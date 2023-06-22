@@ -9,6 +9,8 @@ export const App = () => {
       <div className='app'>App</div>
       <img src={IMAGE_TWO} alt="PNG IMAGE" />
       <img src={IMAGE_STUDY} alt="STUDY IMAGE" />
-    </>
+      <p>ENV NAME: {process.env.name}</p>
+      <p>ENV MODE: {process.env.NODE_ENV}</p>
+    </> 
   )
 }
