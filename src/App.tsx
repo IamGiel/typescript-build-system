@@ -1,10 +1,11 @@
-import "./styles.scss";
-import IMAGE_TWO from "./assets/images/some_image2.jpeg";
-import IMAGE_STUDY from "./assets/images/study.svg";
-import React from "react";
-import { Counter } from "./Counter";
+import './styles.scss';
+import IMAGE_TWO from './assets/images/some_image2.jpeg';
+import IMAGE_STUDY from './assets/images/study.svg';
+import React from 'react';
+import { Counter } from './Counter';
 
 export const App = () => {
+  const name = 'GEl';
   return (
     <>
       <div className="app">App Here</div>

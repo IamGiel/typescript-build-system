@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 
 export const Counter = () => {
   const [count, setCount] = useState(0);
@@ -6,7 +6,7 @@ export const Counter = () => {
 
   useEffect(() => {
     setRenderCount(renderCount + 1);
-    console.log("Component has re-rendered");
+    console.log('Component has re-rendered');
   }, [count]);
 
   return (
