@@ -1,7 +1,7 @@
 import React, { CSSProperties, useState } from 'react';
 import styles from './LiveTable.module.scss';
 
-export interface IPEProfile {
+export type IPEProfile = {
   id: string;
   firstName: string;
   lastName: string;
@@ -9,13 +9,13 @@ export interface IPEProfile {
   domain: string;
   company: any;
   email: string;
-}
+};
 
-export interface ITableProps {
+export type ITableProps = {
   data: IPEProfile[];
   columnHeader: string[];
   onClickItem: (pedid) => void;
-}
+};
 
 export const LiveTable: React.FC<ITableProps> = ({
   data,

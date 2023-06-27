@@ -1,5 +1,5 @@
 import { PepComponentLoader, PepComponent, PepProfile } from './pep';
-import { LiveTable, IPEProfile, ITableProps } from './live-table';
+import { LiveTable, type IPEProfile, type ITableProps } from './live-table';
 export {
   PepComponent,
   PepComponentLoader,
