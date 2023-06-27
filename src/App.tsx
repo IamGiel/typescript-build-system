@@ -8,6 +8,9 @@ export const App = () => {
   const myName = 'GEL';
   return (
     <>
+      <h1 className="text-3xl text-red-100 font-bold underline">
+        Hello world!
+      </h1>
       <div className="app">App Here -{myName}</div>
       <img src={IMAGE_TWO} alt="PNG" />
       <img src={IMAGE_STUDY} alt="STUDY" />

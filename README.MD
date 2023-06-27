@@ -1,3 +1,8 @@
+You can check build by
+
+1. cd build
+2. npx serve
+
 In this commit:
 
 1. Define a common config
