@@ -5,10 +5,10 @@ import React from 'react';
 import { Counter } from './Counter';
 
 export const App = () => {
-  const name = "GEL";
+  const myName = 'GEL';
   return (
     <>
-      <div className="app">App Here</div>
+      <div className="app">App Here -{myName}</div>
       <img src={IMAGE_TWO} alt="PNG" />
       <img src={IMAGE_STUDY} alt="STUDY" />
       <p>ENV NAME: {process.env.name}</p>

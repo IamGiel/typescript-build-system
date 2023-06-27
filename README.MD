@@ -1,8 +1,8 @@
-In this commit: 
+In this commit:
 
 1. Define a common config
 2. seprate dev and prod
-3. pass env variables 
+3. pass env variables
 4. user webpack-merge to merge configs
 
 ```
