@@ -5,7 +5,7 @@ import React from 'react';
 import { Counter } from './Counter';
 
 export const App = () => {
-  const name = 'GEl';
+  const name = "GEL";
   return (
     <>
       <div className="app">App Here</div>
