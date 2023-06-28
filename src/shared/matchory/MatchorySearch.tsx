@@ -1,7 +1,5 @@
-import React from 'react'
+import React from 'react';
 
 export const MatchorySearch = () => {
-  return (
-    <div>MatchorySearch Box</div>
-  )
-}
+  return <div>MatchorySearch Box</div>;
+};

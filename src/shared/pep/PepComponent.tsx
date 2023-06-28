@@ -15,8 +15,8 @@ export const PepComponent: React.FC<PepComponentProps> = ({
   const [data, setData] = useState<IPEProfile[]>([]);
 
   useEffect(() => {
-    fetchDataFromDummyJsonUsers().then((res)=> {
-      console.log("res here in pep ", res)
+    fetchDataFromDummyJsonUsers().then((res) => {
+      console.log('res here in pep ', res);
       setData(res['users']);
     });
   }, []);

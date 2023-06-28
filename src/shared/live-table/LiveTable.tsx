@@ -22,7 +22,7 @@ export const LiveTable: React.FC<ITableProps> = ({
   columnHeader,
   onClickItem,
 }) => {
-  const [isHovered, setIsHovered] = useState(null);
+  // const [isHovered, setIsHovered] = useState(null);
 
   const tableColumnFonts: CSSProperties = {
     display: 'flex',
@@ -50,6 +50,7 @@ export const LiveTable: React.FC<ITableProps> = ({
     height: '52px',
     display: 'grid',
     gridAutoFlow: 'column',
+    border:'none'
   };
 
   const tdItem: CSSProperties = {
@@ -91,12 +92,12 @@ export const LiveTable: React.FC<ITableProps> = ({
   };
 
   const alternateBackgroundColor = (idx) => {
-    if(idx%2===0){
-      return styles['even']
+    if (idx % 2 === 0) {
+      return styles['even'];
     } else {
-      return styles['odd']
+      return styles['odd'];
     }
-  }
+  };
 
   return (
     <div
@@ -119,15 +120,14 @@ export const LiveTable: React.FC<ITableProps> = ({
         <tbody>
           {Array.isArray(data) &&
             data.map((item, index) => (
-              <tr
+              <button
                 key={index}
                 className={alternateBackgroundColor(index)}
                 style={{
-                  ...tableRowInBody
-                  
+                  ...tableRowInBody,
                 }}
-                onMouseEnter={() => setIsHovered(index)}
-                onMouseLeave={() => setIsHovered(null)}
+                // onMouseEnter={() => setIsHovered(index)}
+                // onMouseLeave={() => setIsHovered(null)}
                 onClick={() => onClickItem(item)}
               >
                 <td
@@ -148,7 +148,7 @@ export const LiveTable: React.FC<ITableProps> = ({
                 <td className={alternateBackgroundColor(index)} style={tdItem}>
                   {item.company.address.address}
                 </td>
-              </tr>
+              </button>
             ))}
         </tbody>
       </table>

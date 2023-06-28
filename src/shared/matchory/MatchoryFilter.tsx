@@ -1,7 +1,5 @@
-import React from 'react'
+import React from 'react';
 
 export const MatchoryFilter = () => {
-  return (
-    <div>MatchoryFilter Container</div>
-  )
-}
+  return <div>MatchoryFilter Container</div>;
+};

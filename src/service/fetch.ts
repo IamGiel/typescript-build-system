@@ -1,19 +1,25 @@
 import axios from 'axios';
 
 // Function to hand;e API calls
-export const fetchdata = async (url:string, method:string, data?:any) => {
+export const fetchdata = async (url: string, method: string, data?: any) => {
   try {
     const response = await axios({
-      url, method, data
-    })
-    return response.data
+      url,
+      method,
+      data,
+    });
+    return response.data;
   } catch (error) {
-    console.log(error)
-    throw error
+    console.log(error);
+    throw error;
   }
-}
+};
 
-export const fetchDataWithLogging = async (url: string, method: string, data?: any) => {
+export const fetchDataWithLogging = async (
+  url: string,
+  method: string,
+  data?: any
+) => {
   try {
     const response = await fetchdata(url, method, data);
     console.log('API response:', response);

@@ -1,7 +1,5 @@
-import React from 'react'
+import React from 'react';
 
 export const MatchoryPills = () => {
-  return (
-    <div>MatchoryPills/Keywords Container</div>
-  )
-}
+  return <div>MatchoryPills/Keywords Container</div>;
+};
