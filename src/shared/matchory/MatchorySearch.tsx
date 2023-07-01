@@ -5,9 +5,10 @@ import chevronDown from '../../assets/images/chevron_down.svg';
 
 type MatchorySearch = {
   title: 'Search' | 'Filter';
+  icon?: React.ReactElement;
 };
 
-export const MatchorySearch = ({ title }: MatchorySearch) => {
+export const MatchorySearch = ({ title, icon }: MatchorySearch) => {
   const keywords = [
     { name: 'corn', isSelected: true },
     { name: 'bran', isSelected: true },
@@ -135,10 +136,24 @@ export const MatchorySearch = ({ title }: MatchorySearch) => {
     setnewAlternativeKeyword(''); // Reset the input field
   };
 
+  const onClickFilterBtn = () => {
+    const openAll = !(openKeyWords && openMfgs && openAlternatives);
+    setOpenKeyWords(openAll);
+    setOpenMfgs(openAll);
+    setOpenAlternatives(openAll);
+  };
+
   return (
-    <div className="matchory-search-container flex flex-col min-h-[658px] w-[312px] bg-[#F8F8F8]">
-      <div className="title-section flex p-[12px] h-[56px] text-[16px] font-[700] border-b-[1px] border-[#CBD1E2]">
-        {title}
+    <div className="matchory-search-container block max-h-[658px] w-[312px] bg-[#F8F8F8]">
+      <div className="title-section flex justify-between p-[12px] h-[56px] text-[16px] font-[700] border-b-[1px] border-[#CBD1E2]">
+        <div className="titlename flex leading-[24px]">{title}</div>
+        {icon && (
+          <div className="icon-prop-isAvaialble flex">
+            <button className="filter-btn" onClick={() => onClickFilterBtn()}>
+              <img src={icon} alt="filtericon" />
+            </button>
+          </div>
+        )}
       </div>
 
       <div className="keyword-section items-center gap-[12px] p-[12px] border-b-[1px] border-[#CBD1E2]">
@@ -177,25 +192,31 @@ export const MatchorySearch = ({ title }: MatchorySearch) => {
                 </span>
               </div>
             </div>
+
             <div className="keywords-lists flex flex-wrap gap-[12px]">
               {selectedKeyWords &&
-                selectedKeyWords.map((item, idx) => (
-                  <div className="button-container flex gap-[12px]" key={idx}>
-                    {item.isSelected && (
-                      <button
-                        className={`whitespace-nowrap text-[#3730A3] text-[14px] font-[500] font-inter rounded-[12px] px-[12px] py-[2px] ${
-                          item.isSelected ? 'bg-[#E0E7FF]' : 'bg-[#F3F4F6]'
-                        }`}
-                        onClick={() =>
-                          handleBtnSelectKeyWords(idx, sections.keyword)
-                        }
+                selectedKeyWords.map(
+                  (item, idx) =>
+                    item.isSelected && (
+                      <div
+                        className="button-container flex gap-[12px] flex-shrink-0"
+                        key={idx}
                       >
-                        {item.name}
-                      </button>
-                    )}
-                  </div>
-                ))}
+                        <button
+                          className={`whitespace-nowrap text-[#3730A3] text-[14px] font-[500] font-inter rounded-[12px] px-[12px] py-[2px] ${
+                            item.isSelected ? 'bg-[#E0E7FF]' : 'bg-[#F3F4F6]'
+                          }`}
+                          onClick={() =>
+                            handleBtnSelectKeyWords(idx, sections.keyword)
+                          }
+                        >
+                          {item.name}
+                        </button>
+                      </div>
+                    )
+                )}
             </div>
+
             <div className="input-keywords">
               <div className="mt-2.5">
                 <input
@@ -207,7 +228,7 @@ export const MatchorySearch = ({ title }: MatchorySearch) => {
                   onChange={(e) => setNewKeyword(e.target.value)}
                   onKeyDown={(evt) => handleKeyDown(evt, sections.keyword)}
                   autoComplete="given-name"
-                  className="block w-full rounded-md border-1 px-3.5 py-2 text-[#878EA5] h-[38px] text-[14px] font-[500] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-[#878EA5] focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-1 px-3.5 py-2 text-[#878EA5] h-[38px] placeholder:text-[14px] font-[500] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-[#878EA5] focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
@@ -253,22 +274,26 @@ export const MatchorySearch = ({ title }: MatchorySearch) => {
             </div>
             <div className="keywords-lists flex flex-wrap gap-[12px]">
               {selectedMfgProcesses &&
-                selectedMfgProcesses.map((item, idx) => (
-                  <div className="button-container flex gap-[12px]" key={idx}>
-                    {item.isSelected && (
-                      <button
-                        className={`whitespace-nowrap text-[#3730A3] text-[14px] font-[500] font-inter rounded-[12px] px-[12px] py-[2px] ${
-                          item.isSelected ? 'bg-[#E0E7FF]' : 'bg-[#F3F4F6]'
-                        }`}
-                        onClick={() =>
-                          handleBtnSelectKeyWords(idx, sections.mfgprocess)
-                        }
+                selectedMfgProcesses.map(
+                  (item, idx) =>
+                    item.isSelected && (
+                      <div
+                        className="button-container flex gap-[12px] flex-shrink-0"
+                        key={idx}
                       >
-                        {item.name}
-                      </button>
-                    )}
-                  </div>
-                ))}
+                        <button
+                          className={`whitespace-nowrap text-[#3730A3] text-[14px] font-[500] font-inter rounded-[12px] px-[12px] py-[2px] ${
+                            item.isSelected ? 'bg-[#E0E7FF]' : 'bg-[#F3F4F6]'
+                          }`}
+                          onClick={() =>
+                            handleBtnSelectKeyWords(idx, sections.mfgprocess)
+                          }
+                        >
+                          {item.name}
+                        </button>
+                      </div>
+                    )
+                )}
             </div>
             <div className="input-keywords">
               <div className="mt-2.5">
@@ -281,7 +306,7 @@ export const MatchorySearch = ({ title }: MatchorySearch) => {
                   onChange={(e) => setnewMfgsKeyWord(e.target.value)}
                   onKeyDown={(evt) => handleKeyDown(evt, sections.mfgprocess)}
                   autoComplete="given-name"
-                  className="block w-full rounded-md border-1 px-3.5 py-2 text-[#878EA5] h-[38px] text-[14px] font-[500] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-[#878EA5] focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-1 px-3.5 py-2 text-[#878EA5] h-[38px] placeholder:text-[14px] font-[500] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-[#878EA5] focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
@@ -325,24 +350,29 @@ export const MatchorySearch = ({ title }: MatchorySearch) => {
                 </span>
               </div>
             </div>
+
             <div className="keywords-lists flex flex-wrap gap-[12px]">
               {selectedAlternatives &&
-                selectedAlternatives.map((item, idx) => (
-                  <div className="button-container flex gap-[12px]" key={idx}>
-                    {item.isSelected && (
-                      <button
-                        className={`whitespace-nowrap text-[#3730A3] text-[14px] font-[500] font-inter rounded-[12px] px-[12px] py-[2px] ${
-                          item.isSelected ? 'bg-[#E0E7FF]' : 'bg-[#F3F4F6]'
-                        }`}
-                        onClick={() =>
-                          handleBtnSelectKeyWords(idx, sections.alternative)
-                        }
+                selectedAlternatives.map(
+                  (item, idx) =>
+                    item.isSelected && (
+                      <div
+                        className="button-container flex gap-[12px] flex-shrink-0"
+                        key={idx}
                       >
-                        {item.name}
-                      </button>
-                    )}
-                  </div>
-                ))}
+                        <button
+                          className={`whitespace-nowrap text-[#3730A3] text-[14px] font-[500] font-inter rounded-[12px] px-[12px] py-[2px] ${
+                            item.isSelected ? 'bg-[#E0E7FF]' : 'bg-[#F3F4F6]'
+                          }`}
+                          onClick={() =>
+                            handleBtnSelectKeyWords(idx, sections.alternative)
+                          }
+                        >
+                          {item.name}
+                        </button>
+                      </div>
+                    )
+                )}
             </div>
             <div className="input-keywords">
               <div className="mt-2.5">
@@ -355,7 +385,7 @@ export const MatchorySearch = ({ title }: MatchorySearch) => {
                   onChange={(e) => setnewAlternativeKeyword(e.target.value)}
                   onKeyDown={(evt) => handleKeyDown(evt, sections.alternative)}
                   autoComplete="given-name"
-                  className="block w-full rounded-md border-1 px-3.5 py-2 text-[#878EA5] h-[38px] text-[14px] font-[500] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-[#878EA5] focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-1 px-3.5 py-2 text-[#878EA5] h-[38px] placeholder:text-[14px] font-[500] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-[#878EA5] focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>

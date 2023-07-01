@@ -1,5 +1,6 @@
 import React from 'react';
-import Logo from '../../assets/images/matchory_logo.svg'; // Replace '../assets/logo.svg' with the correct path to your SVG file
+import Logo from '../../assets/images/matchory_logo.svg';
+import filterIcon from '../../assets/images/filterIcon.svg';
 import { MatchorySearch } from './MatchorySearch';
 import { MatchoryPills } from './MatchoryPills';
 import { MatchoryMap } from './MatchoryMap';
@@ -31,7 +32,7 @@ export const Matchory = () => {
           </div>
           {/* filter */}
           <div className="filter-section-container">
-            <MatchorySearch title="Filter" />
+            <MatchorySearch title="Filter by" icon={filterIcon} />
           </div>
         </div>
         <div className="right-results-section">
