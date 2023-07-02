@@ -190,7 +190,6 @@ export const MatchorySearch = ({
       setSelectedMfgProcesses(updatedMfgProcesses);
       setNewMfgsKeyWord(''); // Reset the input field setNewMfgsKeyWord
     }
-
     if (tagname === TAGNAME_ALTERNATIVE) {
       const updatedAlternatives = selectedAlternatives.length
         ? [...selectedAlternatives, { name: newItem, isSelected: true }]
@@ -241,6 +240,11 @@ export const MatchorySearch = ({
     setOpenLocations(openAll);
     setOpenHSCodes(openAll);
     setOpenBuyers(openAll);
+  };
+
+  // will handle reset, cancel, search/filter buttons
+  const onButtonRequest = (evt) => {
+    console.log('evt ', evt.target.type);
   };
 
   const getToggleSection = (sectionName) => {
@@ -301,12 +305,7 @@ export const MatchorySearch = ({
           <div className="section-opener flex justify-between">
             <div className="right-divs flex items-center">
               <span className="font-inter font-[500] text-[14px] leading-[20px] mr-3">
-                {section.sectionName} (
-                {
-                  section.preselectedItems.filter((item) => item.isSelected)
-                    .length
-                }
-                )
+                {section.sectionName}
               </span>
               <div className="tooltip-section">
                 {tooltip(
@@ -343,6 +342,7 @@ export const MatchorySearch = ({
               newWord={newKeyword}
               setNewWord={setNewKeyword}
               onEnter={handleKeyDown}
+              onButtonClick={onButtonRequest}
             />
           )}
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 const ReusableSection = ({
   sectionTagName,
@@ -9,6 +9,7 @@ const ReusableSection = ({
   newWord,
   setNewWord,
   onEnter,
+  onButtonClick,
 }) => {
   return (
     <div className="keywords-list-container flex flex-col">
@@ -19,32 +20,37 @@ const ReusableSection = ({
           </span>
         </div>
         <div className="flex">
-          <span className="font-inter font-[500] text-[14px] leading-[20px] text-[#5650D6]">
+          <button
+            className="font-inter font-[500] text-[14px] leading-[20px] text-[#5650D6]"
+            type="reset"
+            onClick={(evt) => onButtonClick(evt)}
+          >
             Reset
-          </span>
+          </button>
         </div>
       </div>
 
       <div className="keywords-lists flex flex-wrap gap-[12px]">
         {iterableItems &&
           iterableItems.map(
-            (item, idx) =>
-              item.isSelected && (
-                <div
-                  className="button-container flex gap-[12px] flex-shrink-0"
-                  key={idx}
+            (item, idx) => (
+              // item.isSelected && (
+              <div
+                className="button-container flex gap-[12px] flex-shrink-0"
+                key={idx}
+              >
+                <button
+                  className={`max-w-[120px] overflow-hidden overflow-ellipsis whitespace-nowrap text-[#3730A3] text-[14px] font-[500] font-inter rounded-[12px] px-[12px] py-[2px] ${
+                    item.isSelected ? 'bg-[#E0E7FF]' : 'bg-[#F3F4F6]'
+                  }`}
+                  title={item.name}
+                  onClick={() => clickHandler(idx, sectionLabelName)}
                 >
-                  <button
-                    className={`max-w-[120px] overflow-hidden overflow-ellipsis whitespace-nowrap text-[#3730A3] text-[14px] font-[500] font-inter rounded-[12px] px-[12px] py-[2px] ${
-                      item.isSelected ? 'bg-[#E0E7FF]' : 'bg-[#F3F4F6]'
-                    }`}
-                    title={item.name}
-                    onClick={() => clickHandler(idx, sectionLabelName)}
-                  >
-                    {item.name}
-                  </button>
-                </div>
-              )
+                  {item.name}
+                </button>
+              </div>
+            )
+            // )
           )}
       </div>
 
