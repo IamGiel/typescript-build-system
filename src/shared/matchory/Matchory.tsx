@@ -4,9 +4,51 @@ import filterIcon from '../../assets/images/filterIcon.svg';
 import { MatchorySearch } from './MatchorySearch';
 import { MatchoryPills } from './MatchoryPills';
 import { MatchoryMap } from './MatchoryMap';
+import { alternatives, keywords, mfgs } from './sampledata';
 
-// render the matchory Search, filter, keywords and map components
 export const Matchory = () => {
+  const searchDatafromapi = [
+    {
+      sectionName: 'Keywords',
+      suggested: 'Suggested Keywords',
+      preselectedItems: keywords,
+      tagname: `TagName_Keywords`.trim().toUpperCase(),
+    },
+    {
+      sectionName: 'Manufacturing Processes',
+      suggested: 'Suggested Mfg Processes',
+      preselectedItems: mfgs,
+      tagname: `TagName_Manufacturing`.trim().toUpperCase(),
+    },
+    {
+      sectionName: 'Alternative keywords',
+      suggested: 'Suggested Mfg Processes',
+      preselectedItems: alternatives,
+      tagname: `TagName_Alternative`.trim().toUpperCase(),
+    },
+  ];
+
+  const filterDatafromapi = [
+    {
+      sectionName: 'Locations',
+      suggested: 'Suggested locations',
+      preselectedItems: keywords,
+      tagname: `TagName_Locations`.trim().toUpperCase(),
+    },
+    {
+      sectionName: 'HS-Codes',
+      suggested: 'Suggested HS-codes',
+      preselectedItems: mfgs,
+      tagname: `TagName_HSCODES`.trim().toUpperCase(),
+    },
+    {
+      sectionName: 'Buyers',
+      suggested: 'Suggested buyers',
+      preselectedItems: alternatives,
+      tagname: `TagName_Buyers`.trim().toUpperCase(),
+    },
+  ];
+
   return (
     <div className="matchory-parent-container">
       <div className="titleHeader flex flex-row font-[700] font-[inter] text-left text-[#111827] text-[30px]">
@@ -28,11 +70,20 @@ export const Matchory = () => {
         <div className="left-search-filter-section flex flex-col gap-[12px]">
           {/* search */}
           <div className="search-section-container">
-            <MatchorySearch title="Search" />
+            <MatchorySearch
+              title="Search"
+              purpose="Search"
+              data={searchDatafromapi}
+            />
           </div>
           {/* filter */}
           <div className="filter-section-container">
-            <MatchorySearch title="Filter by" icon={filterIcon} />
+            <MatchorySearch
+              title="Filter"
+              icon={filterIcon}
+              purpose="Search"
+              data={filterDatafromapi}
+            />
           </div>
         </div>
         <div className="right-results-section">

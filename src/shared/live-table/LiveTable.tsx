@@ -50,7 +50,7 @@ export const LiveTable: React.FC<ITableProps> = ({
     height: '52px',
     display: 'grid',
     gridAutoFlow: 'column',
-    border:'none'
+    border: 'none',
   };
 
   const tdItem: CSSProperties = {
