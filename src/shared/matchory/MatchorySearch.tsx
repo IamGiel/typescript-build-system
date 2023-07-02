@@ -3,6 +3,7 @@ import infoCircle from '../../assets/images/info-circle.svg';
 import chevronUp from '../../assets/images/chevron_up.svg';
 import chevronDown from '../../assets/images/chevron_down.svg';
 import { sectionLabels } from './sampledata';
+import ReusableSection from './ReusableSection';
 
 type Addword = {
   name: string;
@@ -14,6 +15,7 @@ type MatchoryData = {
   suggested: string;
   preselectedItems: Addword[];
   tagname: string;
+  isOPen: boolean;
 };
 
 type MatchorySearch = {
@@ -55,28 +57,35 @@ export const MatchorySearch = ({
   const [newHSCode, setNewHSCode] = useState('');
   const [newBuyer, setNewBuyer] = useState('');
 
+  const TAGNAME_KEYWORDS = 'TAGNAME_KEYWORDS';
+  const TAGNAME_MANUFACTURING = 'TAGNAME_MANUFACTURING';
+  const TAGNAME_ALTERNATIVE = 'TAGNAME_ALTERNATIVE';
+  const TAGNAME_LOCATIONS = 'TAGNAME_LOCATIONS';
+  const TAGNAME_HSCODES = 'TAGNAME_HSCODES';
+  const TAGNAME_BUYERS = 'TAGNAME_BUYERS';
+
   useEffect(() => {
     if (Array.isArray(data) && data.length > 0) {
       data.forEach((item) => {
         console.log('this is item in useeffect ', item);
         const { tagname, preselectedItems } = item;
         switch (tagname) {
-          case 'TAGNAME_KEYWORDS':
+          case TAGNAME_KEYWORDS:
             setSelectedKeyWords(preselectedItems);
             break;
-          case 'TAGNAME_MANUFACTURING':
+          case TAGNAME_MANUFACTURING:
             setSelectedMfgProcesses(preselectedItems);
             break;
-          case 'TAGNAME_ALTERNATIVE':
+          case TAGNAME_ALTERNATIVE:
             setSelectedAlternatives(preselectedItems);
             break;
-          case 'TAGNAME_LOCATIONS':
+          case TAGNAME_LOCATIONS:
             setSelectedLocations(preselectedItems);
             break;
-          case 'TAGNAME_HSCODES':
+          case TAGNAME_HSCODES:
             setSelectedHSCodes(preselectedItems);
             break;
-          case 'TAGNAME_BUYERS':
+          case TAGNAME_BUYERS:
             setSelectedBuyers(preselectedItems);
             break;
           // Add more cases if needed for additional tag names
@@ -123,10 +132,10 @@ export const MatchorySearch = ({
   const handleKeyDown = (e, tagname) => {
     console.log('tagname ', tagname, e.key);
     if (e.key === 'Enter') {
-      if (tagname === `TagName_Keywords`.trim().toUpperCase()) {
+      if (tagname === TAGNAME_KEYWORDS) {
         handleAddItem(tagname, newKeyword, setNewKeyword, setSelectedKeyWords);
       }
-      if (tagname === 'TAGNAME_MANUFACTURING') {
+      if (tagname === TAGNAME_MANUFACTURING) {
         handleAddItem(
           tagname,
           newMfgsKeyWord,
@@ -134,7 +143,7 @@ export const MatchorySearch = ({
           setSelectedMfgProcesses
         );
       }
-      if (tagname === 'TAGNAME_ALTERNATIVE') {
+      if (tagname === TAGNAME_ALTERNATIVE) {
         handleAddItem(
           tagname,
           newAlternativeKeyword,
@@ -143,7 +152,7 @@ export const MatchorySearch = ({
         );
       }
 
-      if (tagname === 'TAGNAME_LOCATIONS') {
+      if (tagname === TAGNAME_LOCATIONS) {
         handleAddItem(
           tagname,
           newLocation,
@@ -152,10 +161,10 @@ export const MatchorySearch = ({
         );
       }
 
-      if (tagname === 'TAGNAME_HSCODES') {
+      if (tagname === TAGNAME_HSCODES) {
         handleAddItem(tagname, newHSCode, setNewHSCode, setSelectedHSCodes);
       }
-      if (tagname === 'TAGNAME_BUYERS') {
+      if (tagname === TAGNAME_BUYERS) {
         handleAddItem(tagname, newBuyer, setNewBuyer, setSelectedBuyers);
       }
     }
@@ -164,7 +173,7 @@ export const MatchorySearch = ({
   const handleAddItem = (tagname, newItem) => {
     if (newItem.trim() === '') return; // Ignore empty input
 
-    if (tagname === 'TagName_Keywords'.trim().toUpperCase()) {
+    if (tagname === TAGNAME_KEYWORDS) {
       const updatedKeywords = selectedKeyWords.length
         ? [...selectedKeyWords, { name: newItem, isSelected: true }]
         : [{ name: newItem, isSelected: true }];
@@ -173,7 +182,7 @@ export const MatchorySearch = ({
       setNewKeyword(''); // Reset the input field
     }
 
-    if (tagname === 'TagName_Manufacturing'.trim().toUpperCase()) {
+    if (tagname === TAGNAME_MANUFACTURING) {
       const updatedMfgProcesses = selectedMfgProcesses.length
         ? [...selectedMfgProcesses, { name: newItem, isSelected: true }]
         : [{ name: newItem, isSelected: true }];
@@ -182,7 +191,7 @@ export const MatchorySearch = ({
       setNewMfgsKeyWord(''); // Reset the input field setNewMfgsKeyWord
     }
 
-    if (tagname === 'TagName_Alternative'.trim().toUpperCase()) {
+    if (tagname === TAGNAME_ALTERNATIVE) {
       const updatedAlternatives = selectedAlternatives.length
         ? [...selectedAlternatives, { name: newItem, isSelected: true }]
         : [{ name: newItem, isSelected: true }];
@@ -190,7 +199,7 @@ export const MatchorySearch = ({
       setSelectedAlternatives(updatedAlternatives);
       setNewAlternativeKeyword(''); // Reset the input field
     }
-    if (tagname === 'TagName_locations'.trim().toUpperCase()) {
+    if (tagname === TAGNAME_LOCATIONS) {
       const updatedLocations = selectedLocations.length
         ? [...selectedLocations, { name: newItem, isSelected: true }]
         : [{ name: newItem, isSelected: true }];
@@ -198,7 +207,7 @@ export const MatchorySearch = ({
       setSelectedLocations(updatedLocations);
       setNewLocation(''); // Reset the input field
     }
-    if (tagname === 'TagName_hscodes'.trim().toUpperCase()) {
+    if (tagname === TAGNAME_HSCODES) {
       const updatedHScodes = selectedHSCodes.length
         ? [...selectedHSCodes, { name: newItem, isSelected: true }]
         : [{ name: newItem, isSelected: true }];
@@ -206,7 +215,7 @@ export const MatchorySearch = ({
       setSelectedHSCodes(updatedHScodes);
       setNewHSCode(''); // Reset the input field
     }
-    if (tagname === 'TagName_buyers'.trim().toUpperCase()) {
+    if (tagname === TAGNAME_BUYERS) {
       const updatedBuyers = selectedBuyers.length
         ? [...selectedBuyers, { name: newItem, isSelected: true }]
         : [{ name: newItem, isSelected: true }];
@@ -236,18 +245,18 @@ export const MatchorySearch = ({
 
   const getToggleSection = (sectionName) => {
     switch (sectionName) {
-      case 'TAGNAME_KEYWORDS':
+      case TAGNAME_KEYWORDS:
         return setOpenKeyWords(!openKeyWords);
-      case 'TAGNAME_MANUFACTURING':
+      case TAGNAME_MANUFACTURING:
         return setOpenMfgs(!openMfgs);
-      case 'TAGNAME_ALTERNATIVE':
+      case TAGNAME_ALTERNATIVE:
         return setOpenAlternatives(!openAlternatives);
 
-      case 'TAGNAME_LOCATIONS':
+      case TAGNAME_LOCATIONS:
         return setOpenLocations(!openLocations);
-      case 'TAGNAME_HSCODES':
+      case TAGNAME_HSCODES:
         return setOpenHSCodes(!openHSCodes);
-      case 'TAGNAME_BUYERS':
+      case TAGNAME_BUYERS:
         return setOpenBuyers(!openBuyers);
 
       default:
@@ -288,6 +297,7 @@ export const MatchorySearch = ({
           className="keyword-section items-center gap-[12px] p-[12px] border-b-[1px] border-[#CBD1E2]"
           key={id}
         >
+          {/* <pre>{JSON.stringify(section, null, 4)}</pre> */}
           <div className="section-opener flex justify-between">
             <div className="right-divs flex items-center">
               <span className="font-inter font-[500] text-[14px] leading-[20px] mr-3">
@@ -310,6 +320,7 @@ export const MatchorySearch = ({
                 src={section.isOpen ? chevronUp : chevronDown}
                 alt="open"
                 onClick={() => {
+                  section.isOpen = !section.isOpen;
                   const sectionName = section.tagname || section.sectionName;
                   const isOpen = section.isOpen;
                   const toggleSection = getToggleSection(sectionName); // Function to toggle the section
@@ -323,394 +334,82 @@ export const MatchorySearch = ({
           </div>
 
           {section.sectionName === 'Keywords' && openKeyWords && (
-            <div className="keywords-list-container flex flex-col">
-              {/* Render the keywords section */}
-              {/* ... */}
-              <div className="sec-sub-header flex flex-row gap-[12px] mt-[12px] mb-[12px]">
-                <div className="flex">
-                  <span className="font-inter font-[500] text-[14px] leading-[20px] text-[#656B7C]">
-                    {section.suggested}
-                  </span>
-                </div>
-                <div className="flex">
-                  <span className="font-inter font-[500] text-[14px] leading-[20px] text-[#5650D6]">
-                    Reset
-                  </span>
-                </div>
-              </div>
-
-              <div className="keywords-lists flex flex-wrap gap-[12px]">
-                {selectedKeyWords &&
-                  selectedKeyWords.map(
-                    (item, idx) =>
-                      item.isSelected && (
-                        <div
-                          className="button-container flex gap-[12px] flex-shrink-0"
-                          key={idx}
-                        >
-                          <button
-                            className={`max-w-[120px] overflow-hidden overflow-ellipsis whitespace-nowrap text-[#3730A3] text-[14px] font-[500] font-inter rounded-[12px] px-[12px] py-[2px] ${
-                              item.isSelected ? 'bg-[#E0E7FF]' : 'bg-[#F3F4F6]'
-                            }`}
-                            title={item.name}
-                            onClick={() =>
-                              handleBtnSelectKeyWords(
-                                idx,
-                                sectionLabels.keyword
-                              )
-                            }
-                          >
-                            {item.name}
-                          </button>
-                        </div>
-                      )
-                  )}
-              </div>
-
-              <div className="input-keywords">
-                <div className="mt-2.5">
-                  <input
-                    type="text"
-                    name="first-name"
-                    id="first-name"
-                    placeholder="Add a keyword"
-                    value={newKeyword}
-                    onChange={(e) => setNewKeyword(e.target.value)}
-                    onKeyDown={(evt) => handleKeyDown(evt, section.tagname)}
-                    autoComplete="given-name"
-                    className="block w-full rounded-md border-1 px-3.5 py-2 text-[#878EA5] h-[38px] placeholder:text-[14px] font-[500] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-[#878EA5] focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  />
-                </div>
-              </div>
-            </div>
+            <ReusableSection
+              sectionTagName={TAGNAME_KEYWORDS}
+              subtitle="Suggested keywords"
+              iterableItems={selectedKeyWords}
+              sectionLabelName={sectionLabels.keyword}
+              clickHandler={handleBtnSelectKeyWords}
+              newWord={newKeyword}
+              setNewWord={setNewKeyword}
+              onEnter={handleKeyDown}
+            />
           )}
+
           {section.sectionName === 'Manufacturing Processes' && openMfgs && (
-            <div className="keywords-list-container flex flex-col">
-              {/* Render the manufacturing processes section */}
-              {/* ... */}
-              <div className="keywords-list-container flex flex-col">
-                <div className="sec-sub-header flex flex-row gap-[12px] mt-[12px] mb-[12px]">
-                  <div className="flex">
-                    <span className="font-inter font-[500] text-[14px] leading-[20px] text-[#656B7C]">
-                      {section.suggested}
-                    </span>
-                  </div>
-                  <div className="flex">
-                    <span className="font-inter font-[500] text-[14px] leading-[20px] text-[#5650D6]">
-                      Reset
-                    </span>
-                  </div>
-                </div>
-                <div className="keywords-lists flex flex-wrap gap-[12px]">
-                  {selectedMfgProcesses &&
-                    selectedMfgProcesses.map(
-                      (item, idx) =>
-                        item.isSelected && (
-                          <div
-                            className="button-container flex gap-[12px] flex-shrink-0"
-                            key={idx}
-                          >
-                            <button
-                              className={`max-w-[120px] overflow-hidden overflow-ellipsis whitespace-nowrap text-[#3730A3] text-[14px] font-[500] font-inter rounded-[12px] px-[12px] py-[2px] ${
-                                item.isSelected
-                                  ? 'bg-[#E0E7FF]'
-                                  : 'bg-[#F3F4F6]'
-                              }`}
-                              title={item.name}
-                              onClick={() =>
-                                handleBtnSelectKeyWords(
-                                  idx,
-                                  sectionLabels.mfgprocess
-                                )
-                              }
-                            >
-                              {item.name}
-                            </button>
-                          </div>
-                        )
-                    )}
-                </div>
-                <div className="input-keywords">
-                  <div className="mt-2.5">
-                    <input
-                      type="text"
-                      name="first-name"
-                      id="first-name"
-                      placeholder="Add a keyword"
-                      value={newMfgsKeyWord}
-                      onChange={(e) => setNewMfgsKeyWord(e.target.value)}
-                      onKeyDown={(evt) => handleKeyDown(evt, section.tagname)}
-                      autoComplete="given-name"
-                      className="block w-full rounded-md border-1 px-3.5 py-2 text-[#878EA5] h-[38px] placeholder:text-[14px] font-[500] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-[#878EA5] focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
+            <ReusableSection
+              sectionTagName={TAGNAME_MANUFACTURING}
+              subtitle="Suggested keywords"
+              iterableItems={selectedMfgProcesses}
+              sectionLabelName={sectionLabels.mfgprocess}
+              clickHandler={handleBtnSelectKeyWords}
+              newWord={newMfgsKeyWord}
+              setNewWord={setNewMfgsKeyWord}
+              onEnter={handleKeyDown}
+            />
           )}
+
           {section.sectionName === 'Alternative keywords' &&
             openAlternatives && (
-              <div className="keywords-list-container flex flex-col">
-                {/* Render the alternative keywords section */}
-                {/* ... */}
-                <div className="keywords-list-container flex flex-col">
-                  <div className="sec-sub-header flex flex-row gap-[12px] mt-[12px] mb-[12px]">
-                    <div className="flex">
-                      <span className="font-inter font-[500] text-[14px] leading-[20px] text-[#656B7C]">
-                        {section.suggested}
-                      </span>
-                    </div>
-                    <div className="flex">
-                      <span className="font-inter font-[500] text-[14px] leading-[20px] text-[#5650D6]">
-                        Reset
-                      </span>
-                    </div>
-                  </div>
-
-                  <div className="keywords-lists flex flex-wrap gap-[12px]">
-                    {selectedAlternatives &&
-                      selectedAlternatives.map(
-                        (item, idx) =>
-                          item.isSelected && (
-                            <div
-                              className="button-container flex gap-[12px] flex-shrink-0"
-                              key={idx}
-                            >
-                              <button
-                                className={`max-w-[120px] overflow-hidden overflow-ellipsis whitespace-nowrap text-[#3730A3] text-[14px] font-[500] font-inter rounded-[12px] px-[12px] py-[2px] ${
-                                  item.isSelected
-                                    ? 'bg-[#E0E7FF]'
-                                    : 'bg-[#F3F4F6]'
-                                }`}
-                                title={item.name}
-                                onClick={() =>
-                                  handleBtnSelectKeyWords(
-                                    idx,
-                                    sectionLabels.alternative
-                                  )
-                                }
-                              >
-                                {item.name}
-                              </button>
-                            </div>
-                          )
-                      )}
-                  </div>
-                  <div className="input-keywords">
-                    <div className="mt-2.5">
-                      <input
-                        type="text"
-                        name="first-name"
-                        id="first-name"
-                        placeholder="Add a keyword"
-                        value={newAlternativeKeyword}
-                        onChange={(e) =>
-                          setNewAlternativeKeyword(e.target.value)
-                        }
-                        onKeyDown={(evt) => handleKeyDown(evt, section.tagname)}
-                        autoComplete="given-name"
-                        className="block w-full rounded-md border-1 px-3.5 py-2 text-[#878EA5] h-[38px] placeholder:text-[14px] font-[500] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-[#878EA5] focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <ReusableSection
+                sectionTagName={TAGNAME_ALTERNATIVE}
+                subtitle="Suggested alternative keywords"
+                iterableItems={selectedAlternatives}
+                sectionLabelName={sectionLabels.alternative}
+                clickHandler={handleBtnSelectKeyWords}
+                newWord={newAlternativeKeyword}
+                setNewWord={setNewAlternativeKeyword}
+                onEnter={handleKeyDown}
+              />
             )}
 
           {section.sectionName === 'Locations' && openLocations && (
-            <div className="keywords-list-container flex flex-col">
-              {/* Render the alternative keywords section */}
-              {/* ... */}
-              <div className="keywords-list-container flex flex-col">
-                <div className="sec-sub-header flex flex-row gap-[12px] mt-[12px] mb-[12px]">
-                  <div className="flex">
-                    <span className="font-inter font-[500] text-[14px] leading-[20px] text-[#656B7C]">
-                      {section.suggested}
-                    </span>
-                  </div>
-                  <div className="flex">
-                    <span className="font-inter font-[500] text-[14px] leading-[20px] text-[#5650D6]">
-                      Reset
-                    </span>
-                  </div>
-                </div>
-
-                <div className="keywords-lists flex flex-wrap gap-[12px]">
-                  {selectedLocations &&
-                    selectedLocations.map(
-                      (item, idx) =>
-                        item.isSelected && (
-                          <div
-                            className="button-container flex gap-[12px] flex-shrink-0"
-                            key={idx}
-                          >
-                            <button
-                              className={`max-w-[120px] overflow-hidden overflow-ellipsis whitespace-nowrap text-[#3730A3] text-[14px] font-[500] font-inter rounded-[12px] px-[12px] py-[2px] ${
-                                item.isSelected
-                                  ? 'bg-[#E0E7FF]'
-                                  : 'bg-[#F3F4F6]'
-                              }`}
-                              title={item.name}
-                              onClick={() =>
-                                handleBtnSelectKeyWords(
-                                  idx,
-                                  sectionLabels.locations
-                                )
-                              }
-                            >
-                              {item.name}
-                            </button>
-                          </div>
-                        )
-                    )}
-                </div>
-                <div className="input-keywords">
-                  <div className="mt-2.5">
-                    <input
-                      type="text"
-                      name="first-name"
-                      id="first-name"
-                      placeholder="Add a keyword"
-                      value={newLocation}
-                      onChange={(e) => setNewLocation(e.target.value)}
-                      onKeyDown={(evt) => handleKeyDown(evt, section.tagname)}
-                      autoComplete="given-name"
-                      className="block w-full rounded-md border-1 px-3.5 py-2 text-[#878EA5] h-[38px] placeholder:text-[14px] font-[500] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-[#878EA5] focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
+            <ReusableSection
+              sectionTagName={TAGNAME_LOCATIONS}
+              subtitle="Suggested locations"
+              iterableItems={selectedLocations}
+              sectionLabelName={sectionLabels.locations}
+              clickHandler={handleBtnSelectKeyWords}
+              newWord={newLocation}
+              setNewWord={setNewLocation}
+              onEnter={handleKeyDown}
+            />
           )}
+
           {section.sectionName === 'HS-Codes' && openHSCodes && (
-            <div className="keywords-list-container flex flex-col">
-              {/* Render the alternative keywords section */}
-              {/* ... */}
-              <div className="keywords-list-container flex flex-col">
-                <div className="sec-sub-header flex flex-row gap-[12px] mt-[12px] mb-[12px]">
-                  <div className="flex">
-                    <span className="font-inter font-[500] text-[14px] leading-[20px] text-[#656B7C]">
-                      {section.suggested}
-                    </span>
-                  </div>
-                  <div className="flex">
-                    <span className="font-inter font-[500] text-[14px] leading-[20px] text-[#5650D6]">
-                      Reset
-                    </span>
-                  </div>
-                </div>
-
-                <div className="keywords-lists flex flex-wrap gap-[12px]">
-                  {selectedHSCodes &&
-                    selectedHSCodes.map(
-                      (item, idx) =>
-                        item.isSelected && (
-                          <div
-                            className="button-container flex gap-[12px] flex-shrink-0"
-                            key={idx}
-                          >
-                            <button
-                              className={`max-w-[120px] overflow-hidden overflow-ellipsis whitespace-nowrap text-[#3730A3] text-[14px] font-[500] font-inter rounded-[12px] px-[12px] py-[2px] ${
-                                item.isSelected
-                                  ? 'bg-[#E0E7FF]'
-                                  : 'bg-[#F3F4F6]'
-                              }`}
-                              title={item.name}
-                              onClick={() =>
-                                handleBtnSelectKeyWords(
-                                  idx,
-                                  sectionLabels.hscodes
-                                )
-                              }
-                            >
-                              {item.name}
-                            </button>
-                          </div>
-                        )
-                    )}
-                </div>
-                <div className="input-keywords">
-                  <div className="mt-2.5">
-                    <input
-                      type="text"
-                      name="first-name"
-                      id="first-name"
-                      placeholder="Add a keyword"
-                      value={newHSCode}
-                      onChange={(e) => setNewHSCode(e.target.value)}
-                      onKeyDown={(evt) => handleKeyDown(evt, section.tagname)}
-                      autoComplete="given-name"
-                      className="block w-full rounded-md border-1 px-3.5 py-2 text-[#878EA5] h-[38px] placeholder:text-[14px] font-[500] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-[#878EA5] focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
+            <ReusableSection
+              sectionTagName={TAGNAME_HSCODES}
+              subtitle="Suggested HS-Codes"
+              iterableItems={selectedHSCodes}
+              sectionLabelName={sectionLabels.hscodes}
+              clickHandler={handleBtnSelectKeyWords}
+              newWord={newHSCode}
+              setNewWord={setNewHSCode}
+              onEnter={handleKeyDown}
+            />
           )}
-          {section.sectionName === 'Buyers' && openBuyers && (
-            <div className="keywords-list-container flex flex-col">
-              {/* Render the alternative keywords section */}
-              {/* ... */}
-              <div className="keywords-list-container flex flex-col">
-                <div className="sec-sub-header flex flex-row gap-[12px] mt-[12px] mb-[12px]">
-                  <div className="flex">
-                    <span className="font-inter font-[500] text-[14px] leading-[20px] text-[#656B7C]">
-                      {section.suggested}
-                    </span>
-                  </div>
-                  <div className="flex">
-                    <span className="font-inter font-[500] text-[14px] leading-[20px] text-[#5650D6]">
-                      Reset
-                    </span>
-                  </div>
-                </div>
 
-                <div className="keywords-lists flex flex-wrap gap-[12px]">
-                  {selectedBuyers &&
-                    selectedBuyers.map(
-                      (item, idx) =>
-                        item.isSelected && (
-                          <div
-                            className="button-container flex gap-[12px] flex-shrink-0"
-                            key={idx}
-                          >
-                            <button
-                              className={`max-w-[120px] overflow-hidden overflow-ellipsis whitespace-nowrap text-[#3730A3] text-[14px] font-[500] font-inter rounded-[12px] px-[12px] py-[2px] ${
-                                item.isSelected
-                                  ? 'bg-[#E0E7FF]'
-                                  : 'bg-[#F3F4F6]'
-                              }`}
-                              title={item.name}
-                              onClick={() =>
-                                handleBtnSelectKeyWords(
-                                  idx,
-                                  sectionLabels.buyers
-                                )
-                              }
-                            >
-                              {item.name}
-                            </button>
-                          </div>
-                        )
-                    )}
-                </div>
-                <div className="input-keywords">
-                  <div className="mt-2.5">
-                    <input
-                      type="text"
-                      name="first-name"
-                      id="first-name"
-                      placeholder="Add a keyword"
-                      value={newBuyer}
-                      onChange={(e) => setNewBuyer(e.target.value)}
-                      onKeyDown={(evt) => handleKeyDown(evt, section.tagname)}
-                      autoComplete="given-name"
-                      className="block w-full rounded-md border-1 px-3.5 py-2 text-[#878EA5] h-[38px] placeholder:text-[14px] font-[500] shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-[#878EA5] focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
+          {section.sectionName === 'Buyers' && openBuyers && (
+            <ReusableSection
+              sectionTagName={TAGNAME_BUYERS}
+              subtitle="Suggested buyers"
+              iterableItems={selectedBuyers}
+              sectionLabelName={sectionLabels.buyers}
+              clickHandler={handleBtnSelectKeyWords}
+              newWord={newBuyer}
+              setNewWord={setNewBuyer}
+              onEnter={handleKeyDown}
+            />
           )}
         </div>
       ))}

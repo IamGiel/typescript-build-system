@@ -19,18 +19,21 @@ export const Matchory = () => {
       sectionName: 'Keywords',
       suggested: 'Suggested Keywords',
       preselectedItems: keywordsArr,
+      isOpen: false,
       tagname: `TagName_Keywords`.trim().toUpperCase(),
     },
     {
       sectionName: 'Manufacturing Processes',
       suggested: 'Suggested Mfg Processes',
       preselectedItems: mfgsArr,
+      isOpen: false,
       tagname: `TagName_Manufacturing`.trim().toUpperCase(),
     },
     {
       sectionName: 'Alternative keywords',
       suggested: 'Suggested Mfg Processes',
       preselectedItems: alternativesArr,
+      isOpen: false,
       tagname: `TagName_Alternative`.trim().toUpperCase(),
     },
   ];
@@ -40,18 +43,21 @@ export const Matchory = () => {
       sectionName: 'Locations',
       suggested: 'Suggested locations',
       preselectedItems: locationsArr,
+      isOpen: false,
       tagname: `TagName_Locations`.trim().toUpperCase(),
     },
     {
       sectionName: 'HS-Codes',
       suggested: 'Suggested HS-codes',
       preselectedItems: hscodesArr,
+      isOpen: false,
       tagname: `TagName_HSCODES`.trim().toUpperCase(),
     },
     {
       sectionName: 'Buyers',
       suggested: 'Suggested buyers',
       preselectedItems: buyersArr,
+      isOpen: false,
       tagname: `TagName_Buyers`.trim().toUpperCase(),
     },
   ];
@@ -81,6 +87,7 @@ export const Matchory = () => {
               title="Search"
               purpose="Search"
               data={searchDatafromapi}
+              isOpen={false}
             />
           </div>
           {/* filter */}
@@ -90,6 +97,7 @@ export const Matchory = () => {
               icon={filterIcon}
               purpose="Search"
               data={filterDatafromapi}
+              isOpen={false}
             />
           </div>
         </div>

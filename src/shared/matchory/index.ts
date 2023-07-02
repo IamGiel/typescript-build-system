@@ -3,4 +3,12 @@ import { MatchoryFilter } from './MatchoryFilter';
 import { MatchorySearch } from './MatchorySearch';
 import { MatchoryPills } from './MatchoryPills';
 import { MatchoryMap } from './MatchoryMap';
-export { Matchory, MatchoryFilter, MatchorySearch, MatchoryPills, MatchoryMap };
+import { ReusableSection } from './ReusableSection';
+export {
+  Matchory,
+  MatchoryFilter,
+  MatchorySearch,
+  MatchoryPills,
+  MatchoryMap,
+  ReusableSection,
+};
