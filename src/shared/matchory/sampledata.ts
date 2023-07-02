@@ -1,4 +1,4 @@
-export const keywords = [
+export const keywordsArr = [
   { name: 'corn', isSelected: true },
   { name: 'bran', isSelected: true },
   { name: 'breakfast food', isSelected: true },
@@ -8,7 +8,7 @@ export const keywords = [
   { name: 'rye', isSelected: true },
   { name: 'barley', isSelected: true },
 ];
-export const mfgs = [
+export const mfgsArr = [
   { name: 'cereal', isSelected: true },
   { name: 'grass', isSelected: true },
   { name: 'durum', isSelected: true },
@@ -17,7 +17,7 @@ export const mfgs = [
   { name: 'spelt', isSelected: true },
 ];
 
-export const alternatives = [
+export const alternativesArr = [
   { name: 'Harvesting', isSelected: true },
   { name: 'Storage', isSelected: true },
   { name: 'Cleaning', isSelected: true },
@@ -29,6 +29,32 @@ export const alternatives = [
   { name: 'Packing', isSelected: true },
   { name: 'Destoner', isSelected: true },
   { name: 'Trieur', isSelected: true },
+];
+
+export const locationsArr = [
+  { name: 'China', isSelected: true },
+  { name: 'India', isSelected: true },
+  { name: 'Russia', isSelected: true },
+  { name: 'Germany', isSelected: true },
+  { name: 'France', isSelected: true },
+  { name: 'United States', isSelected: true },
+];
+
+export const hscodesArr = [
+  { name: '10019910 - Wheat', isSelected: true },
+  { name: '1103 - Cereal Groats, Meal And Pelle...', isSelected: true },
+  { name: '11031300 - Of wheat: Of maize (corn)', isSelected: true },
+  { name: '11042951 - Cereal, grains, wheat', isSelected: true },
+  { name: '1105 - Flour, Meal, Powder, Flakes...', isSelected: true },
+];
+
+export const buyersArr = [
+  { name: 'Nestle', isSelected: true },
+  { name: 'Lenovo', isSelected: true },
+  { name: 'IBM', isSelected: true },
+  { name: 'Proctor & Gamble', isSelected: true },
+  { name: 'Johnson & Johnson', isSelected: true },
+  { name: 'John Deere', isSelected: true },
 ];
 
 export const sectionLabels = {

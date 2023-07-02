@@ -4,26 +4,33 @@ import filterIcon from '../../assets/images/filterIcon.svg';
 import { MatchorySearch } from './MatchorySearch';
 import { MatchoryPills } from './MatchoryPills';
 import { MatchoryMap } from './MatchoryMap';
-import { alternatives, keywords, mfgs } from './sampledata';
+import {
+  alternativesArr,
+  buyersArr,
+  hscodesArr,
+  keywordsArr,
+  locationsArr,
+  mfgsArr,
+} from './sampledata';
 
 export const Matchory = () => {
   const searchDatafromapi = [
     {
       sectionName: 'Keywords',
       suggested: 'Suggested Keywords',
-      preselectedItems: keywords,
+      preselectedItems: keywordsArr,
       tagname: `TagName_Keywords`.trim().toUpperCase(),
     },
     {
       sectionName: 'Manufacturing Processes',
       suggested: 'Suggested Mfg Processes',
-      preselectedItems: mfgs,
+      preselectedItems: mfgsArr,
       tagname: `TagName_Manufacturing`.trim().toUpperCase(),
     },
     {
       sectionName: 'Alternative keywords',
       suggested: 'Suggested Mfg Processes',
-      preselectedItems: alternatives,
+      preselectedItems: alternativesArr,
       tagname: `TagName_Alternative`.trim().toUpperCase(),
     },
   ];
@@ -32,19 +39,19 @@ export const Matchory = () => {
     {
       sectionName: 'Locations',
       suggested: 'Suggested locations',
-      preselectedItems: keywords,
+      preselectedItems: locationsArr,
       tagname: `TagName_Locations`.trim().toUpperCase(),
     },
     {
       sectionName: 'HS-Codes',
       suggested: 'Suggested HS-codes',
-      preselectedItems: mfgs,
+      preselectedItems: hscodesArr,
       tagname: `TagName_HSCODES`.trim().toUpperCase(),
     },
     {
       sectionName: 'Buyers',
       suggested: 'Suggested buyers',
-      preselectedItems: alternatives,
+      preselectedItems: buyersArr,
       tagname: `TagName_Buyers`.trim().toUpperCase(),
     },
   ];

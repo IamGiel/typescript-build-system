@@ -126,7 +126,7 @@ export const MatchorySearch = ({
       if (tagname === `TagName_Keywords`.trim().toUpperCase()) {
         handleAddItem(tagname, newKeyword, setNewKeyword, setSelectedKeyWords);
       }
-      if (tagname === `TagName_Manufacturing`.trim().toUpperCase()) {
+      if (tagname === 'TAGNAME_MANUFACTURING') {
         handleAddItem(
           tagname,
           newMfgsKeyWord,
@@ -134,7 +134,7 @@ export const MatchorySearch = ({
           setSelectedMfgProcesses
         );
       }
-      if (tagname === `TagName_Alternative`.trim().toUpperCase()) {
+      if (tagname === 'TAGNAME_ALTERNATIVE') {
         handleAddItem(
           tagname,
           newAlternativeKeyword,
@@ -143,7 +143,7 @@ export const MatchorySearch = ({
         );
       }
 
-      if (tagname === `TagName_locations`.trim().toUpperCase()) {
+      if (tagname === 'TAGNAME_LOCATIONS') {
         handleAddItem(
           tagname,
           newLocation,
@@ -152,10 +152,10 @@ export const MatchorySearch = ({
         );
       }
 
-      if (tagname === `TagName_hscodes`.trim().toUpperCase()) {
+      if (tagname === 'TAGNAME_HSCODES') {
         handleAddItem(tagname, newHSCode, setNewHSCode, setSelectedHSCodes);
       }
-      if (tagname === `TagName_buyers`.trim().toUpperCase()) {
+      if (tagname === 'TAGNAME_BUYERS') {
         handleAddItem(tagname, newBuyer, setNewBuyer, setSelectedBuyers);
       }
     }
@@ -236,18 +236,18 @@ export const MatchorySearch = ({
 
   const getToggleSection = (sectionName) => {
     switch (sectionName) {
-      case `TagName_Keywords`.trim().toUpperCase():
+      case 'TAGNAME_KEYWORDS':
         return setOpenKeyWords(!openKeyWords);
-      case `TagName_Manufacturing`.trim().toUpperCase():
+      case 'TAGNAME_MANUFACTURING':
         return setOpenMfgs(!openMfgs);
-      case `TagName_Alternative`.trim().toUpperCase():
+      case 'TAGNAME_ALTERNATIVE':
         return setOpenAlternatives(!openAlternatives);
 
-      case `TagName_Locations`.trim().toUpperCase():
+      case 'TAGNAME_LOCATIONS':
         return setOpenLocations(!openLocations);
-      case `TagName_hscodes`.trim().toUpperCase():
+      case 'TAGNAME_HSCODES':
         return setOpenHSCodes(!openHSCodes);
-      case `TagName_buyers`.trim().toUpperCase():
+      case 'TAGNAME_BUYERS':
         return setOpenBuyers(!openBuyers);
 
       default:
@@ -647,7 +647,7 @@ export const MatchorySearch = ({
               </div>
             </div>
           )}
-          {section.sectionName === 'Buyers' && openHSCodes && (
+          {section.sectionName === 'Buyers' && openBuyers && (
             <div className="keywords-list-container flex flex-col">
               {/* Render the alternative keywords section */}
               {/* ... */}
