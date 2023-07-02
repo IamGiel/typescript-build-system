@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-const ReusableSection = ({
+export const WordlistSection = ({
   sectionTagName,
   subtitle,
   iterableItems,
@@ -10,7 +10,24 @@ const ReusableSection = ({
   setNewWord,
   onEnter,
   onButtonClick,
+  isSelectedCount,
 }) => {
+  // const [selectedCount, setSelectedCount] = useState(0);
+  useEffect(() => {
+    calculateSelectedCount();
+  }, [iterableItems]);
+
+  const calculateSelectedCount = () => {
+    const count = iterableItems.reduce((acc, item) => {
+      if (item.isSelected) {
+        return acc + 1;
+      }
+      return acc;
+    }, 0);
+
+    // setSelectedCount(count);
+    isSelectedCount(count);
+  };
   return (
     <div className="keywords-list-container flex flex-col">
       <div className="sec-sub-header flex flex-row gap-[12px] mt-[12px] mb-[12px]">
@@ -72,5 +89,3 @@ const ReusableSection = ({
     </div>
   );
 };
-
-export default ReusableSection;

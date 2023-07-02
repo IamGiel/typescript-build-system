@@ -1,9 +1,10 @@
 import React, { CSSProperties, useEffect, useState } from 'react';
-import infoCircle from '../../assets/images/info-circle.svg';
-import chevronUp from '../../assets/images/chevron_up.svg';
-import chevronDown from '../../assets/images/chevron_down.svg';
+// import infoCircle from '../../assets/images/info-circle.svg';
+// import chevronUp from '../../assets/images/chevron_up.svg';
+// import chevronDown from '../../assets/images/chevron_down.svg';
 import { sectionLabels } from './sampledata';
-import ReusableSection from './ReusableSection';
+import { SectionOpener } from './resused-sections/SectionOpener';
+import WordlistSection from './resused-sections/WordlistSection';
 
 type Addword = {
   name: string;
@@ -64,6 +65,12 @@ export const MatchorySearch = ({
   const TAGNAME_HSCODES = 'TAGNAME_HSCODES';
   const TAGNAME_BUYERS = 'TAGNAME_BUYERS';
 
+  const [sectionCounts, setSectionCounts] = useState({});
+
+  const handleSelectedCount = (count) => {
+    setCount(count);
+  };
+
   useEffect(() => {
     if (Array.isArray(data) && data.length > 0) {
       data.forEach((item) => {
@@ -94,7 +101,7 @@ export const MatchorySearch = ({
         }
       });
     }
-  }, [data]);
+  }, [data, setSectionCounts]);
 
   // console.log(data[0]);
   // console.log(typeof selectedKeyWords);
@@ -268,19 +275,12 @@ export const MatchorySearch = ({
     }
   };
 
-  const tooltip = (someMessage: string) => {
-    return (
-      <div className="group relative">
-        <img
-          className="infocircle pt-[4px] mr-3 cursor-pointer"
-          src={infoCircle}
-          alt="info"
-        />
-        <p className="absolute top-[0px] w-[200px] h-[fit-content] z-[1] scale-0 transition-all rounded bg-[#c8cbd5] border border-[#ededf8] p-[12px] text-[12px] font-[500] text-[#181818] group-hover:scale-100 justify-center">
-          {someMessage}
-        </p>
-      </div>
-    );
+  const handleSelectedCountChange = (sectionName, count) => {
+    console.log('onchange sectionName ', sectionName);
+    setSectionCounts((prevCounts) => ({
+      ...prevCounts,
+      [sectionName]: count,
+    }));
   };
 
   return (
@@ -301,39 +301,51 @@ export const MatchorySearch = ({
           className="keyword-section items-center gap-[12px] p-[12px] border-b-[1px] border-[#CBD1E2]"
           key={id}
         >
-          {/* <pre>{JSON.stringify(section, null, 4)}</pre> */}
-          <div className="section-opener flex justify-between">
-            <div className="right-divs flex items-center">
-              <span className="font-inter font-[500] text-[14px] leading-[20px] mr-3">
-                {section.sectionName}
-              </span>
-              <div className="tooltip-section">
-                {tooltip(
-                  'This is tooltip. Magna magna dolor aliquip fugiat labore fugiat Lorem sint labore et proident commodo commodo dolor.'
-                )}
-              </div>
-            </div>
-            <div className="chevron-container">
-              <img
-                className="infocircle pt-[4px] cursor-pointer"
-                src={section.isOpen ? chevronUp : chevronDown}
-                alt="open"
-                onClick={() => {
-                  section.isOpen = !section.isOpen;
-                  const sectionName = section.tagname || section.sectionName;
-                  const isOpen = section.isOpen;
-                  const toggleSection = getToggleSection(sectionName); // Function to toggle the section
-
-                  if (toggleSection) {
-                    toggleSection(!isOpen);
-                  }
-                }}
-              />
-            </div>
-          </div>
+          {TAGNAME_KEYWORDS === section.tagname && (
+            <SectionOpener
+              section={section}
+              count={sectionCounts.TAGNAME_KEYWORDS}
+              getToggleSection={getToggleSection}
+            />
+          )}
+          {TAGNAME_MANUFACTURING === section.tagname && (
+            <SectionOpener
+              section={section}
+              count={sectionCounts.TAGNAME_MANUFACTURING}
+              getToggleSection={getToggleSection}
+            />
+          )}
+          {TAGNAME_ALTERNATIVE === section.tagname && (
+            <SectionOpener
+              section={section}
+              count={sectionCounts.TAGNAME_ALTERNATIVE}
+              getToggleSection={getToggleSection}
+            />
+          )}
+          {TAGNAME_LOCATIONS === section.tagname && (
+            <SectionOpener
+              section={section}
+              count={sectionCounts.TAGNAME_LOCATIONS}
+              getToggleSection={getToggleSection}
+            />
+          )}
+          {TAGNAME_HSCODES === section.tagname && (
+            <SectionOpener
+              section={section}
+              count={sectionCounts.TAGNAME_HSCODES}
+              getToggleSection={getToggleSection}
+            />
+          )}
+          {TAGNAME_BUYERS === section.tagname && (
+            <SectionOpener
+              section={section}
+              count={sectionCounts.TAGNAME_BUYERS}
+              getToggleSection={getToggleSection}
+            />
+          )}
 
           {section.sectionName === 'Keywords' && openKeyWords && (
-            <ReusableSection
+            <WordlistSection
               sectionTagName={TAGNAME_KEYWORDS}
               subtitle="Suggested keywords"
               iterableItems={selectedKeyWords}
@@ -343,11 +355,14 @@ export const MatchorySearch = ({
               setNewWord={setNewKeyword}
               onEnter={handleKeyDown}
               onButtonClick={onButtonRequest}
+              isSelectedCount={(count) =>
+                handleSelectedCountChange(TAGNAME_KEYWORDS, count)
+              }
             />
           )}
 
           {section.sectionName === 'Manufacturing Processes' && openMfgs && (
-            <ReusableSection
+            <WordlistSection
               sectionTagName={TAGNAME_MANUFACTURING}
               subtitle="Suggested keywords"
               iterableItems={selectedMfgProcesses}
@@ -356,12 +371,16 @@ export const MatchorySearch = ({
               newWord={newMfgsKeyWord}
               setNewWord={setNewMfgsKeyWord}
               onEnter={handleKeyDown}
+              onButtonClick={onButtonRequest}
+              isSelectedCount={(count) =>
+                handleSelectedCountChange(TAGNAME_MANUFACTURING, count)
+              }
             />
           )}
 
           {section.sectionName === 'Alternative keywords' &&
             openAlternatives && (
-              <ReusableSection
+              <WordlistSection
                 sectionTagName={TAGNAME_ALTERNATIVE}
                 subtitle="Suggested alternative keywords"
                 iterableItems={selectedAlternatives}
@@ -370,11 +389,15 @@ export const MatchorySearch = ({
                 newWord={newAlternativeKeyword}
                 setNewWord={setNewAlternativeKeyword}
                 onEnter={handleKeyDown}
+                onButtonClick={onButtonRequest}
+                isSelectedCount={(count) =>
+                  handleSelectedCountChange(TAGNAME_ALTERNATIVE, count)
+                }
               />
             )}
 
           {section.sectionName === 'Locations' && openLocations && (
-            <ReusableSection
+            <WordlistSection
               sectionTagName={TAGNAME_LOCATIONS}
               subtitle="Suggested locations"
               iterableItems={selectedLocations}
@@ -383,11 +406,15 @@ export const MatchorySearch = ({
               newWord={newLocation}
               setNewWord={setNewLocation}
               onEnter={handleKeyDown}
+              onButtonClick={onButtonRequest}
+              isSelectedCount={(count) =>
+                handleSelectedCountChange(TAGNAME_LOCATIONS, count)
+              }
             />
           )}
 
           {section.sectionName === 'HS-Codes' && openHSCodes && (
-            <ReusableSection
+            <WordlistSection
               sectionTagName={TAGNAME_HSCODES}
               subtitle="Suggested HS-Codes"
               iterableItems={selectedHSCodes}
@@ -396,11 +423,15 @@ export const MatchorySearch = ({
               newWord={newHSCode}
               setNewWord={setNewHSCode}
               onEnter={handleKeyDown}
+              onButtonClick={onButtonRequest}
+              isSelectedCount={(count) =>
+                handleSelectedCountChange(TAGNAME_HSCODES, count)
+              }
             />
           )}
 
           {section.sectionName === 'Buyers' && openBuyers && (
-            <ReusableSection
+            <WordlistSection
               sectionTagName={TAGNAME_BUYERS}
               subtitle="Suggested buyers"
               iterableItems={selectedBuyers}
@@ -409,6 +440,10 @@ export const MatchorySearch = ({
               newWord={newBuyer}
               setNewWord={setNewBuyer}
               onEnter={handleKeyDown}
+              onButtonClick={onButtonRequest}
+              isSelectedCount={(count) =>
+                handleSelectedCountChange(TAGNAME_BUYERS, count)
+              }
             />
           )}
         </div>
