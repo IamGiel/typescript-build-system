@@ -3,7 +3,13 @@ import infoCircle from '../../../assets/images/info-circle.svg';
 import chevronUp from '../../../assets/images/chevron_up.svg';
 import chevronDown from '../../../assets/images/chevron_down.svg';
 
-export const SectionOpener = ({ section, count, getToggleSection, isOpen }) => {
+export const SectionOpener = ({
+  section,
+  count,
+  getToggleSection,
+  isOpen,
+  tooltipMsg,
+}) => {
   // console.log(section)
   // console.log(count)
   // console.log(isOpen)
@@ -29,11 +35,7 @@ export const SectionOpener = ({ section, count, getToggleSection, isOpen }) => {
         <span className="font-inter font-[500] text-[14px] leading-[20px] mr-3">
           {section.sectionName} <span>{count}</span>
         </span>
-        <div className="tooltip-section">
-          {tooltip(
-            'This is tooltip. Magna magna dolor aliquip fugiat labore fugiat Lorem sint labore et proident commodo commodo dolor.'
-          )}
-        </div>
+        <div className="tooltip-section">{tooltip(tooltipMsg)}</div>
       </div>
       <div className="chevron-container">
         <img

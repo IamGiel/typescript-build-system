@@ -4,7 +4,7 @@ import React, { CSSProperties, useEffect, useState } from 'react';
 // import chevronDown from '../../assets/images/chevron_down.svg';
 import { sectionLabels } from './sampledata';
 import { SectionOpener } from './resused-sections/SectionOpener';
-import WordlistSection from './resused-sections/WordlistSection';
+import { WordlistSection } from './resused-sections/WordlistSection';
 
 type Addword = {
   name: string;
@@ -283,6 +283,84 @@ export const MatchorySearch = ({
     }));
   };
 
+  const tagNamesMappings = [
+    TAGNAME_KEYWORDS,
+    TAGNAME_MANUFACTURING,
+    TAGNAME_ALTERNATIVE,
+    TAGNAME_LOCATIONS,
+    TAGNAME_HSCODES,
+    TAGNAME_BUYERS,
+  ];
+
+  const sectionMappings = {
+    Keywords: {
+      tagName: TAGNAME_KEYWORDS,
+      subtitle: 'Suggested keywords',
+      iterableItems: selectedKeyWords,
+      sectionLabelName: sectionLabels.keyword,
+      newWord: newKeyword,
+      setNewWord: setNewKeyword,
+      isSelectedCount: (count) =>
+        handleSelectedCountChange(TAGNAME_KEYWORDS, count),
+      isOpen: openKeyWords,
+    },
+    'Manufacturing Processes': {
+      tagName: TAGNAME_MANUFACTURING,
+      subtitle: 'Suggested keywords',
+      iterableItems: selectedMfgProcesses,
+      sectionLabelName: sectionLabels.mfgprocess,
+      newWord: newMfgsKeyWord,
+      setNewWord: setNewMfgsKeyWord,
+      isSelectedCount: (count) =>
+        handleSelectedCountChange(TAGNAME_MANUFACTURING, count),
+      isOpen: openMfgs,
+    },
+    'Alternative keywords': {
+      tagName: TAGNAME_ALTERNATIVE,
+      subtitle: 'Suggested alternative keywords',
+      iterableItems: selectedAlternatives,
+      sectionLabelName: sectionLabels.alternative,
+      newWord: newAlternativeKeyword,
+      setNewWord: setNewAlternativeKeyword,
+      isSelectedCount: (count) =>
+        handleSelectedCountChange(TAGNAME_ALTERNATIVE, count),
+      isOpen: openAlternatives,
+    },
+    Locations: {
+      tagName: TAGNAME_LOCATIONS,
+      subtitle: 'Suggested locations',
+      iterableItems: selectedLocations,
+      sectionLabelName: sectionLabels.locations,
+      newWord: newLocation,
+      setNewWord: setNewLocation,
+      isSelectedCount: (count) =>
+        handleSelectedCountChange(TAGNAME_LOCATIONS, count),
+      isOpen: openLocations,
+    },
+    'HS-Codes': {
+      tagName: TAGNAME_HSCODES,
+      subtitle: 'Suggested HS-Codes',
+      iterableItems: selectedHSCodes,
+      sectionLabelName: sectionLabels.hscodes,
+      newWord: newHSCode,
+      setNewWord: setNewHSCode,
+      isSelectedCount: (count) =>
+        handleSelectedCountChange(TAGNAME_HSCODES, count),
+      isOpen: openHSCodes,
+    },
+    Buyers: {
+      tagName: TAGNAME_BUYERS,
+      subtitle: 'Suggested buyers',
+      iterableItems: selectedBuyers,
+      sectionLabelName: sectionLabels.buyers,
+      newWord: newBuyer,
+      setNewWord: setNewBuyer,
+      isSelectedCount: (count) =>
+        handleSelectedCountChange(TAGNAME_BUYERS, count),
+      isOpen: openBuyers,
+    },
+  };
+
   return (
     <div className="matchory-search-container block w-[312px] bg-[#F8F8F8]">
       <div className="title-section flex justify-between p-[12px] h-[56px] text-[16px] font-[700] border-b-[1px] border-[#CBD1E2]">
@@ -301,151 +379,43 @@ export const MatchorySearch = ({
           className="keyword-section items-center gap-[12px] p-[12px] border-b-[1px] border-[#CBD1E2]"
           key={id}
         >
-          {TAGNAME_KEYWORDS === section.tagname && (
-            <SectionOpener
-              section={section}
-              count={sectionCounts.TAGNAME_KEYWORDS}
-              getToggleSection={getToggleSection}
-            />
-          )}
-          {TAGNAME_MANUFACTURING === section.tagname && (
-            <SectionOpener
-              section={section}
-              count={sectionCounts.TAGNAME_MANUFACTURING}
-              getToggleSection={getToggleSection}
-            />
-          )}
-          {TAGNAME_ALTERNATIVE === section.tagname && (
-            <SectionOpener
-              section={section}
-              count={sectionCounts.TAGNAME_ALTERNATIVE}
-              getToggleSection={getToggleSection}
-            />
-          )}
-          {TAGNAME_LOCATIONS === section.tagname && (
-            <SectionOpener
-              section={section}
-              count={sectionCounts.TAGNAME_LOCATIONS}
-              getToggleSection={getToggleSection}
-            />
-          )}
-          {TAGNAME_HSCODES === section.tagname && (
-            <SectionOpener
-              section={section}
-              count={sectionCounts.TAGNAME_HSCODES}
-              getToggleSection={getToggleSection}
-            />
-          )}
-          {TAGNAME_BUYERS === section.tagname && (
-            <SectionOpener
-              section={section}
-              count={sectionCounts.TAGNAME_BUYERS}
-              getToggleSection={getToggleSection}
-            />
-          )}
-
-          {section.sectionName === 'Keywords' && openKeyWords && (
-            <WordlistSection
-              sectionTagName={TAGNAME_KEYWORDS}
-              subtitle="Suggested keywords"
-              iterableItems={selectedKeyWords}
-              sectionLabelName={sectionLabels.keyword}
-              clickHandler={handleBtnSelectKeyWords}
-              newWord={newKeyword}
-              setNewWord={setNewKeyword}
-              onEnter={handleKeyDown}
-              onButtonClick={onButtonRequest}
-              isSelectedCount={(count) =>
-                handleSelectedCountChange(TAGNAME_KEYWORDS, count)
-              }
-            />
-          )}
-
-          {section.sectionName === 'Manufacturing Processes' && openMfgs && (
-            <WordlistSection
-              sectionTagName={TAGNAME_MANUFACTURING}
-              subtitle="Suggested keywords"
-              iterableItems={selectedMfgProcesses}
-              sectionLabelName={sectionLabels.mfgprocess}
-              clickHandler={handleBtnSelectKeyWords}
-              newWord={newMfgsKeyWord}
-              setNewWord={setNewMfgsKeyWord}
-              onEnter={handleKeyDown}
-              onButtonClick={onButtonRequest}
-              isSelectedCount={(count) =>
-                handleSelectedCountChange(TAGNAME_MANUFACTURING, count)
-              }
-            />
-          )}
-
-          {section.sectionName === 'Alternative keywords' &&
-            openAlternatives && (
-              <WordlistSection
-                sectionTagName={TAGNAME_ALTERNATIVE}
-                subtitle="Suggested alternative keywords"
-                iterableItems={selectedAlternatives}
-                sectionLabelName={sectionLabels.alternative}
-                clickHandler={handleBtnSelectKeyWords}
-                newWord={newAlternativeKeyword}
-                setNewWord={setNewAlternativeKeyword}
-                onEnter={handleKeyDown}
-                onButtonClick={onButtonRequest}
-                isSelectedCount={(count) =>
-                  handleSelectedCountChange(TAGNAME_ALTERNATIVE, count)
-                }
-              />
+          <div className="tagnamesMappings-section-opener-mapping">
+            {tagNamesMappings.map(
+              (tagName) =>
+                section.tagname === tagName && (
+                  <SectionOpener
+                    key={tagName}
+                    section={section}
+                    count={sectionCounts[tagName]}
+                    getToggleSection={getToggleSection}
+                    tooltipMsg={`${tagName}: tooltip msg passed here.`}
+                  />
+                )
             )}
+          </div>
 
-          {section.sectionName === 'Locations' && openLocations && (
-            <WordlistSection
-              sectionTagName={TAGNAME_LOCATIONS}
-              subtitle="Suggested locations"
-              iterableItems={selectedLocations}
-              sectionLabelName={sectionLabels.locations}
-              clickHandler={handleBtnSelectKeyWords}
-              newWord={newLocation}
-              setNewWord={setNewLocation}
-              onEnter={handleKeyDown}
-              onButtonClick={onButtonRequest}
-              isSelectedCount={(count) =>
-                handleSelectedCountChange(TAGNAME_LOCATIONS, count)
-              }
-            />
-          )}
-
-          {section.sectionName === 'HS-Codes' && openHSCodes && (
-            <WordlistSection
-              sectionTagName={TAGNAME_HSCODES}
-              subtitle="Suggested HS-Codes"
-              iterableItems={selectedHSCodes}
-              sectionLabelName={sectionLabels.hscodes}
-              clickHandler={handleBtnSelectKeyWords}
-              newWord={newHSCode}
-              setNewWord={setNewHSCode}
-              onEnter={handleKeyDown}
-              onButtonClick={onButtonRequest}
-              isSelectedCount={(count) =>
-                handleSelectedCountChange(TAGNAME_HSCODES, count)
-              }
-            />
-          )}
-
-          {section.sectionName === 'Buyers' && openBuyers && (
-            <WordlistSection
-              sectionTagName={TAGNAME_BUYERS}
-              subtitle="Suggested buyers"
-              iterableItems={selectedBuyers}
-              sectionLabelName={sectionLabels.buyers}
-              clickHandler={handleBtnSelectKeyWords}
-              newWord={newBuyer}
-              setNewWord={setNewBuyer}
-              onEnter={handleKeyDown}
-              onButtonClick={onButtonRequest}
-              isSelectedCount={(count) =>
-                handleSelectedCountChange(TAGNAME_BUYERS, count)
-              }
-            />
-          )}
+          <div className="worldist-section-mapping">
+            {Object.entries(sectionMappings).map(
+              ([sectionName, sectionConfig]) =>
+                section.sectionName === sectionName && (
+                  <WordlistSection
+                    key={sectionName}
+                    sectionTagName={sectionConfig.tagName}
+                    subtitle={sectionConfig.subtitle}
+                    iterableItems={sectionConfig.iterableItems}
+                    sectionLabelName={sectionConfig.sectionLabelName}
+                    clickHandler={handleBtnSelectKeyWords}
+                    newWord={sectionConfig.newWord}
+                    setNewWord={sectionConfig.setNewWord}
+                    onEnter={handleKeyDown}
+                    onButtonClick={onButtonRequest}
+                    isSelectedCount={sectionConfig.isSelectedCount}
+                    isOpen={sectionConfig.isOpen}
+                    setIsOpen={(isOpen) => sectionConfig.setOpen(isOpen)}
+                  />
+                )
+            )}
+          </div>
         </div>
       ))}
 
