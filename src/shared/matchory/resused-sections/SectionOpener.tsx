@@ -33,7 +33,7 @@ export const SectionOpener = ({
     <div className="section-opener flex justify-between">
       <div className="right-divs flex items-center">
         <span className="font-inter font-[500] text-[14px] leading-[20px] mr-3">
-          {section.sectionName} <span>{count}</span>
+          {section.sectionName} <span>({count})</span>
         </span>
         <div className="tooltip-section">{tooltip(tooltipMsg)}</div>
       </div>

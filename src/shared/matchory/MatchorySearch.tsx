@@ -103,9 +103,6 @@ export const MatchorySearch = ({
     }
   }, [data, setSectionCounts]);
 
-  // console.log(data[0]);
-  // console.log(typeof selectedKeyWords);
-
   const handleBtnSelectKeyWords = (index, sectionName) => {
     console.log('what is section name ', sectionName);
     const sectionStateMap = {
@@ -139,96 +136,88 @@ export const MatchorySearch = ({
   const handleKeyDown = (e, tagname) => {
     console.log('tagname ', tagname, e.key);
     if (e.key === 'Enter') {
-      if (tagname === TAGNAME_KEYWORDS) {
-        handleAddItem(tagname, newKeyword, setNewKeyword, setSelectedKeyWords);
-      }
-      if (tagname === TAGNAME_MANUFACTURING) {
-        handleAddItem(
-          tagname,
-          newMfgsKeyWord,
-          setNewMfgsKeyWord,
-          setSelectedMfgProcesses
-        );
-      }
-      if (tagname === TAGNAME_ALTERNATIVE) {
-        handleAddItem(
-          tagname,
-          newAlternativeKeyword,
-          setNewAlternativeKeyword,
-          setSelectedAlternatives
-        );
-      }
+      const mapping = {
+        [TAGNAME_KEYWORDS]: {
+          value: newKeyword,
+          setValue: setNewKeyword,
+          setter: setSelectedKeyWords,
+        },
+        [TAGNAME_MANUFACTURING]: {
+          value: newMfgsKeyWord,
+          setValue: setNewMfgsKeyWord,
+          setter: setSelectedMfgProcesses,
+        },
+        [TAGNAME_ALTERNATIVE]: {
+          value: newAlternativeKeyword,
+          setValue: setNewAlternativeKeyword,
+          setter: setSelectedAlternatives,
+        },
+        [TAGNAME_LOCATIONS]: {
+          value: newLocation,
+          setValue: setNewLocation,
+          setter: setSelectedLocations,
+        },
+        [TAGNAME_HSCODES]: {
+          value: newHSCode,
+          setValue: setNewHSCode,
+          setter: setSelectedHSCodes,
+        },
+        [TAGNAME_BUYERS]: {
+          value: newBuyer,
+          setValue: setNewBuyer,
+          setter: setSelectedBuyers,
+        },
+      };
 
-      if (tagname === TAGNAME_LOCATIONS) {
-        handleAddItem(
-          tagname,
-          newLocation,
-          setNewLocation,
-          setSelectedLocations
-        );
-      }
-
-      if (tagname === TAGNAME_HSCODES) {
-        handleAddItem(tagname, newHSCode, setNewHSCode, setSelectedHSCodes);
-      }
-      if (tagname === TAGNAME_BUYERS) {
-        handleAddItem(tagname, newBuyer, setNewBuyer, setSelectedBuyers);
-      }
+      const { value, setValue, setter } = mapping[tagname];
+      handleAddItem(tagname, value, setValue, setter);
     }
   };
 
   const handleAddItem = (tagname, newItem) => {
     if (newItem.trim() === '') return; // Ignore empty input
 
-    if (tagname === TAGNAME_KEYWORDS) {
-      const updatedKeywords = selectedKeyWords.length
-        ? [...selectedKeyWords, { name: newItem, isSelected: true }]
-        : [{ name: newItem, isSelected: true }];
+    const mapping = {
+      [TAGNAME_KEYWORDS]: {
+        selected: selectedKeyWords,
+        setter: setSelectedKeyWords,
+        valueSetter: setNewKeyword,
+      },
+      [TAGNAME_MANUFACTURING]: {
+        selected: selectedMfgProcesses,
+        setter: setSelectedMfgProcesses,
+        valueSetter: setNewMfgsKeyWord,
+      },
+      [TAGNAME_ALTERNATIVE]: {
+        selected: selectedAlternatives,
+        setter: setSelectedAlternatives,
+        valueSetter: setNewAlternativeKeyword,
+      },
+      [TAGNAME_LOCATIONS]: {
+        selected: selectedLocations,
+        setter: setSelectedLocations,
+        valueSetter: setNewLocation,
+      },
+      [TAGNAME_HSCODES]: {
+        selected: selectedHSCodes,
+        setter: setSelectedHSCodes,
+        valueSetter: setNewHSCode,
+      },
+      [TAGNAME_BUYERS]: {
+        selected: selectedBuyers,
+        setter: setSelectedBuyers,
+        valueSetter: setNewBuyer,
+      },
+    };
 
-      setSelectedKeyWords(updatedKeywords);
-      setNewKeyword(''); // Reset the input field
-    }
+    const { selected, setter, valueSetter } = mapping[tagname];
 
-    if (tagname === TAGNAME_MANUFACTURING) {
-      const updatedMfgProcesses = selectedMfgProcesses.length
-        ? [...selectedMfgProcesses, { name: newItem, isSelected: true }]
-        : [{ name: newItem, isSelected: true }];
+    const updatedItems = selected.length
+      ? [...selected, { name: newItem, isSelected: true }]
+      : [{ name: newItem, isSelected: true }];
 
-      setSelectedMfgProcesses(updatedMfgProcesses);
-      setNewMfgsKeyWord(''); // Reset the input field setNewMfgsKeyWord
-    }
-    if (tagname === TAGNAME_ALTERNATIVE) {
-      const updatedAlternatives = selectedAlternatives.length
-        ? [...selectedAlternatives, { name: newItem, isSelected: true }]
-        : [{ name: newItem, isSelected: true }];
-
-      setSelectedAlternatives(updatedAlternatives);
-      setNewAlternativeKeyword(''); // Reset the input field
-    }
-    if (tagname === TAGNAME_LOCATIONS) {
-      const updatedLocations = selectedLocations.length
-        ? [...selectedLocations, { name: newItem, isSelected: true }]
-        : [{ name: newItem, isSelected: true }];
-
-      setSelectedLocations(updatedLocations);
-      setNewLocation(''); // Reset the input field
-    }
-    if (tagname === TAGNAME_HSCODES) {
-      const updatedHScodes = selectedHSCodes.length
-        ? [...selectedHSCodes, { name: newItem, isSelected: true }]
-        : [{ name: newItem, isSelected: true }];
-
-      setSelectedHSCodes(updatedHScodes);
-      setNewHSCode(''); // Reset the input field
-    }
-    if (tagname === TAGNAME_BUYERS) {
-      const updatedBuyers = selectedBuyers.length
-        ? [...selectedBuyers, { name: newItem, isSelected: true }]
-        : [{ name: newItem, isSelected: true }];
-
-      setSelectedBuyers(updatedBuyers);
-      setNewBuyer(''); // Reset the input field
-    }
+    setter(updatedItems);
+    valueSetter(''); // Reset the input field
   };
 
   const onClickFilterBtn = () => {
