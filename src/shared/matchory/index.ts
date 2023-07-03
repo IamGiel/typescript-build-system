@@ -1,13 +1,13 @@
 import { Matchory } from './Matchory';
 import { MatchorySearch } from './MatchorySearch';
-import { MatchoryPills } from './MatchoryPills';
+import { MatchoryResultHeader } from './MatchoryResultHeader';
 import { MatchoryMap } from './MatchoryMap';
-import WordlistSection from './resused-sections/WordlistSection';
+import { WordlistSection } from './resused-sections/WordlistSection';
 import { SectionOpener } from './resused-sections/SectionOpener';
 export {
   Matchory,
   MatchorySearch,
-  MatchoryPills,
+  MatchoryResultHeader,
   MatchoryMap,
   WordlistSection,
 };

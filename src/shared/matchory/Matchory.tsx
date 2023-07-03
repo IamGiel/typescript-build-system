@@ -1,9 +1,7 @@
 import React from 'react';
 import Logo from '../../assets/images/matchory_logo.svg';
 import filterIcon from '../../assets/images/filterIcon.svg';
-import { MatchorySearch } from './MatchorySearch';
-import { MatchoryPills } from './MatchoryPills';
-import { MatchoryMap } from './MatchoryMap';
+import { MatchoryResultHeader, MatchoryMap, MatchorySearch } from './index';
 import {
   alternativesArr,
   buyersArr,
@@ -62,6 +60,31 @@ export const Matchory = () => {
     },
   ];
 
+  const searchResultsData = {
+    totalResults: 12346,
+    searchterm: 'Asynchronous motor',
+    keywords: [
+      { name: 'Generator', isSelected: false },
+      { name: 'AC/DC', isSelected: false },
+      { name: 'Generator', isSelected: false },
+      { name: 'Threephase motor', isSelected: false },
+      { name: 'Squirrel cage motor', isSelected: false },
+      { name: 'electric motor', isSelected: false },
+      { name: 'Generator', isSelected: false },
+      { name: 'AC/DC', isSelected: false },
+      { name: 'Generator', isSelected: false },
+      { name: 'Threephase motor', isSelected: false },
+      { name: 'Squirrel cage motor', isSelected: false },
+      { name: 'electric motor', isSelected: false },
+      { name: 'Generator', isSelected: false },
+      { name: 'AC/DC', isSelected: false },
+      { name: 'Generator', isSelected: false },
+      { name: 'Threephase motor', isSelected: false },
+      { name: 'Squirrel cage motor', isSelected: false },
+      { name: 'electric motor', isSelected: false },
+    ],
+  };
+
   return (
     <div className="matchory-parent-container">
       <div className="titleHeader flex flex-row font-[700] font-[inter] text-left text-[#111827] text-[30px]">
@@ -103,7 +126,7 @@ export const Matchory = () => {
         </div>
         <div className="right-results-section">
           <div className="search-pills-seciton">
-            <MatchoryPills />
+            <MatchoryResultHeader results={searchResultsData} />
           </div>
           <div className="map-container-seciton">
             <MatchoryMap />
