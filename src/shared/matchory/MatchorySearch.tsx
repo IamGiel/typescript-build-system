@@ -71,29 +71,33 @@ export const MatchorySearch = ({
     setCount(count);
   };
 
-  useEffect(() => {
+  const setPreselectedItems = (data) => {
     if (Array.isArray(data) && data.length > 0) {
       data.forEach((item) => {
-        console.log('this is item in useeffect ', item);
         const { tagname, preselectedItems } = item;
+
+        const updatedItems = preselectedItems.map((item) => {
+          return { ...item, isSelected: true }; // Set isSelected to true for all items
+        });
+
         switch (tagname) {
           case TAGNAME_KEYWORDS:
-            setSelectedKeyWords(preselectedItems);
+            setSelectedKeyWords(updatedItems);
             break;
           case TAGNAME_MANUFACTURING:
-            setSelectedMfgProcesses(preselectedItems);
+            setSelectedMfgProcesses(updatedItems);
             break;
           case TAGNAME_ALTERNATIVE:
-            setSelectedAlternatives(preselectedItems);
+            setSelectedAlternatives(updatedItems);
             break;
           case TAGNAME_LOCATIONS:
-            setSelectedLocations(preselectedItems);
+            setSelectedLocations(updatedItems);
             break;
           case TAGNAME_HSCODES:
-            setSelectedHSCodes(preselectedItems);
+            setSelectedHSCodes(updatedItems);
             break;
           case TAGNAME_BUYERS:
-            setSelectedBuyers(preselectedItems);
+            setSelectedBuyers(updatedItems);
             break;
           // Add more cases if needed for additional tag names
           default:
@@ -101,10 +105,13 @@ export const MatchorySearch = ({
         }
       });
     }
+  };
+
+  useEffect(() => {
+    setPreselectedItems(data);
   }, [data, setSectionCounts]);
 
   const handleBtnSelectKeyWords = (index, sectionName) => {
-    console.log('what is section name ', sectionName);
     const sectionStateMap = {
       [sectionLabels.keyword]: [selectedKeyWords, setSelectedKeyWords],
       [sectionLabels.mfgprocess]: [
@@ -126,7 +133,6 @@ export const MatchorySearch = ({
     // Get the selected keyword object
     const selectedKeyword = updatedState[index];
 
-    console.log('selected key word here ', selectedKeyword);
     // Toggle the isSelected property of the selected keyword
     selectedKeyword.isSelected = !selectedKeyword.isSelected;
     // Update the state with the modified array
@@ -134,7 +140,6 @@ export const MatchorySearch = ({
   };
 
   const handleKeyDown = (e, tagname) => {
-    console.log('tagname ', tagname, e.key);
     if (e.key === 'Enter') {
       const mapping = {
         [TAGNAME_KEYWORDS]: {
@@ -238,9 +243,50 @@ export const MatchorySearch = ({
     setOpenBuyers(openAll);
   };
 
+  const resetSection = (sectionToReset) => {
+    switch (sectionToReset) {
+      case TAGNAME_KEYWORDS:
+        setSelectedKeyWords((prevItems) =>
+          prevItems.map((item) => ({ ...item, isSelected: true }))
+        );
+        break;
+      case TAGNAME_MANUFACTURING:
+        setSelectedMfgProcesses((prevItems) =>
+          prevItems.map((item) => ({ ...item, isSelected: true }))
+        );
+        break;
+      case TAGNAME_ALTERNATIVE:
+        setSelectedAlternatives((prevItems) =>
+          prevItems.map((item) => ({ ...item, isSelected: true }))
+        );
+        break;
+      case TAGNAME_LOCATIONS:
+        setSelectedLocations((prevItems) =>
+          prevItems.map((item) => ({ ...item, isSelected: true }))
+        );
+        break;
+      case TAGNAME_HSCODES:
+        setSelectedHSCodes((prevItems) =>
+          prevItems.map((item) => ({ ...item, isSelected: true }))
+        );
+        break;
+      case TAGNAME_BUYERS:
+        setSelectedBuyers((prevItems) =>
+          prevItems.map((item) => ({ ...item, isSelected: true }))
+        );
+        break;
+      // Add more cases if needed for additional tag names
+      default:
+        break;
+    }
+  };
+
   // will handle reset, cancel, search/filter buttons
-  const onButtonRequest = (evt) => {
-    console.log('evt ', evt.target.type);
+  const onClickedBtnType = (evt, action, sectionTagName) => {
+    console.log('mapping evt ', action, 'act on section: ', sectionTagName);
+    if (action === 'reset') {
+      resetSection(sectionTagName);
+    }
   };
 
   const getToggleSection = (sectionName) => {
@@ -265,7 +311,6 @@ export const MatchorySearch = ({
   };
 
   const handleSelectedCountChange = (sectionName, count) => {
-    console.log('onchange sectionName ', sectionName);
     setSectionCounts((prevCounts) => ({
       ...prevCounts,
       [sectionName]: count,
@@ -397,7 +442,7 @@ export const MatchorySearch = ({
                     newWord={sectionConfig.newWord}
                     setNewWord={sectionConfig.setNewWord}
                     onEnter={handleKeyDown}
-                    onButtonClick={onButtonRequest}
+                    onButtonClick={onClickedBtnType}
                     isSelectedCount={sectionConfig.isSelectedCount}
                     isOpen={sectionConfig.isOpen}
                     setIsOpen={(isOpen) => sectionConfig.setOpen(isOpen)}
@@ -410,13 +455,28 @@ export const MatchorySearch = ({
 
       <div className="reset-matchorysearch-section flex justify-end items-center h-[70px] gap-[12px] px-[12px]">
         <div className="Reset-holder flex place-content-evenly items-center text-[14px] text-[#5650D6] font-[500] h-[38px] w-[81px] cursor-pointer">
-          <span className="reset-label">Reset</span>
+          <button
+            className="reset-label"
+            onClick={(evt) => onClickedBtnType(evt, 'reset', 'ALL')}
+          >
+            Reset
+          </button>
         </div>
         <div className="cancel-holder flex place-content-evenly items-center text-[14px] text-[#444752] font-[500] rounded-[12px] border border-[#CBD1E2] h-[38px] w-[81px] cursor-pointer">
-          <button className="reset-label">Cancel</button>
+          <button
+            className="reset-label"
+            onClick={(evt) => onClickedBtnType(evt, 'cancel', 'ALL')}
+          >
+            Cancel
+          </button>
         </div>
         <div className="searchBtn-holder flex place-content-evenly items-center text-[14px] text-[#FFFFFF] font-[500] rounded-[12px] bg-[#5650D6] border border-[#CBD1E2] h-[38px] w-[81px] cursor-pointer">
-          <button className="reset-label">{title}</button>
+          <button
+            className="reset-label"
+            onClick={(evt) => onClickedBtnType(evt, title, 'ALL')}
+          >
+            {title}
+          </button>
         </div>
       </div>
     </div>

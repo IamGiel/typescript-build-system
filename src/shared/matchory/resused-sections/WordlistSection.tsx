@@ -30,10 +30,12 @@ export const WordlistSection = ({
     // setSelectedCount(count);
     isSelectedCount(count);
   };
+
   return (
     <>
       {isOpen && (
         <div className="keywords-list-container flex flex-col">
+          {/* <pre>{JSON.stringify(iterableItems,null,4)}</pre> */}
           <div className="sec-sub-header flex flex-row gap-[12px] mt-[12px] mb-[12px]">
             <div className="flex">
               <span className="font-inter font-[500] text-[14px] leading-[20px] text-[#656B7C]">
@@ -44,7 +46,9 @@ export const WordlistSection = ({
               <button
                 className="font-inter font-[500] text-[14px] leading-[20px] text-[#5650D6]"
                 type="reset"
-                onClick={(evt) => onButtonClick(evt)}
+                onClick={(evt) =>
+                  onButtonClick(evt, 'reset', sectionTagName, iterableItems)
+                }
               >
                 Reset
               </button>
