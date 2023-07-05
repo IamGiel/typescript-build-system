@@ -31,3 +31,11 @@ export const fetchDataWithLogging = async (
     throw error;
   }
 };
+
+export const simulateAPICall = (data) => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(data);
+    }, 2000); // Simulating a 2-second delay
+  });
+};

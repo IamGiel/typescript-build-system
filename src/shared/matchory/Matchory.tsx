@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Logo from '../../assets/images/matchory_logo.svg';
 import filterIcon from '../../assets/images/filterIcon.svg';
 import { MatchoryResultHeader, MatchoryMap, MatchorySearch } from './index';
@@ -10,8 +10,11 @@ import {
   locationsArr,
   mfgsArr,
 } from './sampledata';
+import { simulateAPICall } from '../../service/fetch';
 
 export const Matchory = () => {
+  const [selectedPillWords, setSelectedPillWords] = useState(searchResultsData);
+
   const searchDatafromapi = [
     {
       sectionName: 'Keywords',
@@ -66,27 +69,75 @@ export const Matchory = () => {
     keywords: [
       { name: 'Generator', isSelected: false },
       { name: 'AC/DC', isSelected: false },
-      { name: 'Generator', isSelected: false },
-      { name: 'Threephase motor', isSelected: false },
-      { name: 'Squirrel cage motor', isSelected: false },
-      { name: 'electric motor', isSelected: false },
-      { name: 'Generator', isSelected: false },
-      { name: 'AC/DC', isSelected: false },
-      { name: 'Generator', isSelected: false },
-      { name: 'Threephase motor', isSelected: false },
-      { name: 'Squirrel cage motor', isSelected: false },
-      { name: 'electric motor', isSelected: false },
-      { name: 'Generator', isSelected: false },
-      { name: 'AC/DC', isSelected: false },
-      { name: 'Generator', isSelected: false },
-      { name: 'Threephase motor', isSelected: false },
-      { name: 'Squirrel cage motor', isSelected: false },
-      { name: 'electric motor', isSelected: false },
+      { name: 'Generator2', isSelected: false },
+      {
+        name: 'Threephase motor asdasdasdassssd sdsda sd 1',
+        isSelected: false,
+      },
+      { name: 'Squirrel cage motor 1', isSelected: false },
+      { name: 'electric motor 1', isSelected: false },
+      { name: 'Generator3', isSelected: false },
+      { name: 'AB/DC', isSelected: false },
+      { name: 'Generator4', isSelected: false },
+      { name: 'Threephase motor 2', isSelected: false },
+      { name: 'Squirrel cage motor 2', isSelected: false },
+      { name: 'electric motor 2', isSelected: false },
+      { name: 'Generator5', isSelected: false },
+      { name: 'AZ/DC', isSelected: false },
+      { name: 'Generator6', isSelected: false },
+      { name: 'Threephase motor 3', isSelected: false },
+      { name: 'Squirrel cage motor 3', isSelected: false },
+      { name: 'electric motor 3', isSelected: false },
     ],
   };
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await simulateAPICall(searchResultsData);
+        console.log(response);
+        setSelectedPillWords(response);
+      } catch (error) {
+        // Handle any error that may occur during the API call
+        console.log(error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    console.log(selectedPillWords);
+  }, [selectedPillWords]);
+
+  const onclickPillHandler = (itemName) => {
+    const updatedKeywords = selectedPillWords.keywords.map((keyword) => {
+      if (keyword.name === itemName) {
+        return { ...keyword, isSelected: !keyword.isSelected };
+      }
+      return keyword;
+    });
+
+    setSelectedPillWords((prevState) => ({
+      ...prevState,
+      keywords: updatedKeywords,
+    }));
+  };
+
+  const onClickClearAll = () => {
+    const updatedKeywords = selectedPillWords.keywords.map((keyword) => ({
+      ...keyword,
+      isSelected: false,
+    }));
+
+    setSelectedPillWords((prevState) => ({
+      ...prevState,
+      keywords: updatedKeywords,
+    }));
+  };
+
   return (
-    <div className="matchory-parent-container">
+    <div className="matchory-parent-container bg-[#F8F8F8] p-[12px]">
       <div className="titleHeader flex flex-row font-[700] font-[inter] text-left text-[#111827] text-[30px]">
         Supplier Search
       </div>
@@ -126,7 +177,11 @@ export const Matchory = () => {
         </div>
         <div className="right-results-section">
           <div className="search-pills-seciton">
-            <MatchoryResultHeader results={searchResultsData} />
+            <MatchoryResultHeader
+              results={selectedPillWords}
+              onClickPill={onclickPillHandler}
+              clearAllClicked={onClickClearAll}
+            />
           </div>
           <div className="map-container-seciton">
             <MatchoryMap />

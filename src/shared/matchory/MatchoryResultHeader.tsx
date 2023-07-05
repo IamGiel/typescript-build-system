@@ -1,45 +1,71 @@
 import React, { useEffect, useState } from 'react';
+import { XIcon, xicon } from '../../assets/images/xicon';
+import { MatchoryResultHeaderLoader } from './MatchoryResultHeaderLoader';
+// import xicon from '../../assets/images/x-icon.svg';
 
-export const MatchoryResultHeader = ({ results }) => {
-  const [data, setData] = useState(results | {});
+export const MatchoryResultHeader = ({
+  results,
+  onClickPill,
+  clearAllClicked,
+}) => {
+  const [data, setData] = useState(results);
+
   useEffect(() => {
     setData(results);
-    console.log(data);
-  }, []);
+  }, [results]);
+
+  if (!data || !data.keywords) {
+    return <MatchoryResultHeaderLoader />; // Return null or a loading indicator if data is not available yet
+  }
+  const selectedKeywords = data.keywords.filter((item) => item.isSelected);
+
   return (
-    <div className="MatchoryResultHeader-section-container h-[161px] w-[861px] ">
-      <div className="searches-result-section flex flex-row justify-between">
-        <div className="total-searches">
-          <span>2358 Search Results, for Asynchronous motor</span>
+    <div className="MatchoryResultHeader-section-container min-h-[161px] w-[861px] p-[12px] bg-[#ffffff]">
+      <div className="searches-result-section flex flex-row justify-between font-inter font-[700] text-[14px] text-[#1F2937] mb-[12px]">
+        <div className="total-searches flex gap-[12px]">
+          <span>
+            {data.totalResults} Search Results, for Asynchronous motor
+          </span>
         </div>
-        <div className="clear-all">
-          <span>Clear all</span>
-          <span>X</span>
-        </div>
+        {selectedKeywords.length > 0 && (
+          <div className="clear-all flex gap-[12px] text-[#4F46E5] text-[14px] font-[500]">
+            <div className="clear-all">
+              <span>Clear all</span>
+            </div>
+            <div className="x-icon flex">
+              <button className="filter-btn" onClick={clearAllClicked}>
+                <XIcon height={'20px'} width={'20px'} fill={'#8E8AE4'} />
+              </button>
+            </div>
+          </div>
+        )}
       </div>
-      <div className="keywords-result-section flex flex-wrap">
-        {data &&
-          data.keywords &&
-          data.keywords.map((item, idx) => {
-            return (
-              <div
-                className="result-header-keywords-lists flex flex-wrap gap-[12px]"
-                key={idx}
+      <div className="keywords-result-section flex flex-wrap gap-[12px] max-h-[111px] overflow-y-auto">
+        {data.keywords.map((item, idx) => (
+          <div
+            className="result-header-keywords-lists flex flex-wrap gap-[12px]"
+            key={idx}
+          >
+            <div className="result-header-button-container flex gap-[12px] flex-shrink-0">
+              <button
+                className={`rounded-[12px] px-[12px] py-[2px] flex p-[5px] ${
+                  item.isSelected ? 'bg-[#DDDCF7]' : 'bg-[#EEF0F5]'
+                }`}
+                title={item.name}
+                onClick={() => onClickPill(item.name, 'RESULT-SECTION')}
               >
-                <div className="result-header-button-container flex gap-[12px] flex-shrink-0">
-                  <button
-                    className={`max-w-[120px] overflow-hidden overflow-ellipsis whitespace-nowrap text-[#3730A3] text-[14px] font-[500] font-inter rounded-[12px] px-[12px] py-[2px] ${
-                      item.isSelected ? 'bg-[#E0E7FF]' : 'bg-[#F3F4F6]'
-                    }`}
-                    title={item.name}
-                    onClick={() => clickHandler(idx, sectionLabelName)}
-                  >
-                    {item.name}
-                  </button>
-                </div>
-              </div>
-            );
-          })}
+                <span className="flex max-w-[144px] overflow-hidden overflow-ellipsis whitespace-nowrap text-[#3730A3] text-[14px] font-[500] font-inter">
+                  {item.name}
+                </span>
+                {item.isSelected && (
+                  <span className="xicon-span flex items-center my-[2px] mx-[5px]">
+                    <XIcon height={'16'} width={'16'} fill={'#8E8AE4'} />
+                  </span>
+                )}
+              </button>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );

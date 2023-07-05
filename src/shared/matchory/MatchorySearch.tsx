@@ -5,6 +5,8 @@ import React, { CSSProperties, useEffect, useState } from 'react';
 import { sectionLabels } from './sampledata';
 import { SectionOpener } from './resused-sections/SectionOpener';
 import { WordlistSection } from './resused-sections/WordlistSection';
+import { MatchorySearchLoader } from './MatchorySearchLoader';
+import { simulateAPICall } from '../../service/fetch';
 
 type Addword = {
   name: string;
@@ -66,14 +68,17 @@ export const MatchorySearch = ({
   const TAGNAME_BUYERS = 'TAGNAME_BUYERS';
 
   const [sectionCounts, setSectionCounts] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
 
   const handleSelectedCount = (count) => {
     setCount(count);
   };
 
-  const setPreselectedItems = (data) => {
-    if (Array.isArray(data) && data.length > 0) {
-      data.forEach((item) => {
+  const setPreselectedItems = async (data) => {
+    const response = await simulateAPICall(data);
+
+    if (Array.isArray(response) && response.length > 0) {
+      response.forEach((item) => {
         const { tagname, preselectedItems } = item;
 
         const updatedItems = preselectedItems.map((item) => {
@@ -105,6 +110,8 @@ export const MatchorySearch = ({
         }
       });
     }
+
+    response && setIsLoading(false);
   };
 
   useEffect(() => {
@@ -139,7 +146,7 @@ export const MatchorySearch = ({
     setSelectedState(updatedState);
   };
 
-  const handleKeyDown = (e, tagname) => {
+  const handleEnteredKeyword = (e, tagname) => {
     if (e.key === 'Enter') {
       const mapping = {
         [TAGNAME_KEYWORDS]: {
@@ -395,8 +402,12 @@ export const MatchorySearch = ({
     },
   };
 
+  if (isLoading) {
+    return <MatchorySearchLoader />;
+  }
+
   return (
-    <div className="matchory-search-container block w-[312px] bg-[#F8F8F8]">
+    <div className="matchory-search-container block w-[312px] bg-[#FFFFFF]">
       <div className="title-section flex justify-between p-[12px] h-[56px] text-[16px] font-[700] border-b-[1px] border-[#CBD1E2]">
         <div className="titlename flex leading-[24px]">{title}</div>
         {icon && (
@@ -441,7 +452,7 @@ export const MatchorySearch = ({
                     clickHandler={handleBtnSelectKeyWords}
                     newWord={sectionConfig.newWord}
                     setNewWord={sectionConfig.setNewWord}
-                    onEnter={handleKeyDown}
+                    onEnter={handleEnteredKeyword}
                     onButtonClick={onClickedBtnType}
                     isSelectedCount={sectionConfig.isSelectedCount}
                     isOpen={sectionConfig.isOpen}
