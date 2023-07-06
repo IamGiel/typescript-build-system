@@ -53,13 +53,15 @@ export const MatchoryResultHeader = ({
           >
             <div className="result-header-button-container flex gap-[12px] flex-shrink-0">
               <button
-                className={`rounded-[12px] px-[12px] py-[2px] flex p-[5px] ${
-                  item.isSelected ? 'bg-[#DDDCF7]' : 'bg-[#EEF0F5]'
+                className={`btn-pill rounded-[12px] px-[12px] py-[2px] flex p-[5px] ${
+                  item.isSelected
+                    ? 'bg-[#DDDCF7] w-[100px]'
+                    : 'bg-[#EEF0F5] w-[100px]'
                 }`}
                 title={item.name}
                 onClick={() => onClickPill(item.name, 'RESULT-SECTION')}
               >
-                <span className="flex max-w-[144px] overflow-hidden overflow-ellipsis whitespace-nowrap text-[#3730A3] text-[14px] font-[500] font-inter">
+                <span className="flex max-w-[100px] overflow-hidden overflow-ellipsis whitespace-nowrap text-[#3730A3] text-[14px] font-[500] font-inter">
                   {item.name}
                 </span>
                 {item.isSelected && (
