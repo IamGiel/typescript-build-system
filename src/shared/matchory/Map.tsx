@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import mapboxgl from 'mapbox-gl';
 
-export const Map = () => {
+export const Map = ({ canvasHeight, canvasWidth }) => {
   useEffect(() => {
     mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 
@@ -29,6 +29,12 @@ export const Map = () => {
       }
     );
   }, []);
+  useEffect(() => {
+    const canvasElement = document.querySelector('.mapboxgl-canvas');
+    if (canvasElement) {
+      canvasElement.style.width = canvasWidth; // Adjust the width as needed
+    }
+  }, []);
 
-  return <div id="map" style={{ width: '100%', height: '496px' }}></div>;
+  return <div id="map" style={{ width: '100%', height: canvasHeight }}></div>;
 };

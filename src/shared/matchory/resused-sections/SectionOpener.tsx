@@ -7,7 +7,6 @@ export const SectionOpener = ({
   section,
   count,
   getToggleSection,
-  isOpen,
   tooltipMsg,
 }) => {
   // console.log(section)
@@ -40,7 +39,7 @@ export const SectionOpener = ({
       <div className="chevron-container">
         <img
           className="infocircle pt-[4px] cursor-pointer"
-          src={isOpen ? chevronUp : chevronDown}
+          src={section.isOpen ? chevronUp : chevronDown}
           alt="open"
           onClick={() => {
             section.isOpen = !section.isOpen;

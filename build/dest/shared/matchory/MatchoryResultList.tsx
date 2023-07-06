@@ -14,7 +14,7 @@ export const MatchoryResultList = ({ data, onBookmarkSupplier }) => {
   }
   return (
     <div className="matchory-map-container-section flex flex-row h-[585px] w-[862px] my-[24px] gap-[12px]">
-      <div className="supplier-list-section flex-auto w-[746px] border-gray-300 overflow-auto">
+      <div className="supplier-list-section flex-auto w-[746px] border-gray-200 overflow-auto">
         {/* <pre>{JSON.stringify(data.suppliers)}</pre> */}
         {data.suppliers.map((item, idx) => {
           const isLastItem = idx === data.suppliers.length - 1;
@@ -24,7 +24,7 @@ export const MatchoryResultList = ({ data, onBookmarkSupplier }) => {
               key={idx}
               className={`supplier-list-item-container flex gap-[12px] p-[12px] h-[88px] ${
                 isLastItem ? '' : 'border-b'
-              } border-gray-300 ${isFirstItem ? '' : 'border-t'}`}
+              } border-gray-200 ${isFirstItem ? '' : 'border-t'}`}
             >
               <div className="box-placeholder flex justify-center items-center">
                 <div
@@ -87,10 +87,14 @@ export const MatchoryResultList = ({ data, onBookmarkSupplier }) => {
             </div>
           );
         })}
+
+        <div className='show-map-section'><span>SHOW MAP</span></div>
       </div>
 
-      <div className="map-section flex-auto w-[490px]">
-        <Map />
+      <div className="map-section flex-auto w-[490px] relative">
+        <div className='map-container absolute left-[50%] translate-x-[50%]'>
+          <Map/>
+        </div>
       </div>
     </div>
   );

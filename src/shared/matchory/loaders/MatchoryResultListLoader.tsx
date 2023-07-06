@@ -3,7 +3,7 @@ import React from 'react';
 export const MatchoryResultListLoader = () => {
   return (
     <div className="matchory-map-container-section flex flex-row h-[585px] w-[862px] my-[24px] gap-[12px]">
-      <div className="supplier-list-section flex-auto w-[746px] border-gray-300 overflow-auto">
+      <div className="supplier-list-section flex-auto w-[746px] border-gray-200 overflow-auto">
         {[...Array(5)].map((_, idx) => {
           const isLastItem = idx === 4;
           return (
@@ -11,7 +11,7 @@ export const MatchoryResultListLoader = () => {
               key={idx}
               className={`supplier-list-item-container flex gap-[12px] p-[12px] h-[88px] border-t ${
                 isLastItem ? 'border-b' : ''
-              } border-gray-300`}
+              } border-gray-200`}
             >
               <div className="box-placeholder flex justify-center items-center">
                 <div

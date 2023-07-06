@@ -11,7 +11,7 @@ export const MatchoryResultListLoader = () => {
               key={idx}
               className={`supplier-list-item-container flex gap-[12px] p-[12px] h-[88px] border-t ${
                 isLastItem ? 'border-b' : ''
-              } border-gray-300`}
+              } border-gray-200`}
             >
               <div className="box-placeholder flex justify-center items-center">
                 <div

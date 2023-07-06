@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Logo from '../../assets/images/matchory_logo.svg';
 import filterIcon from '../../assets/images/filterIcon.svg';
 import {
+  MatchoryFilters,
   MatchoryResultHeader,
   MatchoryResultList,
   MatchorySearch,
@@ -87,32 +88,39 @@ export const Matchory = () => {
       <div className="titleHeader flex flex-row font-[700] font-[inter] text-left text-[#111827] text-[30px]">
         Supplier Search
       </div>
-      <div className="poweredby-matchory">
-        <div className="matchory-logo flex flex-row gap-[12px]">
-          <div className="poweredby leading-[16px]">
-            <span className="font-[400] font-[inter] text-[12px]">
-              powerd by
-            </span>
+      <div className="search-container bg-[#ffffff] p-[12px]">
+        <div className="search-subcontainer flex flex-col gap-[12px] border-t border-b border-blue-500 border-gray-200 px-[12px] pt-[12px] pb-[6px]">
+          <div className="poweredby-matchory">
+            <div className="matchory-logo flex flex-row gap-[12px]">
+              <div className="poweredby leading-[16px]">
+                <span className="font-[400] font-[inter] text-[12px]">
+                  powerd by
+                </span>
+              </div>
+              <div className="logo-div">
+                <img src={Logo} alt="matchory test" />
+              </div>
+            </div>
           </div>
-          <div className="logo-div">
-            <img src={Logo} alt="matchory test" />
+          <div className="matchory-search-container">
+            <MatchorySearch />
           </div>
         </div>
       </div>
       <div className="matchory-body flex flex-row  mt-[12px] gap-[48px]">
         <div className="left-search-filter-section flex flex-col gap-[12px]">
           {/* search */}
-          <div className="search-section-container">
-            <MatchorySearch
+          {/* <div className="search-section-container">
+            <MatchorySearchFilters
               title="Search"
               purpose="Search"
               data={searchDatafromapi}
               isOpen={false}
             />
-          </div>
+          </div> */}
           {/* filter */}
           <div className="filter-section-container">
-            <MatchorySearch
+            <MatchoryFilters
               title="Filter"
               icon={filterIcon}
               purpose="Search"

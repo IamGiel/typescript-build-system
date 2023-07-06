@@ -5,7 +5,7 @@ import React, { CSSProperties, useEffect, useState } from 'react';
 import { sectionLabels } from './sampledata';
 import { SectionOpener } from './resused-sections/SectionOpener';
 import { WordlistSection } from './resused-sections/WordlistSection';
-import { MatchorySearchLoader } from './loaders/MatchorySearchLoader';
+import { MatchoryFiltersLoader } from './loaders/MatchoryFiltersLoader';
 import { simulateAPICall } from '../../service/fetch';
 
 type Addword = {
@@ -28,7 +28,7 @@ type MatchorySearch = {
   icon?: React.ReactElement;
 };
 
-export const MatchorySearch = ({
+export const MatchoryFilters = ({
   title,
   icon,
   data,
@@ -59,6 +59,8 @@ export const MatchorySearch = ({
   const [newLocation, setNewLocation] = useState('');
   const [newHSCode, setNewHSCode] = useState('');
   const [newBuyer, setNewBuyer] = useState('');
+
+  const [isIconRotated, setIsIconRotated] = useState(false);
 
   const TAGNAME_KEYWORDS = 'TAGNAME_KEYWORDS';
   const TAGNAME_MANUFACTURING = 'TAGNAME_MANUFACTURING';
@@ -233,6 +235,7 @@ export const MatchorySearch = ({
   };
 
   const onClickFilterBtn = () => {
+    setIsIconRotated(!isIconRotated);
     const openAll = !(
       openKeyWords &&
       openMfgs &&
@@ -403,7 +406,7 @@ export const MatchorySearch = ({
   };
 
   if (isLoading) {
-    return <MatchorySearchLoader />;
+    return <MatchoryFiltersLoader />;
   }
 
   return (
@@ -413,7 +416,11 @@ export const MatchorySearch = ({
         {icon && (
           <div className="icon-prop-isAvaialble flex">
             <button className="filter-btn" onClick={() => onClickFilterBtn()}>
-              <img src={icon} alt="filtericon" />
+              <img
+                className={isIconRotated ? 'rotate-180' : ''}
+                src={icon}
+                alt="filtericon"
+              />
             </button>
           </div>
         )}

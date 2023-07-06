@@ -1,13 +1,23 @@
 import React from 'react';
 
-export const MatchorySearchLoader = () => {
+export const MatchoryFiltersLoader = () => {
   return (
     <div className="matchory-search-container block w-[312px] bg-[#F8F8F8]">
       <div className="title-section flex justify-between p-[12px] h-[56px] text-[16px] font-[700] border-b-[1px] border-[#CBD1E2]">
-        <div className="titlename flex leading-[24px] "></div>
+        <div className="titlename flex leading-[24px] ">
+          <div
+            className="loader-square animate-pulse"
+            style={{
+              width: '80px',
+              height: '20px',
+              backgroundColor: '#EEF0F5',
+              borderRadius: '3px',
+            }}
+          ></div>
+        </div>
       </div>
 
-      {[...Array(3)].map((section, id) => (
+      {[...Array(8)].map((section, id) => (
         <div
           className="keyword-section items-center gap-[12px] p-[12px] border-b-[1px] border-[#CBD1E2]"
           key={id}
@@ -19,7 +29,7 @@ export const MatchorySearchLoader = () => {
                 width: '150px',
                 height: '20px',
                 backgroundColor: '#EEF0F5',
-                borderRadius: '12px',
+                borderRadius: '2px',
               }}
             ></div>
           </div>

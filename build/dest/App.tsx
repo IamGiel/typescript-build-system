@@ -11,7 +11,7 @@ export const App = () => {
       <div className="welcome-home-container m-[12px] text-[24px] font-inter font-[700]">
         <span>My Components!</span>
       </div>
-      <div className="list-menu-container flex gap-[12px] w-full font-inter font-[500] text-[19px] p-[12px] border border-[#08000]">
+      <div className="list-menu-container flex gap-[12px] w-full font-inter font-[500] text-[19px] p-[12px] border border-gray-200">
         {menulist.map((item, idx) => (
           <Link
             to={item.route}
