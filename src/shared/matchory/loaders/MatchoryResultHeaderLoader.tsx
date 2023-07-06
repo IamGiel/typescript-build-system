@@ -1,5 +1,5 @@
 import React from 'react';
-import { XIcon } from '../../assets/images/xicon';
+import { XIcon } from '../../../assets/images/xicon';
 
 export const MatchoryResultHeaderLoader = () => {
   return (
@@ -39,10 +39,10 @@ export const MatchoryResultHeaderLoader = () => {
         </div>
       </div>
       <div className="keywords-result-section flex flex-wrap gap-[12px]">
-        {[...Array(15)].map((item) => (
+        {[...Array(15)].map((item, idx) => (
           <div
             className="result-header-keywords-lists flex flex-wrap gap-[12px]"
-            key={item}
+            key={idx}
           >
             <div className="result-header-button-container flex gap-[12px] flex-shrink-0">
               <button

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { XIcon, xicon } from '../../assets/images/xicon';
-import { MatchoryResultHeaderLoader } from './MatchoryResultHeaderLoader';
+import { MatchoryResultHeaderLoader } from './loaders/MatchoryResultHeaderLoader';
+import { simulateAPICall } from '../../service/fetch';
 // import xicon from '../../assets/images/x-icon.svg';
 
 export const MatchoryResultHeader = ({
@@ -8,10 +9,14 @@ export const MatchoryResultHeader = ({
   onClickPill,
   clearAllClicked,
 }) => {
-  const [data, setData] = useState(results);
+  const [data, setData] = useState(null);
+
+  const fetch = () => {
+    setData(results);
+  };
 
   useEffect(() => {
-    setData(results);
+    fetch();
   }, [results]);
 
   if (!data || !data.keywords) {
@@ -20,7 +25,7 @@ export const MatchoryResultHeader = ({
   const selectedKeywords = data.keywords.filter((item) => item.isSelected);
 
   return (
-    <div className="MatchoryResultHeader-section-container min-h-[161px] w-[861px] p-[12px] bg-[#ffffff]">
+    <div className="MatchoryResultHeader-section-container min-h-[161px] w-[861px] p-[12px] bg-[#ffffff] mb-[12px]">
       <div className="searches-result-section flex flex-row justify-between font-inter font-[700] text-[14px] text-[#1F2937] mb-[12px]">
         <div className="total-searches flex gap-[12px]">
           <span>

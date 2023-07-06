@@ -5,7 +5,7 @@ import React, { CSSProperties, useEffect, useState } from 'react';
 import { sectionLabels } from './sampledata';
 import { SectionOpener } from './resused-sections/SectionOpener';
 import { WordlistSection } from './resused-sections/WordlistSection';
-import { MatchorySearchLoader } from './MatchorySearchLoader';
+import { MatchorySearchLoader } from './loaders/MatchorySearchLoader';
 import { simulateAPICall } from '../../service/fetch';
 
 type Addword = {
@@ -75,7 +75,7 @@ export const MatchorySearch = ({
   };
 
   const setPreselectedItems = async (data) => {
-    const response = await simulateAPICall(data);
+    const response = await simulateAPICall(data, 2000);
 
     if (Array.isArray(response) && response.length > 0) {
       response.forEach((item) => {

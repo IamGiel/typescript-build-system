@@ -32,10 +32,10 @@ export const fetchDataWithLogging = async (
   }
 };
 
-export const simulateAPICall = (data) => {
+export const simulateAPICall = (data, delay) => {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve(data);
-    }, 2000); // Simulating a 2-second delay
+    }, delay); // Simulating a 2-second delay
   });
 };

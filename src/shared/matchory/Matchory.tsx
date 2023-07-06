@@ -1,102 +1,33 @@
 import React, { useEffect, useState } from 'react';
 import Logo from '../../assets/images/matchory_logo.svg';
 import filterIcon from '../../assets/images/filterIcon.svg';
-import { MatchoryResultHeader, MatchoryMap, MatchorySearch } from './index';
+import {
+  MatchoryResultHeader,
+  MatchoryResultList,
+  MatchorySearch,
+} from './index';
 import {
   alternativesArr,
   buyersArr,
+  filterDatafromapi,
   hscodesArr,
   keywordsArr,
   locationsArr,
   mfgsArr,
+  searchDatafromapi,
+  searchResultsData,
 } from './sampledata';
 import { simulateAPICall } from '../../service/fetch';
 
 export const Matchory = () => {
-  const [selectedPillWords, setSelectedPillWords] = useState(searchResultsData);
-
-  const searchDatafromapi = [
-    {
-      sectionName: 'Keywords',
-      suggested: 'Suggested Keywords',
-      preselectedItems: keywordsArr,
-      isOpen: false,
-      tagname: `TagName_Keywords`.trim().toUpperCase(),
-    },
-    {
-      sectionName: 'Manufacturing Processes',
-      suggested: 'Suggested Mfg Processes',
-      preselectedItems: mfgsArr,
-      isOpen: false,
-      tagname: `TagName_Manufacturing`.trim().toUpperCase(),
-    },
-    {
-      sectionName: 'Alternative keywords',
-      suggested: 'Suggested Mfg Processes',
-      preselectedItems: alternativesArr,
-      isOpen: false,
-      tagname: `TagName_Alternative`.trim().toUpperCase(),
-    },
-  ];
-
-  const filterDatafromapi = [
-    {
-      sectionName: 'Locations',
-      suggested: 'Suggested locations',
-      preselectedItems: locationsArr,
-      isOpen: false,
-      tagname: `TagName_Locations`.trim().toUpperCase(),
-    },
-    {
-      sectionName: 'HS-Codes',
-      suggested: 'Suggested HS-codes',
-      preselectedItems: hscodesArr,
-      isOpen: false,
-      tagname: `TagName_HSCODES`.trim().toUpperCase(),
-    },
-    {
-      sectionName: 'Buyers',
-      suggested: 'Suggested buyers',
-      preselectedItems: buyersArr,
-      isOpen: false,
-      tagname: `TagName_Buyers`.trim().toUpperCase(),
-    },
-  ];
-
-  const searchResultsData = {
-    totalResults: 12346,
-    searchterm: 'Asynchronous motor',
-    keywords: [
-      { name: 'Generator', isSelected: false },
-      { name: 'AC/DC', isSelected: false },
-      { name: 'Generator2', isSelected: false },
-      {
-        name: 'Threephase motor asdasdasdassssd sdsda sd 1',
-        isSelected: false,
-      },
-      { name: 'Squirrel cage motor 1', isSelected: false },
-      { name: 'electric motor 1', isSelected: false },
-      { name: 'Generator3', isSelected: false },
-      { name: 'AB/DC', isSelected: false },
-      { name: 'Generator4', isSelected: false },
-      { name: 'Threephase motor 2', isSelected: false },
-      { name: 'Squirrel cage motor 2', isSelected: false },
-      { name: 'electric motor 2', isSelected: false },
-      { name: 'Generator5', isSelected: false },
-      { name: 'AZ/DC', isSelected: false },
-      { name: 'Generator6', isSelected: false },
-      { name: 'Threephase motor 3', isSelected: false },
-      { name: 'Squirrel cage motor 3', isSelected: false },
-      { name: 'electric motor 3', isSelected: false },
-    ],
-  };
+  const [resultsData, setResultsData] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await simulateAPICall(searchResultsData);
-        console.log(response);
-        setSelectedPillWords(response);
+        const response = await simulateAPICall(searchResultsData, 3000);
+        console.log('response ', response);
+        setResultsData(response);
       } catch (error) {
         // Handle any error that may occur during the API call
         console.log(error);
@@ -107,32 +38,47 @@ export const Matchory = () => {
   }, []);
 
   useEffect(() => {
-    console.log(selectedPillWords);
-  }, [selectedPillWords]);
+    console.log(resultsData);
+  }, [resultsData]);
 
   const onclickPillHandler = (itemName) => {
-    const updatedKeywords = selectedPillWords.keywords.map((keyword) => {
+    const updatedKeywords = resultsData.keywords.map((keyword) => {
       if (keyword.name === itemName) {
         return { ...keyword, isSelected: !keyword.isSelected };
       }
       return keyword;
     });
 
-    setSelectedPillWords((prevState) => ({
+    setResultsData((prevState) => ({
       ...prevState,
       keywords: updatedKeywords,
     }));
   };
 
   const onClickClearAll = () => {
-    const updatedKeywords = selectedPillWords.keywords.map((keyword) => ({
+    const updatedKeywords = resultsData.keywords.map((keyword) => ({
       ...keyword,
       isSelected: false,
     }));
 
-    setSelectedPillWords((prevState) => ({
+    setResultsData((prevState) => ({
       ...prevState,
       keywords: updatedKeywords,
+    }));
+  };
+
+  const handleBookmarkSupplier = (supplierToMark) => {
+    console.log('supplier to bookmark ', supplierToMark);
+    const updatedSuppliers = resultsData.suppliers.map((supplier) => {
+      if (supplier.name === supplierToMark.name) {
+        return { ...supplier, isSelected: !supplier.isSelected };
+      }
+      return supplier; // Add a return statement for the other cases
+    });
+
+    setResultsData((prevState) => ({
+      ...prevState,
+      suppliers: updatedSuppliers,
     }));
   };
 
@@ -178,13 +124,16 @@ export const Matchory = () => {
         <div className="right-results-section">
           <div className="search-pills-seciton">
             <MatchoryResultHeader
-              results={selectedPillWords}
+              results={resultsData}
               onClickPill={onclickPillHandler}
               clearAllClicked={onClickClearAll}
             />
           </div>
           <div className="map-container-seciton">
-            <MatchoryMap />
+            <MatchoryResultList
+              data={resultsData}
+              onBookmarkSupplier={handleBookmarkSupplier}
+            />
           </div>
         </div>
       </div>
