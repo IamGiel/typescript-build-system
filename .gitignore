@@ -13,7 +13,7 @@ yarn-error.log*
 .env.local
 
 # Ignore built output
-build/
+# build/
 dist/
 
 # Ignore IDE and editor files
