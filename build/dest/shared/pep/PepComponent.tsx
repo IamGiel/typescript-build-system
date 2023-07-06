@@ -1,11 +1,12 @@
 import React, { CSSProperties, useEffect, useState } from 'react';
 import { PepComponentLoader } from './PepComponentLoader';
 import { IPEProfile, LiveTable } from '../live-table';
+import { fetchDataFromDummyJsonUsers } from '../../service/apis';
 // import dialogService from 'app/shared/services/dialogService';
 // import { GeneralModal } from 'app/shared/modal/GeneralModal';
 
 interface PepComponentProps {
-  stateToRender?: string | null;
+  stateToRender?: 'Default State' | 'Zero State' | 'Loading State';
 }
 
 export const PepComponent: React.FC<PepComponentProps> = ({
@@ -14,17 +15,10 @@ export const PepComponent: React.FC<PepComponentProps> = ({
   const [data, setData] = useState<IPEProfile[]>([]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch('https://dummyjson.com/users');
-        const jsonData = await response.json();
-        setData(jsonData.users);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-
-    fetchData();
+    fetchDataFromDummyJsonUsers().then((res) => {
+      console.log('res here in pep ', res);
+      setData(res['users']);
+    });
   }, []);
 
   const pepContainer: CSSProperties = {
@@ -97,14 +91,14 @@ export const PepComponent: React.FC<PepComponentProps> = ({
 
   return (
     <div className="pep-container" style={pepContainer}>
-      {stateToRender === 'Default State' && (
+      {stateToRender === 'Default State' && data && (
         <>
           <div className="header-title" style={pepHeaderContainer}>
             <h1 style={pepHeader}>PEP Profile</h1>
           </div>
           <div
             className="component-to-render"
-            style={{ height: '353px', overflow: 'hidden' }}
+            style={{ height: '381px', overflow: 'hidden' }}
           >
             <LiveTable
               columnHeader={columnHeader}

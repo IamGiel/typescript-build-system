@@ -1,26 +1,29 @@
-import './styles.scss';
-import IMAGE_TWO from './assets/images/some_image2.jpeg';
-import IMAGE_STUDY from './assets/images/study.svg';
 import React from 'react';
-import { Counter } from './Counter';
-import { PepComponent } from './shared';
+import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom';
 
 export const App = () => {
-  const myName = 'GEL';
+  const menulist = [
+    { title: 'Pep', isSelected: false, route: '/pep' },
+    { title: 'Matchory', isSelected: false, route: '/matchory' },
+  ];
   return (
-    <>
-      <h1 className="text-3xl text-red-100 font-bold underline">
-        Hello world!
-      </h1>
-      <div className="app">App Here -{myName}</div>
-      <img src={IMAGE_TWO} alt="PNG" />
-      <img src={IMAGE_STUDY} alt="STUDY" />
-      <p>ENV NAME: {process.env.name}</p>
-      <p>ENV MODE: {process.env.NODE_ENV}</p>
-      <div className="count-container">
-        <Counter></Counter>
+    <div className="app flex flex-col w-[100%]">
+      <div className="welcome-home-container m-[12px] text-[24px] font-inter font-[700]">
+        <span>My Components!</span>
       </div>
-      <PepComponent />
-    </>
+      <div className="list-menu-container flex gap-[12px] w-full font-inter font-[500] text-[19px] p-[12px] border border-[#08000]">
+        {menulist.map((item, idx) => (
+          <Link
+            to={item.route}
+            key={idx}
+            className="menu-container cursor-pointer"
+          >
+            <span className="menu-item flex justify-center min-w-[87px] text-center border border-green-500 rounded py-[12px] px-[6px]">
+              {item.title}
+            </span>
+          </Link>
+        ))}
+      </div>
+    </div>
   );
 };

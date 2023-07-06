@@ -9,20 +9,20 @@ export type IPEProfile = {
   domain: string;
   company: any;
   email: string;
-}
+};
 
 export type ITableProps = {
   data: IPEProfile[];
   columnHeader: string[];
   onClickItem: (pedid) => void;
-}
+};
 
 export const LiveTable: React.FC<ITableProps> = ({
   data,
   columnHeader,
   onClickItem,
 }) => {
-  const [isHovered, setIsHovered] = useState(null);
+  // const [isHovered, setIsHovered] = useState(null);
 
   const tableColumnFonts: CSSProperties = {
     display: 'flex',
@@ -50,7 +50,7 @@ export const LiveTable: React.FC<ITableProps> = ({
     height: '52px',
     display: 'grid',
     gridAutoFlow: 'column',
-    background: '#FBFCFF',
+    border: 'none',
   };
 
   const tdItem: CSSProperties = {
@@ -65,7 +65,7 @@ export const LiveTable: React.FC<ITableProps> = ({
     fontSize: '14px',
     lineHeight: '20px',
     color: '#656B7C',
-    height: '20px',
+    // height: '20px',
   };
 
   const tdItemName: CSSProperties = {
@@ -91,6 +91,14 @@ export const LiveTable: React.FC<ITableProps> = ({
     backgroundColor: '#ffffff',
   };
 
+  const alternateBackgroundColor = (idx) => {
+    if (idx % 2 === 0) {
+      return styles['even'];
+    } else {
+      return styles['odd'];
+    }
+  };
+
   return (
     <div
       className={styles['table-container']}
@@ -110,39 +118,37 @@ export const LiveTable: React.FC<ITableProps> = ({
           </tr>
         </thead>
         <tbody>
-          {data &&
+          {Array.isArray(data) &&
             data.map((item, index) => (
-              <tr
+              <button
                 key={index}
-                className={styles['table-row-tr']}
+                className={alternateBackgroundColor(index)}
                 style={{
                   ...tableRowInBody,
-                  backgroundColor:
-                    index === isHovered ? 'lightgrey' : 'inherit',
                 }}
-                onMouseEnter={() => setIsHovered(index)}
-                onMouseLeave={() => setIsHovered(null)}
+                // onMouseEnter={() => setIsHovered(index)}
+                // onMouseLeave={() => setIsHovered(null)}
                 onClick={() => onClickItem(item)}
               >
                 <td
-                  className={styles['td-item']}
+                  className={alternateBackgroundColor(index)}
                   style={{ ...tdItem, ...tdItemName }}
                 >
                   {item.firstName} {item.lastName}
                 </td>
-                <td className={styles['td-item']} style={tdItem}>
+                <td className={alternateBackgroundColor(index)} style={tdItem}>
                   {item.email}
                 </td>
-                <td className={styles['td-item']} style={tdItem}>
+                <td className={alternateBackgroundColor(index)} style={tdItem}>
                   {item.address.address}
                 </td>
-                <td className={styles['td-item']} style={tdItem}>
+                <td className={alternateBackgroundColor(index)} style={tdItem}>
                   {item.domain}
                 </td>
-                <td className={styles['td-item']} style={tdItem}>
+                <td className={alternateBackgroundColor(index)} style={tdItem}>
                   {item.company.address.address}
                 </td>
-              </tr>
+              </button>
             ))}
         </tbody>
       </table>
