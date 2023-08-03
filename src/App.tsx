@@ -5,9 +5,10 @@ export const App = () => {
   const menulist = [
     { title: 'Pep', isSelected: false, route: '/pep' },
     { title: 'Matchory', isSelected: false, route: '/matchory' },
+    { title: 'Searchv1', isSelected: false, route: '/searchv1' },
   ];
   return (
-    <div className="app flex flex-col w-[100%]">
+    <div className="app flex flex-col w-[1200px]">
       <div className="welcome-home-container m-[12px] text-[24px] font-inter font-[700]">
         <span>My Components!</span>
       </div>

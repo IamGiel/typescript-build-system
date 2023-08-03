@@ -65,7 +65,14 @@ export const MatchoryResultListLoader = () => {
       </div>
 
       <div className="map-section flex-auto w-[490px]">
-        <span>MAP SECTION </span>
+        <div
+          className="loader-square animate-pulse"
+          style={{
+            width: '100%',
+            height: '100%',
+            backgroundColor: '#d9d9d9',
+          }}
+        ></div>
       </div>
     </div>
   );

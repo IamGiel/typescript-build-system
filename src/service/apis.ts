@@ -22,12 +22,12 @@ export const fetchDataFromApi_C = async () => {
   return fetchDataWithLogging(url, method);
 };
 
-export const postDataToApi = async (payload: any) => {
-  const url = 'https://example.com/api/endpoint';
-  const method = 'POST';
+// export const postDataToApi = async (payload: any) => {
+//   const url = 'https://example.com/api/endpoint';
+//   const method = 'POST';
 
-  return fetchDataWithLogging(url, method, payload);
-};
+//   return fetchDataWithLogging(url, method, payload);
+// };
 
 export const updateDataInApi = async (id: number, payload: any) => {
   const url = `https://example.com/api/endpoint/${id}`;
@@ -35,3 +35,28 @@ export const updateDataInApi = async (id: number, payload: any) => {
 
   return fetchDataWithLogging(url, method, payload);
 };
+
+export const fetchMatchoryToken = async (payload) => {
+  const url = 'https://discovery.matchory.com/oauth/token';
+  const method = 'POST';
+  return fetchDataWithLogging(url, method, payload);
+};
+
+export const fetchMatchoryMachineToken = async (token) => {
+  const url = 'https://discovery.matchory.com/oauth/token';
+  const method = 'POST';
+  return fetchDataWithLogging(url, method, token);
+};
+
+export const fetchMatchoryCreateQueryApi = async (payload) => {
+  const url = 'https://localhost/3002/matchory';
+  const method = 'POST';
+  return fetchDataWithLogging(url, method, payload);
+};
+
+// export const fetchMatchory = async (payload) => {
+//   console.log('calling fetchMatchor: ', payload)
+//   const url = 'https://localhost/3002/matchory';
+//   const method = 'POST';
+//   return fetchDataWithLogging(url, method, payload)
+// }

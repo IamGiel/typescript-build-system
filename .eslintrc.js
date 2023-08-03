@@ -32,5 +32,8 @@ module.exports = {
     '@typescript-eslint/no-unused-vars': 'off',
     'jsx-a11y/click-events-have-key-events': 'off',
     'jsx-a11y/no-noninteractive-element-interactions': 'off',
+    '@typescript-eslint/no-explicit-any': 'off',
+    'react-hooks/exhaustive-deps': 'off',
+    'jsx-a11y/no-static-element-interactions': 'off',
   },
 };

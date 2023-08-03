@@ -93,16 +93,88 @@ export const searchResultsData = {
     { name: 'electric motor 3', isSelected: false },
   ],
   suppliers: [
-    { name: 'Supplier A', isSelected: false },
-    { name: 'Supplier B', isSelected: false },
-    { name: 'Supplier C', isSelected: false },
-    { name: 'Supplier D', isSelected: false },
-    { name: 'Supplier E', isSelected: false },
-    { name: 'Supplier F', isSelected: false },
-    { name: 'Supplier G', isSelected: false },
-    { name: 'Supplier H', isSelected: false },
-    { name: 'Supplier I', isSelected: false },
-    { name: 'Supplier J', isSelected: false },
+    {
+      name: 'Supplier A',
+      isSelected: false,
+      location: {
+        locname: 'Location A',
+        longitude: -122.4194,
+        latitude: 37.7749,
+      },
+    },
+    {
+      name: 'Supplier B',
+      isSelected: false,
+      location: {
+        locname: 'Location B',
+        longitude: -74.006,
+        latitude: 40.7128,
+      },
+    },
+    {
+      name: 'Supplier C',
+      isSelected: false,
+      location: {
+        locname: 'Location C',
+        longitude: -0.1276,
+        latitude: 51.5074,
+      },
+    },
+    {
+      name: 'Supplier D',
+      isSelected: false,
+      location: {
+        locname: 'Location D',
+        longitude: 139.6917,
+        latitude: 35.6895,
+      },
+    },
+    {
+      name: 'Supplier E',
+      isSelected: false,
+      location: { locname: 'Location E', longitude: 2.3522, latitude: 48.8566 },
+    },
+    {
+      name: 'Supplier F',
+      isSelected: false,
+      location: {
+        locname: 'Location F',
+        longitude: -3.7038,
+        latitude: 40.4168,
+      },
+    },
+    {
+      name: 'Supplier G',
+      isSelected: false,
+      location: {
+        locname: 'Location G',
+        longitude: 114.1694,
+        latitude: 22.3193,
+      },
+    },
+    {
+      name: 'Supplier H',
+      isSelected: false,
+      location: {
+        locname: 'Location H',
+        longitude: 103.8198,
+        latitude: 1.3521,
+      },
+    },
+    {
+      name: 'Supplier I',
+      isSelected: false,
+      location: { locname: 'Location I', longitude: 4.8952, latitude: 52.3702 },
+    },
+    {
+      name: 'Supplier J',
+      isSelected: false,
+      location: {
+        locname: 'Location J',
+        longitude: -77.0369,
+        latitude: 38.9072,
+      },
+    },
   ],
 };
 

@@ -5,7 +5,7 @@ const CopyPlugin = require('copy-webpack-plugin');
 module.exports = {
   entry: {
     main: [
-      path.resolve(__dirname, '..', './src/index.tsx'),
+      path.resolve(__dirname, '..', './src/route.tsx'),
       'mapbox-gl/dist/mapbox-gl.css', // Add this line
     ],
   },
