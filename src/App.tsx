@@ -6,6 +6,7 @@ export const App = () => {
     { title: 'Pep', isSelected: false, route: '/pep' },
     { title: 'Matchory', isSelected: false, route: '/matchory' },
     { title: 'Searchv1', isSelected: false, route: '/searchv1' },
+    { title: 'Scheduler', isSelected: false, route: '/ladder' },
   ];
   return (
     <div className="app flex flex-col w-[1200px]">
