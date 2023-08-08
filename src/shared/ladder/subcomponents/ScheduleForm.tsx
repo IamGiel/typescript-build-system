@@ -9,6 +9,9 @@ export const ScheduleForm = ({ isOpen, dayInfo, selected }) => {
   const [hours, setHours] = useState(12);
   const [minutes, setMinutes] = useState(0);
   const [ampm, setAMPM] = useState('am');
+  const [comment, setComment] = useState(null);
+  const buttonStyles = 'text-white px-2 py-1 rounded bg-[#5EB5D4]';
+  const MAX_COMMENT_LENGTH = 20; // Maximum character limit for comment
 
   useEffect(() => {
     setOpen(isOpen ? isOpen : false);
@@ -18,12 +21,29 @@ export const ScheduleForm = ({ isOpen, dayInfo, selected }) => {
     console.log('status: ', status);
     setIsAvailable(status);
   };
-  const handleTimeSelection = () => {
+  const handleSaveDaySchedule = () => {
     console.log(minutes);
     const leadingZeroes = minutes < 10 ? `0${minutes}` : minutes;
     const formattedTime = `${hours}:${leadingZeroes} ${ampm}`;
     console.log('formatted time: ', formattedTime);
-    setSelectedTime(formattedTime);
+
+    setOpen(false);
+
+    const payload = {
+      time: formattedTime,
+      comment: comment,
+      date: dayInfo,
+      status: isAvailable,
+    };
+    console.log('payload: ', payload);
+    setSelectedTime(payload);
+  };
+
+  const handleCommentChange = (e) => {
+    const newComment = e.target.value;
+    if (newComment.length <= MAX_COMMENT_LENGTH) {
+      setComment(newComment);
+    }
   };
 
   return (
@@ -77,7 +97,7 @@ export const ScheduleForm = ({ isOpen, dayInfo, selected }) => {
                               isAvailable === 'AVAILABLE'
                                 ? 'bg-[#3DCB6C]'
                                 : 'bg-slate-300'
-                            }`}
+                            } focus:outline-slate-300`}
                             onClick={() =>
                               handleAvailabilitySelection('AVAILABLE')
                             }
@@ -99,92 +119,127 @@ export const ScheduleForm = ({ isOpen, dayInfo, selected }) => {
                         </div>
                       </div>
                       {/* lets show this section if user is available */}
-                      {isAvailable === 'AVAILABLE' && (
-                        <div className="time-selector flex flex-col items-center m-[12px]">
-                          <div className="label-set-time">
-                            <p>Set a time:</p>
-                          </div>
-                          <div className="m-[5px] p-[12px] w-40 bg-white rounded-lg shadow-xl">
-                            <div className="flex justify-between">
-                              <label
-                                htmlFor="hours"
-                                className="labeltime hidden"
-                              >
-                                Hours
-                              </label>
-                              <select
-                                id="hours"
-                                name="hours"
-                                className="bg-transparent text-xl appearance-none outline-none"
-                                onChange={(e) => setHours(e.target.value)}
-                                value={hours || 12}
-                              >
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                                <option value="6">6</option>
-                                <option value="7">7</option>
-                                <option value="8">8</option>
-                                <option value="9">9</option>
-                                <option value="10">10</option>
-                                <option value="11">11</option>
-                                <option value="12">12</option>
-                              </select>
-                              <span className="text-xl mr-3">:</span>
-                              <label
-                                htmlFor="minutes"
-                                className="labeltime hidden"
-                              >
-                                Minutes
-                              </label>
-                              <select
-                                id="minutes"
-                                name="minutes"
-                                className="bg-transparent text-xl appearance-none outline-none mr-4"
-                                onChange={(e) => setMinutes(e.target.value)}
-                                value={minutes || 0}
-                              >
-                                <option value="0">00</option>
-                                <option value="30">30</option>
-                              </select>
-                              <label
-                                htmlFor="ampm"
-                                className="labeltime hidden"
-                              >
-                                AM
-                              </label>
-                              <select
-                                id="ampm"
-                                name="ampm"
-                                className="bg-transparent text-xl appearance-none outline-none"
-                                onChange={(e) => setAMPM(e.target.value)}
-                                value={ampm}
-                              >
-                                <option value="am">AM</option>
-                                <option value="pm">PM</option>
-                              </select>
+                      <div className="form-optional-inputs min-h-[240px]">
+                        {isAvailable === 'AVAILABLE' && (
+                          <div className="time-selector flex flex-col items-center m-[12px] gap-[12px]">
+                            <div className="label-set-time">
+                              <p className="text-sm font-medium text-gray-700">
+                                Set a time:
+                              </p>
                             </div>
-                            <button
-                              className="mt-4 px-4 py-2 bg-indigo-600 text-white rounded-md"
-                              onClick={() => handleTimeSelection()}
-                            >
-                              Save Time
-                            </button>
+                            <div className="bg-white rounded-lg flex flex-col gap-[12px]">
+                              <div className="flex justify-between">
+                                <label
+                                  htmlFor="hours"
+                                  className="labeltime hidden"
+                                >
+                                  Hours
+                                </label>
+                                <select
+                                  id="hours"
+                                  name="hours"
+                                  className="rounded border border-slate-200 p-[12px] bg-transparent text-xl appearance-none outline-none"
+                                  onChange={(e) => setHours(e.target.value)}
+                                  value={hours || 12}
+                                >
+                                  <option value="1">1</option>
+                                  <option value="2">2</option>
+                                  <option value="3">3</option>
+                                  <option value="4">4</option>
+                                  <option value="5">5</option>
+                                  <option value="6">6</option>
+                                  <option value="7">7</option>
+                                  <option value="8">8</option>
+                                  <option value="9">9</option>
+                                  <option value="10">10</option>
+                                  <option value="11">11</option>
+                                  <option value="12">12</option>
+                                </select>
+                                <div className="text-xl m-[12px]">
+                                  : {/* some spacing before colon */}
+                                </div>
+                                <label
+                                  htmlFor="minutes"
+                                  className="labeltime hidden"
+                                >
+                                  Minutes
+                                </label>
+                                <select
+                                  id="minutes"
+                                  name="minutes"
+                                  className="rounded border border-slate-200 p-[12px] bg-transparent text-xl appearance-none outline-none mr-4"
+                                  onChange={(e) => setMinutes(e.target.value)}
+                                  value={minutes || 0}
+                                >
+                                  <option value="0">00</option>
+                                  <option value="30">30</option>
+                                </select>
+                                <label
+                                  htmlFor="ampm"
+                                  className="labeltime hidden"
+                                >
+                                  AM
+                                </label>
+                                <select
+                                  id="ampm"
+                                  name="ampm"
+                                  className="rounded border border-slate-200 p-[12px] bg-transparent text-xl appearance-none outline-none"
+                                  onChange={(e) => setAMPM(e.target.value)}
+                                  value={ampm}
+                                >
+                                  <option value="am">AM</option>
+                                  <option value="pm">PM</option>
+                                </select>
+                              </div>
+                              {/* Comment input */}
+                              <div className="mt-4">
+                                <label
+                                  htmlFor="comment"
+                                  className="block text-sm font-medium text-gray-700"
+                                >
+                                  Comment (optional)
+                                </label>
+                                <div className="mt-1">
+                                  <textarea
+                                    id="comment"
+                                    name="comment"
+                                    rows="1"
+                                    className="p-[12px] text-[14px] text-[#514141] font-[500] rounded border border-slate-200 shadow-sm focus:ring-slate-500 focus:border-slate-500 mt-1 block w-full border-slate-300 rounded-md min-h-[50px]"
+                                    value={comment}
+                                    // onChange={(e) => setComment(e.target.value)}
+                                    placeholder="Example: Flex after 6"
+                                    onInput={(e) => {
+                                      if (e.target.value.length > 25) {
+                                        e.target.value = e.target.value.slice(
+                                          0,
+                                          25
+                                        );
+                                      }
+                                      setComment(e.target.value);
+                                    }}
+                                  />
+                                </div>
+                                {MAX_COMMENT_LENGTH - comment?.length > 0 && (
+                                  <p className="mt-2 text-sm text-gray-500">
+                                    {MAX_COMMENT_LENGTH - comment?.length}{' '}
+                                    characters remaining
+                                  </p>
+                                )}
+                              </div>
+                            </div>
                           </div>
-                        </div>
-                      )}
+                        )}
+                      </div>
                     </div>
                   </div>
                 </div>
-                <div className="mt-5 sm:mt-6">
+
+                <div className="mt-5 sm:mt-6 flex flex-col justify-center">
                   <button
-                    type="button"
-                    className="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                    onClick={() => setOpen(false)}
+                    className={buttonStyles}
+                    onClick={() => handleSaveDaySchedule()}
                   >
-                    Go back to dashboard
+                    Save
                   </button>
                 </div>
               </Dialog.Panel>

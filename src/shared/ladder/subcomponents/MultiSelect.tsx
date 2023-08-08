@@ -126,11 +126,15 @@ export const MultiSelect: React.FC = () => {
   };
 
   const handleDayClicked = (day) => {
-    // Toggle the modal state for the clicked day
-    setDayModalStates((prevStates) => ({
-      ...prevStates,
-      [day.toISOString()]: !prevStates[day.toISOString()],
-    }));
+    const minSelectableDate = new Date(new Date().getTime() - 86400000 * 7); // 7 days ago
+
+    if (day >= minSelectableDate) {
+      // Toggle the modal state for the clicked day
+      setDayModalStates((prevStates) => ({
+        ...prevStates,
+        [day.toISOString()]: !prevStates[day.toISOString()],
+      }));
+    }
   };
 
   return (
@@ -184,14 +188,19 @@ export const MultiSelect: React.FC = () => {
               {week.map((day) => (
                 <div
                   key={day}
-                  className={`day-box flex flex-col text-center border border-[#ffffff] rounded h-[100px] w-[100px] p-[5px] ${
-                    inRange(day, new Date(), endOfMonth(viewing))
+                  className={`day-box flex flex-col text-center border border-[#ffffff] rounded h-[100px] w-[100px] p-[5px] 
+                  ${
+                    inRange(
+                      day,
+                      new Date(new Date().getTime() - 86400000),
+                      endOfMonth(viewing)
+                    )
                       ? 'cursor-pointer'
                       : 'text-gray-400 opacity-50 pointer-events-none'
-                  } 
+                  }
                   ${
                     isToday(day, new Date())
-                      ? 'bg-black rounded border border-slate 300'
+                      ? 'bg-green rounded border border-[#5EB5D4]'
                       : ''
                   }
                   ${
@@ -213,6 +222,7 @@ export const MultiSelect: React.FC = () => {
                   onClick={() => handleDayClicked(day)}
                 >
                   <span>{new Date(day).getDate(0)}</span>
+                  {isToday(day, new Date()) && <span>TODAY</span>}
                   <div className={`day-box flex flex-col gap-[12px]`}>
                     <div className="calendar-day-sq flex flex-row justify-between">
                       <div className="box-info">
@@ -222,7 +232,7 @@ export const MultiSelect: React.FC = () => {
                             handleSelection(selection, day)
                           }
                           dayInfo={day}
-                          isOpen={dayModalStates[day.toISOString()]}
+                          isOpen={dayModalStates[day.toISOString()]} // Use the modal state for this day
                         />
                         {/* <pre>{JSON.stringify(day)}</pre> */}
                       </div>
