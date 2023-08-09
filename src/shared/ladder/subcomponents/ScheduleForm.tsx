@@ -83,10 +83,12 @@ export const ScheduleForm = ({ isOpen, dayInfo, selected }) => {
                   <div className="mt-3 text-center sm:mt-5">
                     <Dialog.Title
                       as="h3"
-                      className="text-base font-semibold leading-6 text-gray-900"
+                      className="text-base font-[500] leading-6 text-gray-900 mx-[24px]"
                     >
                       Set your availability for{' '}
-                      {new Date(dayInfo).toDateString()}
+                      <span className="font-[800]">
+                        {new Date(dayInfo).toDateString()}
+                      </span>
                     </Dialog.Title>
                     <div className="mt-2">
                       <div className="selection-buttons relative">
@@ -234,9 +236,17 @@ export const ScheduleForm = ({ isOpen, dayInfo, selected }) => {
                   </div>
                 </div>
 
-                <div className="mt-5 sm:mt-6 flex flex-col justify-center">
+                <div className="mt-5 sm:mt-6 flex flex-row justify-end gap-[12px]">
                   <button
-                    className={buttonStyles}
+                    className={
+                      'text-[#181818] px-2 py-1 rounded bg-[#ffffff] roudned border border-slate200'
+                    }
+                    onClick={() => setOpen(false)}
+                  >
+                    cancel
+                  </button>
+                  <button
+                    className={buttonStyles + ' w-[50%]'}
                     onClick={() => handleSaveDaySchedule()}
                   >
                     Save

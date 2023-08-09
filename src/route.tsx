@@ -1,8 +1,8 @@
 import './styles.scss';
-import React from 'react';
+import React, { useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { Ladder, PepComponent } from './shared';
+import { Ladder, MediaSize, PepComponent } from './shared';
 import { Matchory } from './shared/matchory/Matchory';
 import { App } from './App';
 import { Searchv1 } from './shared/searchv1/Searchv1';
@@ -36,7 +36,9 @@ const root = createRoot(domNode);
 // root.render(<App />);
 root.render(
   <React.StrictMode>
-    <div className="router flex mx-[119px]">
+    <div className="router lg:flex lg:mx-[119px]">
+      {/* lets add a reference if screeen is xl, lg, md sm */}
+      <MediaSize />
       <RouterProvider router={router} />
     </div>
   </React.StrictMode>

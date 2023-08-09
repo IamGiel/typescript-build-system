@@ -5,12 +5,13 @@ import {
   IoChevronBackSharp,
   IoChevronForwardSharp,
   IoCheckmarkSharp,
+  IoToday,
 } from 'react-icons/io5';
 
 import { useLilius } from 'use-lilius';
 import { Dropdown, ScheduleForm } from './ScheduleForm';
 
-export const MultiSelect: React.FC = () => {
+export const MultiSelectCalendar: React.FC = () => {
   const {
     calendar,
     inRange,
@@ -138,48 +139,33 @@ export const MultiSelect: React.FC = () => {
   };
 
   return (
-    <div className="w-500">
-      {/* ... Selected tags */}
-      {/* <div className="flex space-x-2">
-        {selected.map((date, index) => {
-          if (index < visibleTagCount) {
-            return (
-              <div
-                key={`${date}`}
-                className="bg-blue-500 text-white px-2 py-1 rounded-full flex items-center"
-              >
-                <span className="mr-1">{format(date, 'MM/dd/yyyy')}</span>
-                <button className="text-white" onClick={() => toggle(date)}>
-                  &times;
-                </button>
-              </div>
-            );
-          }
-          return null;
-        })}
-        {visibleTagCount < selected.length && (
-          <div className="bg-blue-500 text-white px-2 py-1 rounded-full flex items-center">
-            <span className="mr-1">+{selected.length - visibleTagCount}</span>
-          </div>
-        )}
-      </div> */}
-
-      {/* Calendar */}
+    <div className="w-full px-4 xl:w-500 lg:mx-auto">
       <div className="calendar-container mt-4 flex flex-col gap-[40px]">
-        <div className="flex">
-          <button className={buttonStyles} onClick={viewPreviousMonth}>
+        <div className="flex flex-col lg:flex-row gap-[12px]">
+          <button
+            className={
+              buttonStyles +
+              ` ${
+                startOfMonth(viewing) <= startOfMonth(new Date())
+                  ? 'bg-slate-300'
+                  : 'cursor-pointer'
+              }`
+            }
+            onClick={viewPreviousMonth}
+            disabled={startOfMonth(viewing) <= startOfMonth(new Date())}
+          >
             Previous
           </button>
-          <div className="flex-grow text-center">
+          <div className="flex-grow text-center order-first lg:order-none">
             {format(viewing, 'MMMM yyyy')}
           </div>
           <button className={buttonStyles} onClick={viewNextMonth}>
             Next
           </button>
         </div>
-        <div className="grid grid-cols-7 gap-2 mt-2">
+        <div className="grid grid-cols-1 xl:grid-cols-7 gap-[12px] mt-2">
           {calendar[0][0].map((day) => (
-            <div key={day} className="text-center">
+            <div key={day} className="hidden text-center">
               {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][getDay(day)]}
             </div>
           ))}
@@ -188,7 +174,7 @@ export const MultiSelect: React.FC = () => {
               {week.map((day) => (
                 <div
                   key={day}
-                  className={`day-box flex flex-col text-center border border-[#ffffff] rounded h-[100px] w-[100px] p-[5px] 
+                  className={`day-box flex flex-col text-center border border-[#ffffff] rounded p-[5px] border-[2px] hover:border-[#F8CA1D] hover:border-[3px]
                   ${
                     inRange(
                       day,
@@ -196,7 +182,7 @@ export const MultiSelect: React.FC = () => {
                       endOfMonth(viewing)
                     )
                       ? 'cursor-pointer'
-                      : 'text-gray-400 opacity-50 pointer-events-none'
+                      : 'text-gray-400 opacity-50 pointer-events-none xl:hidden'
                   }
                   ${
                     isToday(day, new Date())
@@ -217,24 +203,35 @@ export const MultiSelect: React.FC = () => {
                           'NOT'
                       ? 'bg-[#FCAAA3]'
                       : 'bg-white'
-                  }
-                  `}
+                  } 
+                  xl:w-[100px] xl:h-[100px]`}
                   onClick={() => handleDayClicked(day)}
                 >
-                  <span>{new Date(day).getDate(0)}</span>
-                  {isToday(day, new Date()) && <span>TODAY</span>}
+                  <div className="day-details-info flex flex-row justify-between items-center">
+                    <div className="day-name">
+                      <span>
+                        {new Date(day).getDate(0)}{' '}
+                        {new Date(day)
+                          .toLocaleString('en-US', { weekday: 'long' })
+                          .slice(0, 3)}
+                      </span>
+                    </div>
+                    {isToday(day, new Date()) && (
+                      <div className="today flex">
+                        <IoToday fill="green" />
+                      </div>
+                    )}
+                  </div>
                   <div className={`day-box flex flex-col gap-[12px]`}>
                     <div className="calendar-day-sq flex flex-row justify-between">
                       <div className="box-info">
-                        {/* lets add a dropdown selection for availability type: limited or flexible, if limited offer a time selection */}
                         <ScheduleForm
                           selected={(selection) =>
                             handleSelection(selection, day)
                           }
                           dayInfo={day}
-                          isOpen={dayModalStates[day.toISOString()]} // Use the modal state for this day
+                          isOpen={dayModalStates[day.toISOString()]}
                         />
-                        {/* <pre>{JSON.stringify(day)}</pre> */}
                       </div>
                     </div>
                   </div>

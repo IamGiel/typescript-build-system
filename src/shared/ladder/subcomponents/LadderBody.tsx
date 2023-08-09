@@ -1,5 +1,5 @@
 import React from 'react';
-import { MultiSelect } from './MultiSelect';
+import { MultiSelectCalendar } from './MultiSelectCalendar';
 
 export const LadderBody = () => {
   return (
@@ -21,7 +21,7 @@ export const LadderBody = () => {
         </div>
         <div className="list-container flex flex-col gap-[12px]">
           <div className="lsitem-name">
-            <MultiSelect />
+            <MultiSelectCalendar />
           </div>
         </div>
       </div>
