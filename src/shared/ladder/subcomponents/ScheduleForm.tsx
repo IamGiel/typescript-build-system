@@ -6,9 +6,9 @@ export const ScheduleForm = ({ isOpen, dayInfo, selected }) => {
   const [open, setOpen] = useState(false);
   const [isAvailable, setIsAvailable] = useState('NOT_AVAILABLE');
   const [selectedTime, setSelectedTime] = useState(null);
-  const [hours, setHours] = useState(12);
+  const [hours, setHours] = useState(6);
   const [minutes, setMinutes] = useState(0);
-  const [ampm, setAMPM] = useState('am');
+  const [ampm, setAMPM] = useState('pm');
   const [comment, setComment] = useState(null);
   const buttonStyles = 'text-white px-2 py-1 rounded bg-[#5EB5D4]';
   const MAX_COMMENT_LENGTH = 20; // Maximum character limit for comment
@@ -29,14 +29,27 @@ export const ScheduleForm = ({ isOpen, dayInfo, selected }) => {
 
     setOpen(false);
 
-    const payload = {
-      time: formattedTime,
-      comment: comment,
-      date: dayInfo,
-      status: isAvailable,
-    };
+    let payload = {};
+
+    if (isAvailable === 'NOT_AVAILABLE') {
+      payload = {
+        time: null,
+        comment: null,
+        date: dayInfo,
+        status: isAvailable,
+      };
+    } else {
+      payload = {
+        time: formattedTime,
+        comment: comment,
+        date: dayInfo,
+        status: isAvailable,
+      };
+    }
+
     console.log('payload: ', payload);
     setSelectedTime(payload);
+    selected(payload);
   };
 
   const handleCommentChange = (e) => {
@@ -202,10 +215,11 @@ export const ScheduleForm = ({ isOpen, dayInfo, selected }) => {
                                   Comment (optional)
                                 </label>
                                 <div className="mt-1">
-                                  <textarea
+                                  <input
                                     id="comment"
                                     name="comment"
                                     rows="1"
+                                    maxLength={20}
                                     className="p-[12px] text-[14px] text-[#514141] font-[500] rounded border border-slate-200 shadow-sm focus:ring-slate-500 focus:border-slate-500 mt-1 block w-full border-slate-300 rounded-md min-h-[50px]"
                                     value={comment}
                                     // onChange={(e) => setComment(e.target.value)}

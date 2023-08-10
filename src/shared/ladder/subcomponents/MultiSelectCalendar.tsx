@@ -46,7 +46,9 @@ export const MultiSelectCalendar: React.FC = () => {
 
   const [isOpen, setIsOpen] = useState(false);
   const [dayModalStates, setDayModalStates] = useState({});
-  const [availabilityType, setAvailabilityType] = useState({});
+  const [availabilityType, setAvailabilityType] = useState({
+    status: 'NOT_AVAILABLE',
+  });
   const [previouslySelected, setPreviouslySelected] = useState([]);
   const [visibleTagCount, setVisibleTagCount] = useState(0);
   const shouldRecountTags =
@@ -112,13 +114,16 @@ export const MultiSelectCalendar: React.FC = () => {
   };
 
   const handleSelection = (selection, day) => {
+    console.log('selection: ', selection);
+    console.log('day: ', day);
     // Update the availability type for the specific day
     setAvailabilityType((prevTypes) => ({
       ...prevTypes,
       [day.toISOString()]: {
         status: {
-          value: selection.status.value,
-          label: selection.status.label,
+          value: selection.status,
+          label:
+            selection.status === 'AVAILABLE' ? 'AVAILABLE' : 'NOT AVAILABLE',
         },
         time: selection.time, // You can add time property here
         comment: selection.comment, // You can add comment property here
@@ -137,6 +142,10 @@ export const MultiSelectCalendar: React.FC = () => {
       }));
     }
   };
+
+  useEffect(() => {
+    console.log('availablity tpye: ', availabilityType);
+  }, [availabilityType]);
 
   return (
     <div className="w-full px-4 xl:w-500 lg:mx-auto">
@@ -182,7 +191,7 @@ export const MultiSelectCalendar: React.FC = () => {
                       endOfMonth(viewing)
                     )
                       ? 'cursor-pointer'
-                      : 'text-gray-400 opacity-50 pointer-events-none xl:hidden'
+                      : 'text-gray-400 opacity-50 pointer-events-none'
                   }
                   ${
                     isToday(day, new Date())
@@ -192,24 +201,31 @@ export const MultiSelectCalendar: React.FC = () => {
                   ${
                     availabilityType[day.toISOString()] &&
                     availabilityType[day.toISOString()].status.value ===
-                      'FLEXIBLE'
-                      ? 'bg-[#3DCB6C]'
+                      'AVAILABLE'
+                      ? 'bg-[#3DCB6C] text-[#ffffff]'
                       : availabilityType[day.toISOString()] &&
                         availabilityType[day.toISOString()].status.value ===
-                          'LIMITED'
-                      ? 'bg-[#CBF8AC]'
+                          'NOT_AVAILABLE'
+                      ? 'border-[2px] bg-[#FBBDBE] text-[#EE444D]'
                       : availabilityType[day.toISOString()] &&
                         availabilityType[day.toISOString()].status.value ===
-                          'NOT'
-                      ? 'bg-[#FCAAA3]'
-                      : 'bg-white'
+                          null
+                      ? 'border-[2px] border-[#FCAAA3]'
+                      : 'border-[2px] border-white'
                   } 
-                  xl:w-[100px] xl:h-[100px]`}
+                  
+                  xl:w-[100px] xl:h-[125px]`}
                   onClick={() => handleDayClicked(day)}
                 >
                   <div className="day-details-info flex flex-row justify-between items-center">
                     <div className="day-name">
-                      <span>
+                      <span
+                        className={
+                          !availabilityType[day.toISOString()]
+                            ? 'text-[#5EB5D4]'
+                            : 'text-[#ffffff]'
+                        }
+                      >
                         {new Date(day).getDate(0)}{' '}
                         {new Date(day)
                           .toLocaleString('en-US', { weekday: 'long' })
@@ -222,6 +238,29 @@ export const MultiSelectCalendar: React.FC = () => {
                       </div>
                     )}
                   </div>
+                  {availabilityType && availabilityType[day.toISOString()] && (
+                    <div className="daily-schedule-details z-[9] py-[10px]">
+                      <div className="status-detail flex justify-center">
+                        <p className="details flex text-[12px] font-[500] font-inter">
+                          {availabilityType[day.toISOString()].status.label}
+                        </p>
+                      </div>
+                      <div className="status-detail flex justify-center">
+                        {availabilityType[day.toISOString()].status.value ===
+                          'AVAILABLE' && (
+                          <p className="details flex text-[12px] font-[500] font-inter">
+                            {availabilityType[day.toISOString()].time}
+                          </p>
+                        )}
+                      </div>
+
+                      <div className="status-detail flex justify-center">
+                        <p className="details flex text-[12px] font-[500] font-inter max-h-[36px] overflow-hidden overflow-y-auto">
+                          {availabilityType[day.toISOString()].comment}
+                        </p>
+                      </div>
+                    </div>
+                  )}
                   <div className={`day-box flex flex-col gap-[12px]`}>
                     <div className="calendar-day-sq flex flex-row justify-between">
                       <div className="box-info">
