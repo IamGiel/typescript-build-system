@@ -36,9 +36,11 @@ const root = createRoot(domNode);
 // root.render(<App />);
 root.render(
   <React.StrictMode>
-    <div className="router lg:flex lg:mx-[119px]">
+    <div className="router flex flex-col justfiy-center lg:flex lg:mx-[119px]">
       {/* lets add a reference if screeen is xl, lg, md sm */}
-      <MediaSize />
+      <div className="flex justify-center">
+        <MediaSize />
+      </div>
       <RouterProvider router={router} />
     </div>
   </React.StrictMode>

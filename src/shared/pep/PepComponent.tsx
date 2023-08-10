@@ -2,6 +2,7 @@ import React, { CSSProperties, useEffect, useState } from 'react';
 import { PepComponentLoader } from './PepComponentLoader';
 import { IPEProfile, LiveTable } from '../live-table';
 import { fetchDataFromDummyJsonUsers } from '../../service/apis';
+import { PepList } from './subcomponents/PepList';
 // import dialogService from 'app/shared/services/dialogService';
 // import { GeneralModal } from 'app/shared/modal/GeneralModal';
 
@@ -13,6 +14,13 @@ export const PepComponent: React.FC<PepComponentProps> = ({
   stateToRender,
 }) => {
   const [data, setData] = useState<IPEProfile[]>([]);
+  const [state, setState] = useState('Loading State');
+
+  useEffect(() => {
+    setTimeout(() => {
+      setState('Default State');
+    }, 3000);
+  }, []);
 
   useEffect(() => {
     fetchDataFromDummyJsonUsers().then((res) => {
@@ -91,7 +99,7 @@ export const PepComponent: React.FC<PepComponentProps> = ({
 
   return (
     <div className="pep-container" style={pepContainer}>
-      {stateToRender === 'Default State' && data && (
+      {state === 'Default State' && data && (
         <>
           <div className="header-title" style={pepHeaderContainer}>
             <h1 style={pepHeader}>PEP Profile</h1>
@@ -100,18 +108,19 @@ export const PepComponent: React.FC<PepComponentProps> = ({
             className="component-to-render"
             style={{ height: '381px', overflow: 'hidden' }}
           >
-            <LiveTable
+            {/* <LiveTable
               columnHeader={columnHeader}
               data={data}
               onClickItem={onTableClicked}
-            />
+            /> */}
+            <PepList peplist={data} />
           </div>
         </>
       )}
 
       {/* if no pep data */}
 
-      {stateToRender === 'Zero State' && (
+      {state === 'Zero State' && (
         <>
           <div className="no-pep" style={noPep}>
             <div className="header-title" style={pepHeaderContainer}>
@@ -167,7 +176,7 @@ export const PepComponent: React.FC<PepComponentProps> = ({
 
       {/* loading state */}
 
-      {stateToRender === 'Loading State' && (
+      {state === 'Loading State' && (
         <>
           <div className="loading-state-container">
             <div className="header-title">

@@ -255,7 +255,7 @@ export const MultiSelectCalendar: React.FC = () => {
                       </div>
 
                       <div className="status-detail flex justify-center">
-                        <p className="details flex text-[12px] font-[500] font-inter max-h-[36px] overflow-hidden overflow-y-auto">
+                        <p className="details flex text-[12px] text-[#181818] mt-[5px] font-[500] font-inter max-h-[36px] overflow-hidden overflow-y-auto">
                           {availabilityType[day.toISOString()].comment}
                         </p>
                       </div>
