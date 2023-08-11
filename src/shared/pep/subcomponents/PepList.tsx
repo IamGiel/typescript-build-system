@@ -17,8 +17,9 @@ import { ProfileICon } from '../../../assets/images/ProfileIcon';
 import { ThreeDotsMenuIcon } from '../../../assets/images/ThreeDotsMenuIcon';
 
 export const PepList = ({ peplist }) => {
-  const itemsPerPage = 10; // Number of items to show per page
+  //   const itemsPerPage = 10; // Number of items to show per page
   const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
   const iconColor = '#BAC1D8';
   const showMenus = [
     { value: '5', label: '5', icon: null },
@@ -61,7 +62,16 @@ export const PepList = ({ peplist }) => {
     },
   ];
 
-  const handleMenuItemSelect = (value) => {
+  const handleShowItemsSelect = (value) => {
+    // Handle the selected menu item value
+    console.log('handleShowItemsSelect value:', value);
+    setItemsPerPage(value);
+  };
+  const handleListActionSelect = (value) => {
+    // Handle the selected menu item value
+    console.log('handleListActionSelect value:', value);
+  };
+  const handleLegendSelect = (value) => {
     // Handle the selected menu item value
     console.log('Selected value:', value);
   };
@@ -80,7 +90,7 @@ export const PepList = ({ peplist }) => {
     subseqCols: 'text-[14px] text-[#111827] font-[400]',
   };
 
-  const menuItemDiv = (menuItems, icon: ReactElement) => {
+  const menuItemDiv = (menuItems, icon: ReactElement, onSelect) => {
     return (
       <Menu as="div" className="relative inline-block text-left">
         <div>
@@ -114,7 +124,7 @@ export const PepList = ({ peplist }) => {
                           'block px-4 py-2 text-sm'
                         ) + ' flex items-center gap-[5px]'
                       }
-                      onClick={() => handleMenuItemSelect(item.value)} // Call the handler
+                      onClick={() => onSelect(item.value)}
                     >
                       <span>{item.icon}</span>
                       {item.label} results
@@ -134,30 +144,31 @@ export const PepList = ({ peplist }) => {
       <div className="filter-search-row grid grid-cols-1  mb-[12px] px-[12px]">
         <div className="showing-num-list py-2 col-span-1 flex flex-row gap-[12px] grid grid-cols-4">
           <div className="total grid grid-cols-2 col-span-2 w-[400px]">
-            <div className="displaying-page p-[6px] col-span-1">
+            <div className="displaying-page py-[6px] col-span-1">
               <div className="display-amt">
                 <span className="font-[400] text-[16px] text-[#656B7C]">
                   Displaying
                 </span>{' '}
                 <span className="font-[700] text-[16px] text-[#111827]">
-                  10
+                  {Math.min(currentPage * itemsPerPage, peplist.length)}
                 </span>{' '}
                 <span className="font-[400] text-[16px] text-[#656B7C]">
                   of
                 </span>{' '}
                 <span className="font-[700] text-[16px] text-[#111827]">
-                  421
+                  {peplist.length}
                 </span>
               </div>
             </div>
             <div className="filter-header-display  border-2 border-[#8D8D8E] rounded-[6px] w-[fit-content] p-[6px] flex flex-row justify-center gap-[12px] col-span-1">
               <p className="result-total font-[600] text-[#6B6B6F] text-[16px]">
-                10 results
+                {itemsPerPage} Results
               </p>
               <div className="chevron-icon flex items-center">
                 {menuItemDiv(
                   showMenus,
-                  <Vector height={'15px'} width={'15px'} fill={'#6B6B6F'} />
+                  <Vector height={'15px'} width={'15px'} fill={'#6B6B6F'} />,
+                  handleShowItemsSelect
                 )}
               </div>
             </div>
@@ -166,25 +177,25 @@ export const PepList = ({ peplist }) => {
           <div className="filter-header-search  border border-slate-300 rounded p-[6px] flex flex-row justify-center gap-[12px] col-span-1">
             <span className="chevron-icon flex items-center">
               <MagnifyingGlass
-                fill={'none'}
+                fill={'rgba(101, 107, 124, 0)'}
                 height={'20px'}
                 width={'20px'}
-                stroke={iconColor}
+                stroke={'rgba(186, 193, 216, 1)'}
               />
             </span>
             <input
-              className="result-total w-[75px] flex flex-grow focus:outline-none focus-visible:outline-none"
-              placeholder="search"
+              className="result-total w-[75px] text-[#656B7C] font-[400] text-[16px] flex flex-grow focus:outline-none focus-visible:outline-none"
+              placeholder="Search"
             />
           </div>
         </div>
       </div>
 
-      <div className="grid grid-cols-6 bg-[#F9FAFB] border border-[#E7E9ED]">
-        <div className="col-span-1 text-left py-2 px-[12px] font-inter font-[500] text-[16px] text-[#6B7280]">
+      <div className="grid grid-cols-9 bg-[#F9FAFB] border-t border-[#E7E9ED]">
+        <div className="col-span-2 text-left py-2 px-[12px] font-inter font-[500] text-[16px] text-[#6B7280]">
           PRIMARY NAME
         </div>
-        <div className="col-span-1 text-left py-2 px-[12px] font-inter font-[500] text-[16px] text-[#6B7280]">
+        <div className="col-span-2 text-left py-2 px-[12px] font-inter font-[500] text-[16px] text-[#6B7280]">
           ROLE
         </div>
         <div className="col-span-1 text-left py-2 px-[12px] font-inter font-[500] text-[16px] text-[#6B7280]">
@@ -199,7 +210,8 @@ export const PepList = ({ peplist }) => {
                 height={'24px'}
                 width={'24px'}
                 fill={'white'}
-              />
+              />,
+              handleLegendSelect
             )}
           </div>
         </div>
@@ -210,18 +222,18 @@ export const PepList = ({ peplist }) => {
             .slice(0, currentPage * itemsPerPage) // Slice the array based on current page and itemsPerPage
             .map((pep, idx) => (
               <div
-                className="item-container grid grid-cols-6 border-t border-slate-300"
+                className="item-container grid grid-cols-9 border-t border-slate-300"
                 key={idx}
               >
                 <div
-                  className="name-column text-[#5650D6] font-[500] text-[14px] peplist-item col-span-1 text-left py-2 px-[12px] overflow-hidden whitespace-normal truncate w-[100%]"
+                  className="name-column text-[#5650D6] font-[500] text-[14px] peplist-item col-span-2 text-left py-2 px-[12px] overflow-hidden whitespace-normal truncate w-[100%]"
                   title={`${pep.firstName} ${pep.lastName}`}
                 >
                   {pep.firstName} {pep.lastName} pokaiwhenuakitnatahu some long
                   lastnamewithoutspacing
                 </div>
                 <div
-                  className={`role-column ${peplistStyles.subseqCols} peplist-item col-span-1 text-left py-2 px-[12px] overflow-hidden whitespace-normal truncate w-[100%]`}
+                  className={`role-column ${peplistStyles.subseqCols} peplist-item col-span-2 text-left py-2 px-[12px] overflow-hidden whitespace-normal truncate w-[100%]`}
                   title={`${pep.company.department}`}
                 >
                   {pep.company.department} Mr director VP CEO of something
@@ -235,7 +247,7 @@ export const PepList = ({ peplist }) => {
                   Taumatawhakatangihangakoauauotamateaturipukakapiki-maungahoronukupokaiwhenuakitnatahu:
                 </div>
                 <div
-                  className={`risktype-column ${peplistStyles.subseqCols} peplist-item flex items-center col-span-2 text-left py-2 px-[12px] max-w-[fit-content]`}
+                  className={`risktype-column ${peplistStyles.subseqCols} peplist-item flex items-center col-span-3 text-left py-2 px-[12px] max-w-[fit-content]`}
                 >
                   <div className="flex flex-wrap gap-[12px]">
                     {[...Array(3)].map((item, idx) => (
@@ -271,7 +283,7 @@ export const PepList = ({ peplist }) => {
                     ))}
                   </div>
                 </div>
-                <div className="view-details-column flex flex-row items-center justify-end gap-[10px]">
+                <div className="view-details-column flex flex-row items-center col-span justify-end gap-[10px]">
                   <div className="view-dets-btn">
                     <button className="btn-div-view-dets flex items-center gap-[5px] py-[7px] px-[11px] h-[40px] border border-[#CBD1E2] rounded-[4px] text-[12px] text-[#444752]">
                       View Details
@@ -291,7 +303,8 @@ export const PepList = ({ peplist }) => {
                         width={'15px'}
                         stroke={2}
                         fill={'rgb(107,107,111)'}
-                      />
+                      />,
+                      handleListActionSelect
                     )}
                   </div>
                 </div>

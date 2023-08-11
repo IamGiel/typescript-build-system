@@ -33,7 +33,7 @@ export const PepComponent: React.FC<PepComponentProps> = ({
     display: 'flex',
     flexDirection: 'column',
     height: '506px',
-    width: '1112px',
+    // width: '1112px',
     borderRadius: '0px',
     backgroundColor: '#FFFFFF',
   };
@@ -100,7 +100,7 @@ export const PepComponent: React.FC<PepComponentProps> = ({
     <div className="pep-container" style={pepContainer}>
       {state === 'Default State' && data && (
         <>
-          <div className="header-title" style={pepHeaderContainer}>
+          <div className="header-title  px-[12px]" style={pepHeaderContainer}>
             <h1 style={pepHeader}>PEP Profile</h1>
           </div>
           <div className="component-to-render" style={{ height: '381px' }}>
