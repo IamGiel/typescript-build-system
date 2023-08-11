@@ -66,6 +66,7 @@ export const PepList = ({ peplist }) => {
     // Handle the selected menu item value
     console.log('handleShowItemsSelect value:', value);
     setItemsPerPage(value);
+    setCurrentPage(1);
   };
   const handleListActionSelect = (value) => {
     // Handle the selected menu item value
@@ -143,7 +144,7 @@ export const PepList = ({ peplist }) => {
     <div className="pep-list-container flex flex-col">
       <div className="filter-search-row grid grid-cols-1  mb-[12px] px-[12px]">
         <div className="showing-num-list py-2 col-span-1 flex flex-row gap-[12px] grid grid-cols-4">
-          <div className="total grid grid-cols-2 col-span-2 w-[400px]">
+          <div className="total grid grid-cols-2 col-span-2 w-[330px]">
             <div className="displaying-page py-[6px] col-span-1">
               <div className="display-amt">
                 <span className="font-[400] text-[16px] text-[#656B7C]">
@@ -174,7 +175,7 @@ export const PepList = ({ peplist }) => {
             </div>
           </div>
           <div className="filler col-span-1"></div>
-          <div className="filter-header-search  border border-slate-300 rounded p-[6px] flex flex-row justify-center gap-[12px] col-span-1">
+          <div className="filter-header-search  border border-slate-300 rounded-[6px] p-[6px] flex flex-row justify-center gap-[12px] col-span-1">
             <span className="chevron-icon flex items-center">
               <MagnifyingGlass
                 fill={'rgba(101, 107, 124, 0)'}
@@ -191,17 +192,17 @@ export const PepList = ({ peplist }) => {
         </div>
       </div>
 
-      <div className="grid grid-cols-9 bg-[#F9FAFB] border-t border-[#E7E9ED]">
-        <div className="col-span-2 text-left py-2 px-[12px] font-inter font-[500] text-[16px] text-[#6B7280]">
+      <div className="grid grid-cols-10 bg-[#F9FAFB] border-t border-[#E7E9ED]">
+        <div className="col-span-2 text-left py-2 px-[12px] font-inter font-[500] text-[16px] text-[#6B7280] flex items-center gap-[12px]">
           PRIMARY NAME
         </div>
-        <div className="col-span-2 text-left py-2 px-[12px] font-inter font-[500] text-[16px] text-[#6B7280]">
+        <div className="col-span-2 text-left py-2 px-[12px] font-inter font-[500] text-[16px] text-[#6B7280] flex items-center gap-[12px]">
           ROLE
         </div>
-        <div className="col-span-1 text-left py-2 px-[12px] font-inter font-[500] text-[16px] text-[#6B7280]">
+        <div className="col-span-2 text-left py-2 px-[12px] font-inter font-[500] text-[16px] text-[#6B7280] flex items-center gap-[12px]">
           NATIONALITY
         </div>
-        <div className="col-span-3 text-left py-2 px-[12px] font-inter font-[500] text-[16px] text-[#6B7280] flex items-center gap-[12px]">
+        <div className="col-span-4 text-left py-3 px-[12px] font-inter font-[500] text-[16px] text-[#6B7280] flex items-center gap-[12px]">
           RISK TYPE{' '}
           <div className="info-circle-div flex items-center gap-[5px] cursor-pointer">
             {menuItemDiv(
@@ -222,29 +223,26 @@ export const PepList = ({ peplist }) => {
             .slice(0, currentPage * itemsPerPage) // Slice the array based on current page and itemsPerPage
             .map((pep, idx) => (
               <div
-                className="item-container grid grid-cols-9 border-t border-slate-300"
+                className="item-container grid grid-cols-10 border-t border-slate-300 min-h-[52px] items-center"
                 key={idx}
               >
                 <div
                   className="name-column text-[#5650D6] font-[500] text-[14px] peplist-item col-span-2 text-left py-2 px-[12px] overflow-hidden whitespace-normal truncate w-[100%]"
                   title={`${pep.firstName} ${pep.lastName}`}
                 >
-                  {pep.firstName} {pep.lastName} pokaiwhenuakitnatahu some long
-                  lastnamewithoutspacing
+                  {pep.firstName} {pep.lastName}
                 </div>
                 <div
                   className={`role-column ${peplistStyles.subseqCols} peplist-item col-span-2 text-left py-2 px-[12px] overflow-hidden whitespace-normal truncate w-[100%]`}
                   title={`${pep.company.department}`}
                 >
-                  {pep.company.department} Mr director VP CEO of something
-                  something SOMEONE WITH A TITLE OF BLAH
+                  {pep.company.department}
                 </div>
                 <div
-                  className={`nationality-column ${peplistStyles.subseqCols} peplist-item col-span-1 text-left py-2 px-[12px] overflow-hidden whitespace-normal truncate w-[100%]`}
+                  className={`nationality-column ${peplistStyles.subseqCols} peplist-item col-span-2 text-left py-2 px-[12px] overflow-hidden whitespace-normal truncate w-[100%]`}
                   title={`${pep.company.address.city}`}
                 >
                   {pep.company.address.city}{' '}
-                  Taumatawhakatangihangakoauauotamateaturipukakapiki-maungahoronukupokaiwhenuakitnatahu:
                 </div>
                 <div
                   className={`risktype-column ${peplistStyles.subseqCols} peplist-item flex items-center col-span-3 text-left py-2 px-[12px] max-w-[fit-content]`}
@@ -285,7 +283,7 @@ export const PepList = ({ peplist }) => {
                 </div>
                 <div className="view-details-column flex flex-row items-center col-span justify-end gap-[10px]">
                   <div className="view-dets-btn">
-                    <button className="btn-div-view-dets flex items-center gap-[5px] py-[7px] px-[11px] h-[40px] border border-[#CBD1E2] rounded-[4px] text-[12px] text-[#444752]">
+                    <button className="btn-div-view-dets flex items-center gap-[5px] py-[7px] px-[11px] h-[40px] w-[115px] border border-[#CBD1E2] rounded-[4px] text-[12px] text-[#444752]">
                       View Details
                       <ArrowRightIcon
                         height={'15px'}
