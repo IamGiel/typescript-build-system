@@ -44,7 +44,6 @@ export const PepComponent: React.FC<PepComponentProps> = ({
   };
 
   const pepHeader: CSSProperties = {
-    fontFamily: 'inter',
     fontSize: '24px',
     fontWeight: '700',
     lineHeight: '32px',
