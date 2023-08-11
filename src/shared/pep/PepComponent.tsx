@@ -104,10 +104,7 @@ export const PepComponent: React.FC<PepComponentProps> = ({
           <div className="header-title" style={pepHeaderContainer}>
             <h1 style={pepHeader}>PEP Profile</h1>
           </div>
-          <div
-            className="component-to-render"
-            style={{ height: '381px', overflow: 'hidden' }}
-          >
+          <div className="component-to-render" style={{ height: '381px' }}>
             {/* <LiveTable
               columnHeader={columnHeader}
               data={data}
