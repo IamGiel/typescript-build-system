@@ -12,7 +12,7 @@ import { useLilius } from 'use-lilius';
 import { Dropdown, ScheduleForm } from './ScheduleForm';
 import { CheckIcon, NoSymbolIcon } from '@heroicons/react/20/solid';
 
-export const MultiSelectCalendar: React.FC = () => {
+export const MultiSelectCalendar: React.FC = ({ proposals }) => {
   const {
     calendar,
     inRange,
@@ -147,6 +147,7 @@ export const MultiSelectCalendar: React.FC = () => {
 
   useEffect(() => {
     console.log('availablity tpye: ', availabilityType);
+    console.log('proposla prop data ', proposals);
   }, [availabilityType]);
 
   return (
@@ -185,7 +186,7 @@ export const MultiSelectCalendar: React.FC = () => {
               {week.map((day) => (
                 <div
                   key={day}
-                  className={`day-box flex flex-col text-center border border-[#7DA94D] rounded p-[5px] border-[2px] hover:border-[#F8CA1D] hover:border-[3px]
+                  className={`day-box flex flex-col text-center border border-[#7DA94D] rounded p-[5px] border-[2px] hover:border-[#EEDBCE] hover:border-[3px]
                   ${
                     inRange(
                       day,
@@ -194,11 +195,6 @@ export const MultiSelectCalendar: React.FC = () => {
                     )
                       ? 'cursor-pointer border-[#A69D9A]'
                       : 'text-gray-400 opacity-50 pointer-events-none'
-                  }
-                  ${
-                    isToday(day, new Date())
-                      ? 'bg-green rounded border border-[#5EB5D4]'
-                      : ''
                   }
                   ${
                     availabilityType[day.toISOString()] &&
@@ -251,6 +247,26 @@ export const MultiSelectCalendar: React.FC = () => {
                       </div>
                     )}
                   </div>
+                  {proposals &&
+                    proposals.length &&
+                    proposals.map((item, idx) => {
+                      return (
+                        <>
+                          {new Date(item.info.date)
+                            .toUTCString()
+                            .slice(0, 8) ===
+                            new Date(day).toUTCString().slice(0, 8) && (
+                            <div
+                              key={idx}
+                              className="eventname text-[12px] text-[#ffffff] font-[500] mt-[12px] flex justify-evenly"
+                            >
+                              {/* {item.eventName} Display the proposal name */}
+                              Meetup
+                            </div>
+                          )}
+                        </>
+                      );
+                    })}
                   {availabilityType && availabilityType[day.toISOString()] && (
                     <div className="daily-schedule-details z-[9] py-[10px]">
                       <div className="status-detail flex justify-center">

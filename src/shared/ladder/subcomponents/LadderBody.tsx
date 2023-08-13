@@ -27,11 +27,11 @@ export const LadderBody = () => {
   const proposals: IProposal[] = [
     {
       id: 'some_proposal_id',
-      eventName: 'Wednesdays Tennis Meet',
+      eventName: 'Wednesdays Tennis aaaas sdsdsd sdd',
       author: { playerName: 'Ivan', playerId: 'playerid', isPlaying: true },
       info: {
-        date: new Date().getTime(), // Date in milliseconds since Unix epoch
-        time: new Date().getTime(), // Time in milliseconds since Unix epoch
+        date: new Date().toUTCString(), // Date in milliseconds since Unix epoch
+        time: new Date().toUTCString(), // Time in milliseconds since Unix epoch
         requiredPlayers: 8,
         subscribedPlayers: [
           { playerName: 'Gel', playerId: 'playerid' },
@@ -42,11 +42,11 @@ export const LadderBody = () => {
     },
     {
       id: 'some_proposal_id',
-      eventName: 'Thursdays Tennis Meet',
+      eventName: 'Mens 3.5 Doubles Meetup somethign',
       author: { playerName: 'Ivan', playerId: 'playerid', isPlaying: true },
       info: {
-        date: new Date().getTime(), // Date in milliseconds since Unix epoch
-        time: new Date().getTime(), // Time in milliseconds since Unix epoch
+        date: new Date('2023-08-21T21:00:00').toUTCString(), // Date in milliseconds since Unix epoch
+        time: new Date('2023-08-21T21:00:00').toUTCString(), // Time in milliseconds since Unix epoch
         requiredPlayers: 8,
         subscribedPlayers: [
           { playerName: 'Gel', playerId: 'playerid' },
@@ -64,14 +64,21 @@ export const LadderBody = () => {
 
   return (
     <div className="ladder-body-container flex flex-col lg:flex-row my-[12px] p-[24px] gap-[24px]">
-      <div className="lb-section flex flex-col gap-[12px] rounded border border-slate-300 p-[12px] min-w-[238px]">
+      <div className="lb-section flex flex-col gap-[12px] rounded border border-slate-300 p-[12px] min-w-[240px]">
         <div className="list-of-matches-section flex flex-col gap-[12px]">
-          <div className="ts-header-title  p-[12px]">
+          <div className="ts-header-title  p-[12px] rounded bg-[#142A24] max-w-[200px]">
             <div
-              className="proposal-sec-header flex items-center justify-between font-[600] text-[16px] text-[#B8AFAD]  cursor-pointer"
+              className="proposal-sec-header relative flex items-center justify-between font-[600] text-[16px] text-[#6AE5F0]  cursor-pointer"
               onClick={handleShowProposal}
             >
-              <span>Proposed Events</span>
+              <span>Proposed Events </span>
+              <span className="alert-numcircle">
+                <div className="absolute top-0 right-0 bg-red-500 w-6 h-6 rounded-full flex items-center justify-center">
+                  <span className="text-white text-xs font-semibold">
+                    {proposals.length}
+                  </span>
+                </div>
+              </span>
               {showProposal && (
                 <ChevronDownIcon height="24" width="24" fill="#B8AFAD" />
               )}
@@ -85,13 +92,13 @@ export const LadderBody = () => {
                   proposals.length &&
                   proposals.map((proposal, idx) => (
                     <div
-                      className="flex flex-row items-center justify-between gap-[12px] px-[12px]"
+                      className="flex flex-row items-center justify-between gap-[12px] p-[12px] border bg-[#5f9ea0]"
                       key={idx}
                     >
-                      <span className="proposal-title text-[16px] text-[#73B83A] font-[500]">
+                      <span className="proposal-title text-[16px] text-[#DFEFF7] font-[500]">
                         {proposal.eventName}
                       </span>{' '}
-                      <span className="flex items-center w-[7px] h-[7px] bg-red-500 rounded-full m-[8px]"></span>
+                      {/* <span className="flex items-center w-[7px] h-[7px] bg-red-500 rounded-full m-[8px]"></span> */}
                     </div>
                   ))}
               </div>
@@ -106,7 +113,7 @@ export const LadderBody = () => {
         </div>
         <div className="list-container flex flex-col gap-[12px]">
           <div className="lsitem-name">
-            <MultiSelectCalendar />
+            <MultiSelectCalendar proposals={proposals} />
           </div>
         </div>
       </div>
