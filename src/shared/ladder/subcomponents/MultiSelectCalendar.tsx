@@ -10,6 +10,7 @@ import {
 
 import { useLilius } from 'use-lilius';
 import { Dropdown, ScheduleForm } from './ScheduleForm';
+import { CheckIcon, NoSymbolIcon } from '@heroicons/react/20/solid';
 
 export const MultiSelectCalendar: React.FC = () => {
   const {
@@ -54,7 +55,8 @@ export const MultiSelectCalendar: React.FC = () => {
   const shouldRecountTags =
     previouslySelected?.length || selected.length > visibleTagCount;
 
-  const buttonStyles = 'text-white px-2 py-1 rounded bg-[#5EB5D4]';
+  const buttonStyles =
+    'text-[#533F24] font-[500] px-2 py-1 rounded bg-[#9BC96B]';
 
   useEffect(() => {
     setPreviouslySelected(selected);
@@ -165,14 +167,14 @@ export const MultiSelectCalendar: React.FC = () => {
           >
             Previous
           </button>
-          <div className="flex-grow text-center order-first lg:order-none">
+          <div className="flex-grow text-center order-first lg:order-none font-[500] text-[#B8AFAD] text-[26px]">
             {format(viewing, 'MMMM yyyy')}
           </div>
           <button className={buttonStyles} onClick={viewNextMonth}>
             Next
           </button>
         </div>
-        <div className="grid grid-cols-1 xl:grid-cols-7 gap-[12px] mt-2">
+        <div className="grid grid-cols-1 xl:grid-cols-7 gap-[31px] mt-2">
           {calendar[0][0].map((day) => (
             <div key={day} className="hidden text-center">
               {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][getDay(day)]}
@@ -183,14 +185,14 @@ export const MultiSelectCalendar: React.FC = () => {
               {week.map((day) => (
                 <div
                   key={day}
-                  className={`day-box flex flex-col text-center border border-[#ffffff] rounded p-[5px] border-[2px] hover:border-[#F8CA1D] hover:border-[3px]
+                  className={`day-box flex flex-col text-center border border-[#7DA94D] rounded p-[5px] border-[2px] hover:border-[#F8CA1D] hover:border-[3px]
                   ${
                     inRange(
                       day,
                       new Date(new Date().getTime() - 86400000),
                       endOfMonth(viewing)
                     )
-                      ? 'cursor-pointer'
+                      ? 'cursor-pointer border-[#A69D9A]'
                       : 'text-gray-400 opacity-50 pointer-events-none'
                   }
                   ${
@@ -202,11 +204,11 @@ export const MultiSelectCalendar: React.FC = () => {
                     availabilityType[day.toISOString()] &&
                     availabilityType[day.toISOString()].status.value ===
                       'AVAILABLE'
-                      ? 'bg-[#3DCB6C] text-[#ffffff]'
+                      ? 'bg-[#427F1C] text-[#ffffff] font-[800]'
                       : availabilityType[day.toISOString()] &&
                         availabilityType[day.toISOString()].status.value ===
                           'NOT_AVAILABLE'
-                      ? 'border-[2px] bg-[#FBBDBE] text-[#EE444D]'
+                      ? 'border-[2px] bg-[#554D3D] text-[#ffffff]'
                       : availabilityType[day.toISOString()] &&
                         availabilityType[day.toISOString()].status.value ===
                           null
@@ -219,11 +221,22 @@ export const MultiSelectCalendar: React.FC = () => {
                 >
                   <div className="day-details-info flex flex-row justify-between items-center">
                     <div className="day-name">
+                      {/* day number and name */}
                       <span
                         className={
-                          !availabilityType[day.toISOString()]
-                            ? 'text-[#5EB5D4]'
-                            : 'text-[#ffffff]'
+                          availabilityType[day.toISOString()] &&
+                          availabilityType[day.toISOString()].status.value ===
+                            'AVAILABLE'
+                            ? 'text-[#ffffff] font-[500]'
+                            : availabilityType[day.toISOString()] &&
+                              availabilityType[day.toISOString()].status
+                                .value === 'NOT_AVAILABLE'
+                            ? 'bg-[#554D3D] text-[#A5825E]'
+                            : availabilityType[day.toISOString()] &&
+                              availabilityType[day.toISOString()].status
+                                .value === null
+                            ? 'border-[#FCAAA3] text-[#89945D]'
+                            : 'border-white text-[#89945D]'
                         }
                       >
                         {new Date(day).getDate(0)}{' '}
@@ -234,29 +247,37 @@ export const MultiSelectCalendar: React.FC = () => {
                     </div>
                     {isToday(day, new Date()) && (
                       <div className="today flex">
-                        <IoToday fill="green" />
+                        <IoToday fill="rgb(211,203,154)" />
                       </div>
                     )}
                   </div>
                   {availabilityType && availabilityType[day.toISOString()] && (
                     <div className="daily-schedule-details z-[9] py-[10px]">
                       <div className="status-detail flex justify-center">
-                        <p className="details flex text-[12px] font-[500] font-inter">
+                        <p className="details flex  items-center justify-center text-[12px] text-[#D3CB9A] font-[800] font-inter overflow-hidden whitespace-normal truncate w-[100%]">
                           {availabilityType[day.toISOString()].status.label}
                         </p>
                       </div>
                       <div className="status-detail flex justify-center">
-                        {availabilityType[day.toISOString()].status.value ===
-                          'AVAILABLE' && (
-                          <p className="details flex text-[12px] font-[500] font-inter">
+                        {availabilityType[day.toISOString()] && (
+                          <p className="details flex  items-center justify-center text-[12px] text-[#D3CB9A] font-[800] font-inter overflow-hidden whitespace-normal truncate w-[100%]">
                             {availabilityType[day.toISOString()].time}
                           </p>
                         )}
                       </div>
 
                       <div className="status-detail flex justify-center">
-                        <p className="details flex text-[12px] text-[#181818] mt-[5px] font-[500] font-inter max-h-[36px] overflow-hidden overflow-y-auto">
-                          {availabilityType[day.toISOString()].comment}
+                        <p className="details flex  items-center justify-center text-[12px] text-[#ffffff] font-[400] font-inter overflow-hidden whitespace-normal truncate w-[100%]">
+                          {availabilityType[day.toISOString()].status.value ===
+                          'NOT_AVAILABLE' ? (
+                            <NoSymbolIcon
+                              height="24"
+                              width="24"
+                              fill="#CE2938"
+                            />
+                          ) : (
+                            <CheckIcon height="24" width="24" fill="#9BC96B" />
+                          )}
                         </p>
                       </div>
                     </div>

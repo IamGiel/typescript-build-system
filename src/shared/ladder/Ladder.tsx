@@ -6,7 +6,7 @@ import { LadderFooter } from './subcomponents/LadderFooter';
 export const Ladder = () => {
   return (
     // eslint-disable-next-line prettier/prettier
-    <div className="ladder-container flex flex-col bg-slate-200 m-auto p-[24px] w-90vw sm:w-[90%] gap-[12px]">
+    <div className="ladder-container flex flex-col bg-[#3E2D16] m-auto p-[24px] w-90vw sm:w-[90%] gap-[12px]">
       <div className="ladder-Header-section">
         <LadderHeader />
       </div>
