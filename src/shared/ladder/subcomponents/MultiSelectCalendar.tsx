@@ -10,7 +10,7 @@ import {
 
 import { useLilius } from 'use-lilius';
 import { Dropdown, ScheduleForm } from './ScheduleForm';
-import { CheckIcon, NoSymbolIcon } from '@heroicons/react/20/solid';
+import { CheckIcon, NoSymbolIcon, TrophyIcon } from '@heroicons/react/20/solid';
 
 export const MultiSelectCalendar: React.FC = ({ proposals }) => {
   const {
@@ -186,7 +186,7 @@ export const MultiSelectCalendar: React.FC = ({ proposals }) => {
               {week.map((day) => (
                 <div
                   key={day}
-                  className={`day-box flex flex-col text-center border border-[#7DA94D] rounded p-[5px] border-[2px] hover:border-[#EEDBCE] hover:border-[3px]
+                  className={`day-box flex flex-col justify-between border border-[#7DA94D] rounded p-[5px] border-[2px] hover:border-[#EEDBCE] hover:border-[3px]
                   ${
                     inRange(
                       day,
@@ -195,6 +195,11 @@ export const MultiSelectCalendar: React.FC = ({ proposals }) => {
                     )
                       ? 'cursor-pointer border-[#A69D9A]'
                       : 'text-gray-400 opacity-50 pointer-events-none'
+                  }
+                  ${
+                    isToday(day, new Date())
+                      ? 'border-yellow-300 bg-[#71716F]'
+                      : ''
                   }
                   ${
                     availabilityType[day.toISOString()] &&
@@ -215,7 +220,7 @@ export const MultiSelectCalendar: React.FC = ({ proposals }) => {
                   xl:w-[100px] xl:h-[125px]`}
                   onClick={() => handleDayClicked(day)}
                 >
-                  <div className="day-details-info flex flex-row justify-between items-center">
+                  <div className="day-details-info flex flex-col justify-start">
                     <div className="day-name">
                       {/* day number and name */}
                       <span
@@ -241,47 +246,54 @@ export const MultiSelectCalendar: React.FC = ({ proposals }) => {
                           .slice(0, 3)}
                       </span>
                     </div>
-                    {isToday(day, new Date()) && (
-                      <div className="today flex">
-                        <IoToday fill="rgb(211,203,154)" />
-                      </div>
-                    )}
                   </div>
-                  {proposals &&
-                    proposals.length &&
-                    proposals.map((item, idx) => {
-                      return (
-                        <>
-                          {new Date(item.info.date)
-                            .toUTCString()
-                            .slice(0, 8) ===
-                            new Date(day).toUTCString().slice(0, 8) && (
-                            <div
-                              key={idx}
-                              className="eventname text-[12px] text-[#ffffff] font-[500] mt-[12px] flex justify-evenly"
-                            >
-                              {/* {item.eventName} Display the proposal name */}
-                              Meetup
-                            </div>
-                          )}
-                        </>
-                      );
-                    })}
-                  {availabilityType && availabilityType[day.toISOString()] && (
-                    <div className="daily-schedule-details z-[9] py-[10px]">
-                      <div className="status-detail flex justify-center">
-                        <p className="details flex  items-center justify-center text-[12px] text-[#D3CB9A] font-[800] font-inter overflow-hidden whitespace-normal truncate w-[100%]">
-                          {availabilityType[day.toISOString()].status.label}
-                        </p>
+                  {proposals && proposals.length > 0 ? (
+                    proposals
+                      .filter(
+                        (item) =>
+                          new Date(item.info.date).toUTCString().slice(0, 8) ===
+                          new Date(day).toUTCString().slice(0, 8)
+                      )
+                      .map((item, idx) => (
+                        <div
+                          key={idx}
+                          className="eventname h-[14px] text-[12px] text-[#ffffff] font-[500] mt-[12px] flex items-center justify-center"
+                        >
+                          {/* {item.eventName} Display the proposal name */}
+                          <TrophyIcon height="24" width="24" fill="#F6F5F7" />
+                          game on
+                        </div>
+                      ))
+                  ) : (
+                    <div className="eventname h-[14px] text-[12px] text-[#ffffff] font-[500] mt-[12px] flex justify-center">
+                      No proposal today
+                    </div>
+                  )}
+
+                  {availabilityType &&
+                  availabilityType[day.toISOString()] &&
+                  availabilityType[day.toISOString()].status.value ===
+                    'AVAILABLE' ? (
+                    <div className="daily-schedule-details z-[9] py-[10px]  flex flex-row justify-center items-center">
+                      <div className="status-detail flex flex-row justify-center items-center">
+                        <CheckIcon
+                          height="24"
+                          width="24"
+                          fill="#9BC96B"
+                          title="AVAILABLE"
+                        />
                       </div>
                       <div className="status-detail flex justify-center">
                         {availabilityType[day.toISOString()] && (
-                          <p className="details flex  items-center justify-center text-[12px] text-[#D3CB9A] font-[800] font-inter overflow-hidden whitespace-normal truncate w-[100%]">
+                          <p className="details flex  flex-row items-center justify-center text-[12px] text-[#D3CB9A] font-[800] font-inter overflow-hidden whitespace-normal truncate w-[100%]">
                             {availabilityType[day.toISOString()].time}
                           </p>
                         )}
                       </div>
-
+                    </div>
+                  ) : (
+                    availabilityType &&
+                    availabilityType[day.toISOString()] && (
                       <div className="status-detail flex justify-center">
                         <p className="details flex  items-center justify-center text-[12px] text-[#ffffff] font-[400] font-inter overflow-hidden whitespace-normal truncate w-[100%]">
                           {availabilityType[day.toISOString()].status.value ===
@@ -292,12 +304,18 @@ export const MultiSelectCalendar: React.FC = ({ proposals }) => {
                               fill="#CE2938"
                             />
                           ) : (
-                            <CheckIcon height="24" width="24" fill="#9BC96B" />
+                            <CheckIcon
+                              height="24"
+                              width="24"
+                              fill="#9BC96B"
+                              title="AVAILABLE"
+                            />
                           )}
                         </p>
                       </div>
-                    </div>
+                    )
                   )}
+
                   <div className={`day-box flex flex-col gap-[12px]`}>
                     <div className="calendar-day-sq flex flex-row justify-between">
                       <div className="box-info">
