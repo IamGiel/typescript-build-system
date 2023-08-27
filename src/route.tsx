@@ -6,6 +6,7 @@ import { Ladder, MediaSize, PepComponent } from './shared';
 import { Matchory } from './shared/matchory/Matchory';
 import { App } from './App';
 import { Searchv1 } from './shared/searchv1/Searchv1';
+import { JsonPdf } from './shared/json-pdf/jsonPdf';
 
 const router = createBrowserRouter([
   {
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
   {
     path: '/ladder',
     element: <Ladder />,
+  },
+  {
+    path: '/jsontopdf',
+    element: <JsonPdf />,
   },
 ]);
 

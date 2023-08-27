@@ -30,8 +30,8 @@ export const LadderBody = () => {
       eventName: 'Wednesdays Tennis aaaas sdsdsd sdd',
       author: { playerName: 'Ivan', playerId: 'playerid', isPlaying: true },
       info: {
-        date: new Date().toUTCString(), // Date in milliseconds since Unix epoch
-        time: new Date().toUTCString(), // Time in milliseconds since Unix epoch
+        date: new Date('2023-08-24T21:00:00').toUTCString(), // Date in milliseconds since Unix epoch
+        time: new Date('2023-08-24T21:00:00').toUTCString(), // Time in milliseconds since Unix epoch
         requiredPlayers: 8,
         subscribedPlayers: [
           { playerName: 'Gel', playerId: 'playerid' },
@@ -47,6 +47,21 @@ export const LadderBody = () => {
       info: {
         date: new Date('2023-08-21T21:00:00').toUTCString(), // Date in milliseconds since Unix epoch
         time: new Date('2023-08-21T21:00:00').toUTCString(), // Time in milliseconds since Unix epoch
+        requiredPlayers: 8,
+        subscribedPlayers: [
+          { playerName: 'Gel', playerId: 'playerid' },
+          { playerName: 'Max', playerId: 'playerid' },
+          { playerName: 'Sam', playerId: 'playerid' },
+        ],
+      },
+    },
+    {
+      id: 'some_proposal_id',
+      eventName: 'Wednesdays Tennis aaaas sdsdsd sdd',
+      author: { playerName: 'Ivan', playerId: 'playerid', isPlaying: true },
+      info: {
+        date: new Date('2023-08-28T21:00:00').toUTCString(), // Date in milliseconds since Unix epoch
+        time: new Date('2023-08-28T21:00:00').toUTCString(), // Time in milliseconds since Unix epoch
         requiredPlayers: 8,
         subscribedPlayers: [
           { playerName: 'Gel', playerId: 'playerid' },
