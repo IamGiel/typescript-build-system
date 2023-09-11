@@ -221,7 +221,7 @@ export const ScheduleForm = ({ isOpen, dayInfo, selected }) => {
                                     rows="1"
                                     maxLength={20}
                                     className="p-[12px] text-[14px] text-[#514141] font-[500] rounded border border-slate-200 shadow-sm focus:ring-slate-500 focus:border-slate-500 mt-1 block w-full border-slate-300 rounded-md min-h-[50px]"
-                                    value={comment}
+                                    value={comment || ''}
                                     // onChange={(e) => setComment(e.target.value)}
                                     placeholder="Example: Flex after 6"
                                     onInput={(e) => {

@@ -21,6 +21,7 @@ export const DayCell = ({
   endOfMonthProp,
   viewingProp,
   subDaysProp,
+  isOpen,
 }) => {
   // Determine the cell's classes based on various conditions
   function calculateCellClasses(
@@ -33,7 +34,7 @@ export const DayCell = ({
     isTodayProp
   ) {
     let cellClasses =
-      'day-box min-h-[120px] flex flex-col justify-between rounded p-[5px] border-[2px] hover:border-[#EEDBCE] hover:border-[3px]';
+      'day-box min-h-[120px] min-w-[120px] flex flex-col justify-between rounded p-[5px] border-[2px] hover:border-[#EEDBCE] hover:border-[3px]';
 
     if (
       !isAfterProp(day, subDaysProp(new Date(), 1)) ||
@@ -112,7 +113,7 @@ export const DayCell = ({
       }`}
       onClick={() => handleDayClicked(day)}
     >
-      <div className="day-details-info flex flex-col justify-start">
+      <div className="day-details-info flex flex-col justify-start text-[12px]">
         <div className="day-name flex gap-[12px]">
           {/* day number and name */}
           <span
@@ -161,11 +162,12 @@ export const DayCell = ({
 
       <div className={`day-box flex flex-col gap-[12px]`}>
         <div className="calendar-day-sq flex flex-row justify-between">
+          <span>{JSON.stringify(dayModalStates[day.toISOString()])}</span>
           <div className="box-info">
             <ScheduleForm
               selected={(selection) => handleSelection(selection, day)}
               dayInfo={day}
-              isOpen={dayModalStates[day.toISOString()]}
+              isOpen={isOpen}
               onClose={() =>
                 setDayModalStates((prevState) => ({
                   ...prevState,

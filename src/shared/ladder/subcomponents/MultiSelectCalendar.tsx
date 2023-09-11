@@ -145,6 +145,7 @@ export const MultiSelectCalendar: React.FC = ({ proposals }) => {
         comment: selection.comment, // You can add comment property here
       },
     }));
+    setIsOpen(false);
     return availabilityType;
   };
 
@@ -209,6 +210,7 @@ export const MultiSelectCalendar: React.FC = ({ proposals }) => {
                   isTodayProp={isToday}
                   isSameMonthProp={isSameMonth}
                   subDaysProp={subDays}
+                  isOpen={isOpen}
                 />
               ))}
             </React.Fragment>

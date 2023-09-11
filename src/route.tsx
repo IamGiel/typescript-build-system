@@ -7,6 +7,7 @@ import { Matchory } from './shared/matchory/Matchory';
 import { App } from './App';
 import { Searchv1 } from './shared/searchv1/Searchv1';
 import { JsonPdf } from './shared/json-pdf/jsonPdf';
+import { Exp } from './shared/exp/Exp';
 
 const router = createBrowserRouter([
   {
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
   {
     path: '/jsontopdf',
     element: <JsonPdf />,
+  },
+  {
+    path: '/exp',
+    element: <Exp />,
   },
 ]);
 

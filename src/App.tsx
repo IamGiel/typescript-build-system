@@ -8,6 +8,7 @@ export const App = () => {
     { title: 'Searchv1', isSelected: false, route: '/searchv1' },
     { title: 'Scheduler', isSelected: false, route: '/ladder' },
     { title: 'JsonToPdf', isSelected: false, route: '/jsontopdf' },
+    { title: 'Exp', isSelected: false, route: '/exp' },
   ];
   return (
     <div className="app flex flex-col w-[1200px]">
